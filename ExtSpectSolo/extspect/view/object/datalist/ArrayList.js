@@ -1,5 +1,5 @@
 Ext.define( 'extspect.view.object.datalist.ArrayList',
-	{    extend : 'extspect.view.object.datalist.PropertiesOrArrayList',
+	{  extend : 'extspect.view.object.datalist.PropertiesOrArrayList',
 		xtype : 'arraylist',
 		requires : 'extspect.store.object.ArrayListStore',
 		storeName : 'extspect.store.object.ArrayListStore',

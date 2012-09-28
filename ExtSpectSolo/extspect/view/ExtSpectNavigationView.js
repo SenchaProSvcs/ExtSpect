@@ -5,7 +5,8 @@ Ext.define( 'extspect.view.ExtSpectNavigationView',
 		isDataListGrouped : false,
 		dataListStoreName : null,
 
-		config : {     minHeight : 300,
+		config : {
+			minHeight : 300,
 			height : window.innerHeight, // - 100 , // '100%'
 			minWidth : 300,
 			width : window.innerWidth / 2,

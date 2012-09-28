@@ -1,5 +1,5 @@
 Ext.define( 'extspect.object.rec.ApplicationRec',
-	{    extend : 'extspect.object.rec.ControllerRec',
+	{  extend : 'extspect.object.rec.ControllerRec',
 
 		properties : [
 			"_controllerInstances" ,

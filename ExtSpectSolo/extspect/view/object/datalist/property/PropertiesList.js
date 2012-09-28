@@ -171,22 +171,19 @@ Ext.define( 'extspect.view.object.datalist.property.PropertiesList',
 
 			var parentTabPanel = this.fetchParentTabPanel();
 			if ( parentTabPanel.isCollectionTabPanel || parentTabPanel.isMixedCollectionTabPanel )
-			{
-				object = object.fetchValue();
+			{  object = object.fetchValue();
 				if ( !( object instanceof Ext.util.Collection ) && !( object instanceof Ext.util.MixedCollection ) )
 				{ console.warn( 'object is not a collection in PropertiesList.objectToPropertyRecs' ); }
 			}
 
 			for ( var property in object )
-			{
-				if ( showOnlyOwnProps && !object.hasOwnProperty( property ) )
+			{  if ( showOnlyOwnProps && !object.hasOwnProperty( property ) )
 				{ continue; }
 
 				var value = object[ property ];
 				// Trace.vars( 'value' , value, 'this.isValueOk()' , this.isValueOk( value , property )  )
 				if ( this.isValueOk( value, property ) )
-				{
-					var group = groupedOk ? this.determineGroup( value, property ) : null;
+				{  var group = groupedOk ? this.determineGroup( value, property ) : null;
 					var record = this.createRowObject( value, property, group );
 					recs.push( record );
 				}

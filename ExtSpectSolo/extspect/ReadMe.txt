@@ -1,20 +1,13 @@
 
-Release notes for ExtSpect 0.2.08
+Release notes for ExtSpect
 
-by Jim.Soper@extjs.com
-
+by Jim.Soper@Sencha.com
 
 ========== INTRODUCTION
 
 Welcome to the brand new ExtSpect, a plugin inspector Sencha Touch 2.0
 written in Sencha Touch 2.0. The first version focusses on components,
 but we will be adding features to allow you to look at other parts of Touch.
-
-Please note:
-
-o Please do NOT share this outside of the Sencha. This is a pre-release
-version, and it should be tested first, and the code and legal issues cleaned up.
-
 
 ========== INSTALLATION
 

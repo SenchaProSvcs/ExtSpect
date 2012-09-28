@@ -1,5 +1,5 @@
 Ext.define( 'extspect.view.object.toolbar.MethodsListToolbar',
-	{    extend : 'extspect.view.ExtSpectToolbar',
+	{  extend : 'extspect.view.ExtSpectToolbar',
 		xtype : 'methodslisttoolbar',
 
 		requires : [

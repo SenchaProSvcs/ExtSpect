@@ -1,5 +1,5 @@
 Ext.define( 'extspect.view.tree.datalist.PropertiesTree',
-	{    extend : 'extspect.view.tree.datalist.TreeList',
+	{  extend : 'extspect.view.tree.datalist.TreeList',
 
 		collectRowObjects : function () {
 			var object = this.fetchRootObject();

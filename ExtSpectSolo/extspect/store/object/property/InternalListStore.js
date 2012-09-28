@@ -1,5 +1,5 @@
 Ext.define( 'extspect.store.object.property.InternalListStore',
-	{    extend : 'extspect.store.object.property.PropertiesListStore'
+	{  extend : 'extspect.store.object.property.PropertiesListStore'
 	}
 );
 // groupFn screws up properties with all caps names

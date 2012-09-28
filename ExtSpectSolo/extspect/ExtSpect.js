@@ -12,13 +12,10 @@ Ext.define( 'extspect.ExtSpect',
 			'extspect.object.rec.BaseRec'
 		],
 
-		// testProperty : 'testProperty in Ext.define( extspect.ExtSpect )',
-
 		config : { // iconCls, iconMask and title are here in case the view is used inside a tab panel
 			iconCls : 'search',
 			iconMask : true,
 			title : 'ExtSpect',
-			// testConfig : 'testConfig in config',
 
 			flex : 1,
 
@@ -62,8 +59,6 @@ Ext.define( 'extspect.ExtSpect',
 			this.addCssLinkElement( 'extspect/resources/extspect.css' );
 
 			if ( !this.app ) { console.error( 'ExtSpect.initialize() did not get a value for the config property app:' );}
-//			if ( !this.getTestConfig )
-//			{ console.error( 'ExtSpect.initialize() did not get a value for the config property getTestConfig:' ); }
 
 			if ( this.startObject ) {
 				var navView = this.fetchObjectNavigationView();

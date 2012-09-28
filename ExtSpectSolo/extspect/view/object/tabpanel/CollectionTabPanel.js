@@ -5,25 +5,25 @@ Ext.define( 'extspect.view.object.tabpanel.CollectionTabPanel',
 
 		config : {
 			items : [
-				{    title : 'Items',
+				{  title : 'Items',
 					items : { xtype : 'arraylist' }
 				} ,
-				{    title : 'All',
+				{  title : 'All',
 					items : { xtype : 'arraylist' }
 				} ,
-				{    title : 'Properties',
+				{  title : 'Properties',
 					items : [
 						{ xtype : 'extpropertieslist' } ,
 						{ xtype : 'propertieslisttoolbar' }
 					]
 				} ,
-				{    title : 'Internal',
+				{  title : 'Internal',
 					items : [
 						{ xtype : 'internallist' } ,
 						{ xtype : 'propertieslisttoolbar' }
 					]
 				} ,
-				{    title : 'Methods',
+				{  title : 'Methods',
 					items : [
 						{ xtype : 'methodlist' } ,
 						{ xtype : 'methodslisttoolbar' }

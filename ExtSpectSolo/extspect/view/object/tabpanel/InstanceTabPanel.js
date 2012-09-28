@@ -6,26 +6,25 @@ Ext.define( 'extspect.view.object.tabpanel.InstanceTabPanel',
 			'extspect.view.object.toolbar.PropertiesListToolbar' ,
 			'extspect.view.object.toolbar.MethodsListToolbar'
 		],
-		//parentNavigationViewXtype : 'objectnavigationview' ,
 
-		config : {    title : StringOf.to$( Ext.Viewport ),
+		config : { title : StringOf.to$( Ext.Viewport ),
 			// TODO: what if Ext.Viewport is not the first object shown at startup?
 			// 'Inspector Panel' , // this must be longish for setNavigationViewTitle to work
 
 			items : [
-				{    title : 'Properties',
+				{  title : 'Properties',
 					items : [
 						{ xtype : 'propertieslist' } ,
 						{ xtype : 'propertieslisttoolbar' }
 					]
 				} ,
-				{    title : 'Internal',
+				{  title : 'Internal',
 					items : [
 						{ xtype : 'internallist' } ,
 						{ xtype : 'propertieslisttoolbar' }
 					]
 				} ,
-				{    title : 'Methods',
+				{  title : 'Methods',
 					items : [
 						{ xtype : 'methodlist' } ,
 						{ xtype : 'methodslisttoolbar' }
