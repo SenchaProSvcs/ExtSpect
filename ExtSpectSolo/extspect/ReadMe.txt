@@ -41,7 +41,6 @@ o The file that adds ExtSpect to a container should/must also declare
 
 	requires : [ 'extspect.ExtSpect' ] ,
 
-
 ========== USAGE
 
 Using ExtSpect is fairly straightforward. The 'tree panel' on the left lets you
