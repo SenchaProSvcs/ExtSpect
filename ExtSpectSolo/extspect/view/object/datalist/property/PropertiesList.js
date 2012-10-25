@@ -188,7 +188,7 @@ Ext.define( 'extspect.view.object.datalist.property.PropertiesList',
 					recs.push( record );
 				}
 			}
-			Trace.vars( 'recs', recs.length );
+			// Trace.vars( 'recs', recs.length );
 			return recs;
 		},
 

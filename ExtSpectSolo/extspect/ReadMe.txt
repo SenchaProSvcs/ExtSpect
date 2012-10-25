@@ -11,35 +11,42 @@ but we will be adding features to allow you to look at other parts of Touch.
 
 ========== INSTALLATION
 
-For users of the demos app, ExtSpectSolo, the
-index.html file expects that a touch2 directory will be a sibling of
-the app directory. Please make adjustments in index.html as needed.
+For users of the demo app, ExtSpectSolo, the index.html file expects
+that a touch2 directory will be a sibling of the app directory.
+Please make adjustments in index.html as needed.
 
 For installation of ExtSpect as a plugin, there are 2 things that you must
 do, and a couple more optional choices.
 
-o The 'extspect' folder can be found inside the folder for the demo app
-(CrimeFinder or ExtSpectSolo) included in the zipped file. Copy only the
-'extspect' folder to just inside your app's main folder, at the same level
-as your index.html file.
+o The 'extspect' folder can be found inside the folder for the demo app,
+ExtSpectSolo, included in the zipped file. Copy only the 'extspect' folder
+to just inside your app's main folder, at the same level as your index.html file.
 
 o Somewhere inside the views that you build, add ExtSpect as a component.
-Typically, this will be in you top level viewport, so it would look like this:
+The ExtSpect class extends Ext.Container, but it can also be added using the
+xtype 'extspect'. There are default values for the title and iconCls, so it should
+fit into a tab panel with no further work.
 
-	Ext.Viewport.add( Ext.create( 'extspect.ExtSpect', { app:  MyApp.app } ) )
+There is also a config option to the ExtSpect class called app:. This is required.
+The variable that follows app: is the name of your app (eg. MyApp) plus .app
+with no quotes.
 
-The ExtSpect class extends Ext.Panel, but it can also be added using the xtype
-'extspect'. There are values for the title and iconCls, so it should fit into a
-tab panel with no further work.
-
-o There is a config option to the ExtSpect class called app. This is required.
-It typically looks something like this:
+Adding ExtSpect to your top level viewport would look like this:
 
 	Ext.Viewport.add( Ext.create( 'extspect.ExtSpect', { app : MyApp.app } ) )
 
-o The file that adds ExtSpect to a container should/must also declare
+As an item in a tab panel, it would look like this:
 
-	requires : [ 'extspect.ExtSpect' ] ,
+			{  xtype : 'extspect',
+				app : MyApp.app
+			}
+
+It seems that for MyApp.app to load properly, you really need to load
+sencha-touch-debug.js.
+
+The file that adds ExtSpect to a container must also declare
+
+	requires : [ 'extspect.ExtSpect' ]
 
 ========== USAGE
 
@@ -95,7 +102,7 @@ function is StringOf.to$(). ExtSpect uses it heavily.
 util.Trace is not needed by ExtSpect, but I use it heavily in my coding.
 It offers three major functions:
 
-Trace.start() and  Trace.end() work as a pair. With no args, Trace.start()
+Trace.start() and Trace.end() work as a pair. With no args, Trace.start()
 uses console.group() to print out the name of the containing function
 AND the name of the function that called it, separated by a diamond ? .
 They are followed by then names of each of the arguments and

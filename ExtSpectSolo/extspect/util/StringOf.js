@@ -2,7 +2,7 @@ Ext.define( 'extspect.util.StringOf', { } );
 
 // ---------- StringOf constants
 
-StringOf = {};
+if ( !window.StringOf ) { window.StringOf = {} }
 
 StringOf.empty$ = '';
 
@@ -17,7 +17,7 @@ StringOf.rightBrace$ = '}';     // String.fromCharCode( 0x276f )
 
 // ---------- StringOf.ellipsis$
 
-// TODO: 30 needs to be a function of the width of the panel
+// TODO: 50 needs to be a function of the width of the panel
 // Ext.Viewport.getWindowWidth() / 2
 // or ExtSpect.getColumnWidth()
 StringOf.ellipsis$ = function ( string ) { return Ext.String.ellipsis( string, 50, true ); };

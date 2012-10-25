@@ -12,8 +12,7 @@ Ext.define( 'extspect.view.tree.datalist.PropertiesTree',
 
 			this.rowObjects = [];
 
-			if ( this.baseRecs.length > 0 )
-			{ this.buildFinalRowObjects( startRec ); }
+			if ( this.baseRecs.length > 0 ) { this.buildFinalRowObjects( startRec ); }
 
 			return this.rowObjects;
 		},
@@ -27,8 +26,7 @@ Ext.define( 'extspect.view.tree.datalist.PropertiesTree',
 			// block repetition of an object in a branch
 			var nextObject = object;
 			if ( object.isPropertyPointerWithInstance ) { nextObject = object.fetchValue(); }
-			if ( this.branchObjects.indexOf( nextObject ) !== -1 )
-			{ console.groupEnd( "STOP BRANCH " + StringOf.to$( nextObject ) ); }
+			if ( this.branchObjects.indexOf( nextObject ) !== -1 ) { console.groupEnd( "STOP BRANCH " + StringOf.to$( nextObject ) ); }
 			else {
 				rec = this.createRec( object );
 				this.depth++;
@@ -40,14 +38,12 @@ Ext.define( 'extspect.view.tree.datalist.PropertiesTree',
 					var childRecs = this.createChildRecs( object, rec );
 					if ( skipDirectChild ) {
 						var recIndex = parentRecChildRecs.indexOf( rec );
-						if ( recIndex !== -1 )
-						{
+						if ( recIndex !== -1 ) {
 							console.error( 'createRecTree : rec found in parentRec.childRecs, rec =' +
 								StringOf.to$( rec ), rec );
 							debugger;
 						}
-						for ( var index = 0 , len = childRecs.length; index < len; index++ )
-						{ parentRecChildRecs.push( childRecs[ index ] ); }
+						for ( var index = 0 , len = childRecs.length; index < len; index++ ) { parentRecChildRecs.push( childRecs[ index ] ); }
 					}
 					else {
 						rec.children = childRecs;
@@ -66,23 +62,19 @@ Ext.define( 'extspect.view.tree.datalist.PropertiesTree',
 			var childRecs = [];
 			for ( var index = 0 , len = properties.length; index < len; index++ ) {
 				var property = properties[ index ];
-				if ( !( property in parentObject ) )
-				{
+				if ( !( property in parentObject ) ) {
 					console.warn( '>>>> createChildRecs' +
 						': "' + property + '" not in parentObject', parentObject );
 				}
 				else {
 					var value = parentObject[ property ];
 
-					if ( ( value instanceof Ext.util.MixedCollection ) || ( value instanceof Ext.util.Collection ) )
-					{ value = this.extCollectionToArray( value ); }
+					if ( ( value instanceof Ext.util.MixedCollection ) || ( value instanceof Ext.util.Collection ) ) { value = this.extCollectionToArray( value ); }
 					else {
-						if ( ( value instanceof NodeList ) || ( value instanceof HTMLCollection ) )
-						{ value = this.htmlCollectionToArray( value ); }
+						if ( ( value instanceof NodeList ) || ( value instanceof HTMLCollection ) ) { value = this.htmlCollectionToArray( value ); }
 					}
 
-					if ( value instanceof Array )
-					{ this.createArrayRecs( parentObject, property, value, parentRec, childRecs ); }
+					if ( value instanceof Array ) { this.createArrayRecs( parentObject, property, value, parentRec, childRecs ); }
 					else {
 						if ( this.isInstance( value ) ) {
 							this.createChildRec( parentObject, property, value, parentRec, childRecs );
@@ -95,8 +87,7 @@ Ext.define( 'extspect.view.tree.datalist.PropertiesTree',
 
 		createArrayRecs : function ( parentObject, property, array, parentRec, childRecs ) {
 			if ( parentObject.isPropertyPointerWithArray ) {
-				for ( var index2 = 0 , len2 = array.length; index2 < len2; index2++ )
-				{ this.createChildRec( array, index2, array[ index2 ], parentRec, childRecs ); }
+				for ( var index2 = 0 , len2 = array.length; index2 < len2; index2++ ) { this.createChildRec( array, index2, array[ index2 ], parentRec, childRecs ); }
 			}
 			else {
 				if ( ( array.length > 0 ) && this.isInstance( array[0] ) ) {
@@ -167,50 +158,36 @@ Ext.define( 'extspect.view.tree.datalist.PropertiesTree',
 
 		determineRecClassName : function ( object ) {
 			var recClassName;
-			if ( object.isPropertyPointerWithValue )
-			{ recClassName = 'extspect.object.rec.PropertyPointerRec'; }
+			if ( object.isPropertyPointerWithValue ) { recClassName = 'extspect.object.rec.PropertyPointerRec'; }
 			else {
 				if ( object.hasOwnProperty( "modelName" ) ) // $className
 				{ recClassName = 'extspect.object.rec.ModelRec'; }
 				else {
-					if ( object instanceof Ext.app.Application )
-					{ recClassName = 'extspect.object.rec.ApplicationRec'; }
+					if ( object instanceof Ext.app.Application ) { recClassName = 'extspect.object.rec.ApplicationRec'; }
 					else {
-						if ( object instanceof Ext.app.Controller )
-						{ recClassName = 'extspect.object.rec.ControllerRec'; }
+						if ( object instanceof Ext.app.Controller ) { recClassName = 'extspect.object.rec.ControllerRec'; }
 						else {
-							if ( object instanceof Ext.lib.Component )
-							{ recClassName = 'extspect.object.rec.ComponentRec'; }
+							if ( object instanceof Ext.lib.Component ) { recClassName = 'extspect.object.rec.ComponentRec'; }
 							else {
-								if ( object instanceof Ext.event.Dispatcher )
-								{ recClassName = 'extspect.object.rec.DispatcherRec'; }
+								if ( object instanceof Ext.event.Dispatcher ) { recClassName = 'extspect.object.rec.DispatcherRec'; }
 								else {
-									if ( object instanceof Ext.dom.Element )
-									{ recClassName = 'extspect.object.rec.ExtElementRec'; }
+									if ( object instanceof Ext.dom.Element ) { recClassName = 'extspect.object.rec.ExtElementRec'; }
 									else {
-										if ( object instanceof HTMLElement )
-										{ recClassName = 'extspect.object.rec.HtmlElementRec'; }
+										if ( object instanceof HTMLElement ) { recClassName = 'extspect.object.rec.HtmlElementRec'; }
 										else {
-											if ( object instanceof HTMLDocument )
-											{ recClassName = 'extspect.object.rec.HtmlDocumentRec'; }
+											if ( object instanceof HTMLDocument ) { recClassName = 'extspect.object.rec.HtmlDocumentRec'; }
 											else {
-												if ( object instanceof Ext.data.proxy.Proxy )
-												{ recClassName = 'extspect.object.rec.ProxyRec'; }
+												if ( object instanceof Ext.data.proxy.Proxy ) { recClassName = 'extspect.object.rec.ProxyRec'; }
 												else {
-													if ( object instanceof Ext.app.Route )
-													{ recClassName = 'extspect.object.rec.RouteRec'; }
+													if ( object instanceof Ext.app.Route ) { recClassName = 'extspect.object.rec.RouteRec'; }
 													else {
-														if ( object instanceof Ext.app.Router )
-														{ recClassName = 'extspect.object.rec.RouterRec'; }
+														if ( object instanceof Ext.app.Router ) { recClassName = 'extspect.object.rec.RouterRec'; }
 														else {
-															if ( object.isStore || ( object instanceof Ext.data.Store ) )
-															{ recClassName = 'extspect.object.rec.StoreRec'; }
+															if ( object.isStore || ( object instanceof Ext.data.Store ) ) { recClassName = 'extspect.object.rec.StoreRec'; }
 															else {
-																if ( object === Ext )
-																{ recClassName = 'extspect.object.rec.ExtRec'; }
+																if ( object === Ext ) { recClassName = 'extspect.object.rec.ExtRec'; }
 																else {
-																	if ( object instanceof Object )
-																	{ recClassName = 'extspect.object.rec.SimpleObjectRec'; }
+																	if ( object instanceof Object ) { recClassName = 'extspect.object.rec.SimpleObjectRec'; }
 																	else { recClassName = 'extspect.object.rec.BaseRec'; }
 																}
 															}

@@ -20,7 +20,6 @@ Ext.define( 'extspect.view.object.ObjectNavigationView',
 		// called by ObjectNavigationView#onBackButtonTap()
 		// p. 4-36 Touch manual says this is needed
 		// or use autoDestroy: true
-		// TODO: You also want to get rid of the store
 		/*  pop : function ( )
 		 {	Trace.start()
 		 // var currentTabPanel = this._activeItem
@@ -60,7 +59,6 @@ Ext.define( 'extspect.view.object.ObjectNavigationView',
 
 			var navigationBar = this.getNavigationBar();
 			var titleComponent = navigationBar.titleComponent;
-			// titleComponent.minWidth = '300' , // BUG: this should not be necessary
 
 			var title = this.computeTitleString( startObject );
 			// The 2 lines below do not blow up, but seem to have little effect

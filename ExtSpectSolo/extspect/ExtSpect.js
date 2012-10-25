@@ -3,7 +3,7 @@ Ext.Loader.require( 'extspect.util.ExtSpectStringOf' );
 Ext.Loader.require( 'extspect.util.Trace' );// for Trace.start(), Trace.end(), Trace.vars()
 
 Ext.define( 'extspect.ExtSpect',
-	{  extend : 'Ext.Panel',
+	{  extend : 'Ext.Container',
 		xtype : 'extspect',
 		id : 'es-extspect',
 		requires : [
@@ -12,7 +12,8 @@ Ext.define( 'extspect.ExtSpect',
 			'extspect.object.rec.BaseRec'
 		],
 
-		config : { // iconCls, iconMask and title are here in case the view is used inside a tab panel
+		config : {
+			// iconCls, iconMask and title are here in case the view is used inside a tab panel
 			iconCls : 'search',
 			iconMask : true,
 			title : 'ExtSpect',
@@ -23,9 +24,10 @@ Ext.define( 'extspect.ExtSpect',
 				{  xtype : 'container',
 					layout : { type : 'hbox' },
 					items : [
-						{    xtype : 'treenavigationview' } ,
-						{    xtype : 'objectnavigationview' }
-					]    }
+						{ xtype : 'treenavigationview' } ,
+						{ xtype : 'objectnavigationview' }
+					]
+				}
 			],
 
 			// The top/starting object in the tree views
@@ -47,10 +49,10 @@ Ext.define( 'extspect.ExtSpect',
 
 		constructor : function ( config ) {
 			ExtSpect = this;
-			Trace.vars( 'config', config );
-			Trace.vars( ' this.app', this.app );
+			// Trace.vars( 'config', config );
+			// Trace.vars( 'this.app', this.app );
 			this.callParent( arguments );
-			Trace.vars( 'this.app', this.app );
+			// Trace.vars( 'this.app', this.app );
 		},
 
 		initialize : function () {

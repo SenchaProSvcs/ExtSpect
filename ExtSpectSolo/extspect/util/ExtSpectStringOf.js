@@ -1,9 +1,11 @@
 Ext.define( 'extspect.util.ExtSpectStringOf', { } );
 
+if ( !window.StringOf ) { window.StringOf = {} }
+
 Ext.extspectString = function () { return StringOf.embrace$( '', 'Ext' ); };
 Ext.extspectString._name = 'Ext#extspectString';
 
-StringOf.class$ = function ( value ) { return value.hasOwnProperty( "superclass" ) ? StringOf.object$( value, '' ) : null ; };
+StringOf.class$ = function ( value ) { return value.hasOwnProperty( "superclass" ) ? StringOf.object$( value, '' ) : null; };
 StringOf.class$._name = 'StringOf.class$';
 
 Ext.app.Application.prototype.extspectString =
@@ -100,8 +102,7 @@ Date.prototype.extspectString._name = 'Date#extspectString';
 
 // typeof( StringOf.to$ ) -> 'function'
 Function.prototype.extspectString = function () {
-	if ( "modelName" in this )
-	{ return StringOf.embrace$( 'Model', StringOf.quote$( StringOf.functionName( this ) ) ); }
+	if ( "modelName" in this ) { return StringOf.embrace$( 'Model', StringOf.quote$( StringOf.functionName( this ) ) ); }
 	return StringOf.functionName( this ) + '()';
 };
 Function.prototype.extspectString._name = 'Function#extspectString';
@@ -132,16 +133,14 @@ HTMLCollection.prototype.extspectString._name = 'HTMLCollection#extspectString';
 
 KeyboardEvent.prototype.extspectString = function () {
 	var data$;
-	if ( "keyCode" in this )
-	{ data$ = StringOf.keyCode$( this.keyCode ) + ', ' + this.charCode; }
+	if ( "keyCode" in this ) { data$ = StringOf.keyCode$( this.keyCode ) + ', ' + this.charCode; }
 	return StringOf.embrace$( "KybrdEvent", data$ || StringOf.object$( this ) );
 };
 KeyboardEvent.prototype.extspectString._name = 'KeyboardEvent#extspectString';
 
 MouseEvent.prototype.extspectString = function () {
 	var data$;
-	if ( "button" in this )
-	{
+	if ( "button" in this ) {
 		data$ = 'btn = ' + this.button + ' dtl(' + this.detail + ')' +
 			' @Clnt(' + this.clientX + ' ' + this.clientY + ')';
 		// add pgOffst to Clnt(?) to get actual (scrolled ) pstn (Flanagan , pg. 408)

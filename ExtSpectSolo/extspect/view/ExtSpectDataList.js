@@ -3,7 +3,8 @@ Ext.define( 'extspect.view.ExtSpectDataList',
 		isExtSpectDataList : true,
 		defaultIdPrefix : 'es-',
 
-		config : {    itemTpl : '{text}',
+		config : {
+			itemTpl : '{text}',
 			rootObject : Ext.Viewport,
 			emptyText : "NO DATA",
 			listeners : {
@@ -13,15 +14,15 @@ Ext.define( 'extspect.view.ExtSpectDataList',
 		},
 
 		fetchParentNavigationView : function () {
-			var view = this.up( '[isExtSpectNavigationView]' );
-			return view;
+			return this.up( '[isExtSpectNavigationView]' );
 		},
 
-		fetchObjectNavigationView : function () { return Ext.ComponentQuery.query( 'objectnavigationview' )[ 0 ]; },
+		fetchObjectNavigationView : function () {
+			return Ext.ComponentQuery.query( 'objectnavigationview' )[ 0 ];
+		},
 
 		fetchParentTabPanel : function () {
-			var panel = this.up( '[isExtSpectTabPanel]' );
-			return panel;
+			return this.up( '[isExtSpectTabPanel]' );
 		},
 
 		fetchRootObject : function () {
@@ -30,11 +31,24 @@ Ext.define( 'extspect.view.ExtSpectDataList',
 			return rootObject;
 		},
 
+		// Prevents data from appearing unless you use callParent
+//		initialize : function () {
+//			var store = Ext.create( 'extspect.store.ExtSpectDataListStore' );
+//			store.setData( [
+//				Ext.create( 'extspect.model.row.RowRecord', { text : 'iniitialize' } )
+//			] );
+//			this.setStore( store );
+//			this.callParent( arguments );
+//		},
+
 		// ========== handlePainted
 
 		handlePainted : function () { this.computeAndSetData(); },
 
 		computeAndSetData : function () {
+			var previousStore = this.getStore();
+			if ( previousStore ) { Ext.StoreManager.unregister( previousStore ); }
+
 			this.determineAndSetIndexBar();
 			var recs = this.collectRowObjects();
 			var storeName = this.determineStoreName();
@@ -56,7 +70,7 @@ Ext.define( 'extspect.view.ExtSpectDataList',
 		// A config object is not an instance, nor is a RegEx
 		isInstance : function ( value ) {
 			var result =
-				(    ( value instanceof Object ) &&
+				(  ( value instanceof Object ) &&
 					( StringOf.constructorName( value ) !== '' ) &&
 					( !( value instanceof RegExp ) ) &&
 					( !( value instanceof HTMLElement ) ) && // many Ext.Loader.scriptElements
@@ -83,11 +97,9 @@ Ext.define( 'extspect.view.ExtSpectDataList',
 
 		htmlCollectionToArray : function ( collection ) {
 			var array = [];
-			for ( var len = collection.length , index = 0; index < len; index++ )
-			{ array.push( collection.item( index ) ); }
+			for ( var len = collection.length , index = 0; index < len; index++ ) { array.push( collection.item( index ) ); }
 			return array;
 		}
-
 	}
 );
 /*createComparisonFunction : function ( property )
@@ -126,7 +138,6 @@ Ext.define( 'extspect.view.ExtSpectDataList',
  }
  */
 
-
 /*
  // THIS WAS TEMPORARY, BUT USEFUL
  TraceClassRecords : function ( array )
@@ -142,4 +153,5 @@ Ext.define( 'extspect.view.ExtSpectDataList',
  }	}
  else
  {	Trace.vars( 'array', '[]' )
- }	}	}*/
+ }   }
+ }*/

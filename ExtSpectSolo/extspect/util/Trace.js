@@ -1,6 +1,7 @@
 Ext.define( 'extspect.util.Trace', { } );
 
-Trace = {};
+// 10/12 Trace = {};
+if ( !window.Trace ) { window.Trace = {} }
 
 Trace.ok = true;
 
@@ -14,15 +15,12 @@ Trace.diamondChar = String.fromCharCode( 0x2666 );
 
 Trace.start =
 	function ( value ) {
-		if ( Trace.ok )
-		{
+		if ( Trace.ok ) {
 			var argmnts;
 			var fnctn = this.callingFn();
-			if ( value )
-			{ value = this._Fd_fCallers$( fnctn ) + ' : ' + StringOf.to$( value );}
+			if ( value ) { value = this._Fd_fCallers$( fnctn ) + ' : ' + StringOf.to$( value );}
 			else {
-				if ( fnctn )
-				{
+				if ( fnctn ) {
 					argmnts = fnctn.arguments;
 					value = this._Call_fCallersNVs$( argmnts );
 				}
@@ -37,11 +35,9 @@ Trace.start._name = 'Trace.start';
 
 Trace.end =
 	function ( value, callingFn ) {
-		if ( Trace.ok )
-		{
+		if ( Trace.ok ) {
 			console.groupEnd();
-			if ( value )
-			{
+			if ( value ) {
 				callingFn = callingFn || this.callingFn();
 				var string = 'End : ' + this._SaV_fCallersVlu$( callingFn.arguments, value );
 				console.log( string );
@@ -59,8 +55,7 @@ Trace.end._name = 'Trace.end';
 
 Trace.vars =
 	function () {
-		if ( Trace.ok )
-		{
+		if ( Trace.ok ) {
 			console.log( Trace._A_fCallersNVs$( arguments ) );
 		}
 	};
@@ -77,11 +72,9 @@ Trace.callingFn._name = 'Trace.callingFn';
 Trace.callerFn =
 	function ( argmnts ) {
 		var fnctn;
-		if ( 'callee' in argmnts )
-		{
+		if ( 'callee' in argmnts ) {
 			var callee = argmnts.callee;
-			if ( 'caller' in callee )
-			{
+			if ( 'caller' in callee ) {
 				fnctn = callee.caller;
 			}
 		}
@@ -95,8 +88,7 @@ Trace.callerName =
 	function ( argmnts ) {
 		var name = StringOf.empty$;
 		var fnctn = Trace.callerFn( argmnts );
-		if ( fnctn )
-		{ name = StringOf.functionName( fnctn ); }
+		if ( fnctn ) { name = StringOf.functionName( fnctn ); }
 		return name;
 	};
 Trace.callerName._name = 'Trace.callerName';
@@ -107,8 +99,7 @@ Trace.callerName._name = 'Trace.callerName';
 
 Trace.functionArguments$ =
 	function ( fnctn ) {
-		if ( !( fnctn instanceof Function ) )
-		{
+		if ( !( fnctn instanceof Function ) ) {
 			console.error( this.functionArguments$._name + ', the following is not a function :', fnctn );
 			return null;
 		}
@@ -168,18 +159,14 @@ Trace.trimSpaces10$ =
 
 		// if the char at i is not in the list of whitespaces ,
 		//		string = string.substring( i ) , stop
-		for ( var i = 0; i < string.length; i++ )
-		{
-			if ( whiteSpaces$.indexOf( string.charAt( i ) ) === -1 )
-			{
+		for ( var i = 0; i < string.length; i++ ) {
+			if ( whiteSpaces$.indexOf( string.charAt( i ) ) === -1 ) {
 				string = string.substring( i );
 				break;
 			}
 		}
-		for ( i = string.length - 1; i >= 0; i-- )
-		{
-			if ( whiteSpaces$.indexOf( string.charAt( i ) ) === -1 )
-			{
+		for ( i = string.length - 1; i >= 0; i-- ) {
+			if ( whiteSpaces$.indexOf( string.charAt( i ) ) === -1 ) {
 				string = string.substring( 0, i + 1 );
 				break;
 			}
@@ -196,11 +183,9 @@ Trace.trimSpaces10$._name = 'StringOf.trimSpaces10$';
 
 Trace._Saf_name =
 	function ( $_argmnts__fnctn__null ) {
-		if ( typeof( $_argmnts__fnctn__null ) === 'string' )
-		{ return $_argmnts__fnctn__null;}
+		if ( typeof( $_argmnts__fnctn__null ) === 'string' ) { return $_argmnts__fnctn__null;}
 
-		if ( $_argmnts__fnctn__null === null )
-		{ return '_Saf_name=null'; }
+		if ( $_argmnts__fnctn__null === null ) { return '_Saf_name=null'; }
 
 		if ( 'callee' in $_argmnts__fnctn__null ) // input is an arguments object
 		{ return StringOf.functionName( $_argmnts__fnctn__null.callee );}
@@ -249,8 +234,7 @@ Trace._Call_fCallersNVs$ =
 		var len = argmnts.length;
 		var string = this._Fd_fCallers$( fnctn, depth );
 		var argNames = this.argumentNames( fnctn );
-		for ( var index = 0; index < len; index++ )
-		{ string += ', ' + argNames[ index ] + ' = ' + StringOf.to$( argmnts[ index ] ); }
+		for ( var index = 0; index < len; index++ ) { string += ', ' + argNames[ index ] + ' = ' + StringOf.to$( argmnts[ index ] ); }
 		return string;
 	};
 Trace._Call_fCallersNVs$._name = 'Trace._Call_fCallersNVs$';
@@ -261,8 +245,7 @@ Trace._Call_fCallersNVs$._name = 'Trace._Call_fCallersNVs$';
 
 Trace._Sad_fCallers$ =
 	function ( $_argmnts, depth ) {
-		if ( typeof( $_argmnts ) === 'string' )
-		{ return $_argmnts; }
+		if ( typeof( $_argmnts ) === 'string' ) { return $_argmnts; }
 
 		return this._Saf_name( $_argmnts );
 	};
@@ -283,11 +266,10 @@ Trace._SaV_fCallersVlu$._name = 'Trace._SaV_fCallersVlu$';
 Trace._A_fCallersNVs$ =
 	function ( argmnts ) {
 		var fnctn = argmnts.callee;
-		var len = argmnts.length ;
+		var len = argmnts.length;
 		var string = this._Fd_fCallers$( fnctn.caller );
 
-		for ( var index = 0; index < len; index++ )
-		{ string += ', ' + argmnts[ index ] + ' = ' + StringOf.to$( argmnts[ ++index ] ); }
+		for ( var index = 0; index < len; index++ ) { string += ', ' + argmnts[ index ] + ' = ' + StringOf.to$( argmnts[ ++index ] ); }
 		return string;
 	};
 Trace._A_fCallersNVs$._name = 'Trace._A_fCallersNVs$';

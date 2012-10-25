@@ -133,15 +133,15 @@ Ext.define( 'extspect.view.tree.datalist.TreeList',
 		},
 
 		handleItemTap : function ( dataview, index, element, record, event, object, eOptsObject ) {
-			Trace.start( this );
+			// Trace.start( this );
 
 			var value = record.data.value;
 			Trace.value = value;
-			console.log( 'TreeList#handleItemTap record = ', record );
+			// console.log( 'TreeList#handleItemTap record = ', record );
 
 			if ( value && value.isPropertyPointerWithValue )
 			{ value = value.fetchValue(); }
-			console.log( 'TreeList#handleItemTap value = ', value );
+			// console.log( 'TreeList#handleItemTap value = ', value );
 
 			if ( this.isInstance( value ) ) {
 				var objectNavigationView = this.fetchObjectNavigationView();
@@ -152,7 +152,7 @@ Ext.define( 'extspect.view.tree.datalist.TreeList',
 					' selected item not an instance :', value );
 			}
 
-			Trace.end();
+			// Trace.end();
 		}
 
 	}
