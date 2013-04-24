@@ -19,14 +19,16 @@ Ext.define( 'extspect.view.tree.datalist.PropertiesTree',
 
 		createRecTree : function ( object, parentRec, parentRecChildRecs ) {
 			if ( this.depth > 19 ) {
-				console.error( Ext.getDisplayName( arguments.callee ) + ': Exceeded depth = ' + this.depth );
+				console.error( Ext.getDisplayName( arguments.callee ) + 
+						': Exceeded depth = ' + this.depth );
 				debugger;
 			}
 			var rec;
 			// block repetition of an object in a branch
 			var nextObject = object;
 			if ( object.isPropertyPointerWithInstance ) { nextObject = object.fetchValue(); }
-			if ( this.branchObjects.indexOf( nextObject ) !== -1 ) { console.groupEnd( "STOP BRANCH " + StringOf.to$( nextObject ) ); }
+			if ( this.branchObjects.indexOf( nextObject ) !== -1 ) 
+			{ console.groupEnd( "STOP BRANCH " + StringOf.to$( nextObject ) ); }
 			else {
 				rec = this.createRec( object );
 				this.depth++;
@@ -43,7 +45,8 @@ Ext.define( 'extspect.view.tree.datalist.PropertiesTree',
 								StringOf.to$( rec ), rec );
 							debugger;
 						}
-						for ( var index = 0 , len = childRecs.length; index < len; index++ ) { parentRecChildRecs.push( childRecs[ index ] ); }
+						for ( var index = 0 , len = childRecs.length; index < len; index++ ) 
+						{ parentRecChildRecs.push( childRecs[ index ] ); }
 					}
 					else {
 						rec.children = childRecs;

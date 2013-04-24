@@ -11,7 +11,8 @@ Ext.define( 'extspect.view.tree.tabpanel.TreeTabPanel',
 			'extspect.view.tree.toolbar.ClassesTreeToolbar'
 		],
 
-		config : {    items : [
+		config : { 
+			items : [
 			{  title : 'Components',
 				items : [
 					{ xtype : 'componentstree' } ,

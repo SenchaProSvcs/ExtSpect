@@ -71,8 +71,7 @@ Ext.define( 'extspect.ExtSpect',
 		fetchObjectNavigationView : function () { return Ext.ComponentQuery.query( 'objectnavigationview' )[ 0 ]; },
 
 		fetchTreeNavigationView : function () { return Ext.ComponentQuery.query( 'treenavigationview' )[ 0 ];}
-	}
-);
+	});
 
 /* Notes for getUseTreeWithLines and getTreeIndentingChar
  Expect provides 2 options for showning trees in the left pane -
