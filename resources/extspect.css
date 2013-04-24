@@ -1,0 +1,74 @@
+body.x-desktop { font-size: 104%} /* For Mac Safari */
+
+/*
+    http://www.sencha.com/blog/whats-new-in-sencha-touch-21
+#es-extspect .x-dock-body,
+*/
+/* Experiemnts
+#es-extspect .x-list .x-list-disclosure, 2.2.0
+#es-extspect .x-list .x-list-item .inner-html, 2.2.0
+*/
+#es-extspect .x-list-item-label, /* 2.0.1.1 only */
+#es-extspect .x-list-item, /* for 2.0.1.1 only */
+#es-extspect .x-list-item-body/* for 2.1.1 only? */
+{	font-family: 'Arial Narrow', sans-serif;
+	line-height: 1em;
+	min-height: 1em;
+	/* height: 1em; */
+
+	border-top: 0;
+	border-bottom: 0;
+	padding-top: 0;
+	padding-bottom: 0;
+	margin-top: 0;
+	margin-bottom: 0;
+}
+
+/* THIS WORKS FINE IN 2.1.1
+BUT NOT SO WELL IN 2.0.1.1
+#es-extspect .x-list-item-body
+{	font-family: 'Arial Narrow', sans-serif;
+	line-height: 1em;
+	min-height: 1em;
+
+	border-top: 0;
+	border-bottom: 0;
+	padding-top: 0;
+	padding-bottom: 0;
+	margin-top: 0;
+	margin-bottom: 0;
+}
+*/
+
+/* THESE WORK IN 2.0.1.1
+#es-extspect .x-list-item-label,
+#es-extspect .x-list-item
+{	font-family: 'Arial Narrow', sans-serif;
+	line-height: 1.1em;
+	min-height: 1.1em;
+
+	border-top: 0;
+	border-bottom: 0;
+	padding-top: 0;
+	padding-bottom: 0;
+	margin-top: 0;
+	margin-bottom: 0;
+}
+
+THESE WORK IN 2.0.1.1
+#es-treenavigationview .x-list-item-label,
+#es-treenavigationview .x-list-item,
+#es-objectnavigationview .x-list-item-label,
+#es-objectnavigationview .x-list-item
+{
+    font-family: 'Arial Narrow', sans-serif;
+    line-height: 1.1em;
+    min-height: 1.1em;
+
+    border-top: 0;
+    border-bottom: 0;
+    padding-top: 0;
+    padding-bottom: 0;
+    margin-top: 0;
+    margin-bottom: 0;
+}
