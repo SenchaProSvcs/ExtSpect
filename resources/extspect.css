@@ -1,4 +1,4 @@
-body.x-desktop { font-size: 104%} /* For Mac Safari */
+body.x-desktop { font-size: 100%} /* For Mac Safari */
 
 /*
     http://www.sencha.com/blog/whats-new-in-sencha-touch-21
@@ -54,7 +54,9 @@ BUT NOT SO WELL IN 2.0.1.1
 	margin-top: 0;
 	margin-bottom: 0;
 }
+*/
 
+/*
 THESE WORK IN 2.0.1.1
 #es-treenavigationview .x-list-item-label,
 #es-treenavigationview .x-list-item,
@@ -72,3 +74,4 @@ THESE WORK IN 2.0.1.1
     margin-top: 0;
     margin-bottom: 0;
 }
+*/

@@ -7,8 +7,10 @@ Ext.define( 'ux.extspect.view.ExtSpectDataList',
 			itemTpl: '{text}',
 			rootObject: Ext.Viewport,
 			emptyText: "NO DATA",
+
 			useSimpleItems: true, // Touch 2.2.0
-			// useVariableHeights: true, // Touch 2.2.0
+			// variableHeights: true, // Touch 2.2.0
+			infinite: true, // Touch 2.2.0
 
 			itemHeight: 10, // added for Touch 2.1
 			// This becomes style="min-height:10px !important!" in the elements
@@ -110,7 +112,9 @@ Ext.define( 'ux.extspect.view.ExtSpectDataList',
 		}
 	}
 );
-/*createComparisonFunction : function ( property )
+
+/*
+createComparisonFunction : function ( property )
  {	var fnctn = function ( firstObject , secondObject )
  {	var firstValue = firstObject[ property ]
  var secondValue = secondObject[ property ]

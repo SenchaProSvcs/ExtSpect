@@ -1,4 +1,4 @@
-Ext.define('ux.extspect.view.tree.TreeNavigationView', {
+Ext.define( 'ux.extspect.view.tree.TreeNavigationView', {
 	extend: 'ux.extspect.view.ExtSpectNavigationView',
 	xtype: 'treenavigationview',
 	id: 'es-treenavigationview',
@@ -10,29 +10,30 @@ Ext.define('ux.extspect.view.tree.TreeNavigationView', {
 	showInstances: true,
 
 	config: {
-		items: [ {
-			xtype: 'treetabpanel'
-		} ]
+		items: [
+			{ xtype: 'treetabpanel' }
+		]
 	},
 
-	fetchDataLists: function() {
-		return this.query('[isExtSpectDataList=true]');
+	fetchDataLists: function () {
+		return this.query( '[isExtSpectDataList=true]' );
 	},
 
 	// A new object has appeared in the Object view
 	// Try to select it on the datalist in the tree
-	selectNewObject: function(newObject) {
+	selectNewObject: function ( newObject ) {
+		console.log( arguments.callee.displayName, newObject );
 		var dataLists = this.fetchDataLists();
-		for ( var index = 0, len = dataLists.length; index < len; index++) {
+		for ( var index = 0, len = dataLists.length; index < len; index++ ) {
 			var dataList = dataLists[index];
 			var store = dataList.getStore();
-			if (store) { // a list that is not visible mght not have a store
-				var record = store.findRecord("text", ux.extspect.util.StringOf.to$(newObject), 0, true);
-				if (record) {
+			if ( store ) { // a list that is not visible mght not have a store
+				var record = store.findRecord( "text", ux.extspect.util.StringOf.to$( newObject ), 0, true );
+				if ( record ) {
 					dataList.deselectAll();
-					dataList.select(record, false);
+					dataList.select( record, false );
 				}
 			}
 		}
 	}
-});
+} );
