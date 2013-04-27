@@ -1,5 +1,5 @@
-Ext.define( 'ux.extspect.object.rec.LeafRec',
-	{  extend : 'ux.extspect.object.rec.BaseRec',
+Ext.define( 'uxExtSpect.object.rec.LeafRec',
+	{  extend : 'uxExtSpect.object.rec.BaseRec',
 		properties : []
 	}
 );

@@ -1,5 +1,5 @@
-Ext.define( 'ux.extspect.view.tree.datalist.PropertiesTree',
-	{  extend : 'ux.extspect.view.tree.datalist.TreeList',
+Ext.define( 'uxExtSpect.view.tree.datalist.PropertiesTree',
+	{  extend : 'uxExtSpect.view.tree.datalist.TreeList',
 
 		collectRowObjects : function () {
 			var object = this.fetchRootObject();
@@ -27,7 +27,7 @@ Ext.define( 'ux.extspect.view.tree.datalist.PropertiesTree',
 			var nextObject = object;
 			if ( object.isPropertyPointerWithInstance ) { nextObject = object.fetchValue(); }
 			if ( this.branchObjects.indexOf( nextObject ) !== -1 ) {
-				console.groupEnd( "STOP BRANCH " + ux.extspect.util.StringOf.to$( nextObject ) );
+				console.groupEnd( "STOP BRANCH " + uxExtSpect.util.StringOf.to$( nextObject ) );
 			}
 			else {
 				rec = this.createRec( object );
@@ -93,7 +93,7 @@ Ext.define( 'ux.extspect.view.tree.datalist.PropertiesTree',
 			}
 			else {
 				if ( ( array.length > 0 ) && this.isInstance( array[0] ) ) {
-					var pointer = this.createPropertyPointer( parentObject, property, array, 'ux.extspect.object.pointer.PropertyPointerWithArray' );
+					var pointer = this.createPropertyPointer( parentObject, property, array, 'uxExtSpect.object.pointer.PropertyPointerWithArray' );
 					if ( pointer ) { this.createRecTree( pointer, parentRec, childRecs ); }
 				}
 			}
@@ -106,7 +106,7 @@ Ext.define( 'ux.extspect.view.tree.datalist.PropertiesTree',
 			}
 			else {
 				var pointer = this.createPropertyPointer( parentObject, property, value,
-					'ux.extspect.object.pointer.PropertyPointerWithInstance' );
+					'uxExtSpect.object.pointer.PropertyPointerWithInstance' );
 				if ( pointer ) { this.createRecTree( pointer, parentRec, childRecs ); }
 			}
 		},
@@ -114,7 +114,7 @@ Ext.define( 'ux.extspect.view.tree.datalist.PropertiesTree',
 		createPropertyPointer : function ( parentObject, property, value, pointerClassName ) {
 			var pointer;
 
-			var propertyCount = ux.extspect.util.StringOf.propertyCount( value );
+			var propertyCount = uxExtSpect.util.StringOf.propertyCount( value );
 			if ( propertyCount > 0 ) {
 				pointer = Ext.create( pointerClassName, {} );
 				pointer.object = parentObject;
@@ -139,58 +139,58 @@ Ext.define( 'ux.extspect.view.tree.datalist.PropertiesTree',
 		},
 
 		requires : [
-			'ux.extspect.object.rec.ApplicationRec' ,
-			'ux.extspect.object.rec.ComponentRec' ,
-			'ux.extspect.object.rec.ControllerRec' ,
-			'ux.extspect.object.rec.DispatcherRec' ,
-			'ux.extspect.object.rec.ExtElementRec' ,
-			'ux.extspect.object.rec.HtmlDocumentRec' ,
-			'ux.extspect.object.rec.HtmlElementRec' ,
-			'ux.extspect.object.rec.ModelRec' ,
-			'ux.extspect.object.rec.PropertyPointerRec' ,
-			'ux.extspect.object.pointer.PropertyPointerWithInstance' ,
-			'ux.extspect.object.pointer.PropertyPointerWithArray' ,
-			'ux.extspect.object.rec.ProxyRec' ,
-			'ux.extspect.object.rec.RouteRec' ,
-			'ux.extspect.object.rec.RouterRec'  ,
-			'ux.extspect.object.rec.SimpleObjectRec' ,
-			'ux.extspect.object.rec.StoreRec'  ,
-			'ux.extspect.object.rec.StoreManagerRec'
+			'uxExtSpect.object.rec.ApplicationRec' ,
+			'uxExtSpect.object.rec.ComponentRec' ,
+			'uxExtSpect.object.rec.ControllerRec' ,
+			'uxExtSpect.object.rec.DispatcherRec' ,
+			'uxExtSpect.object.rec.ExtElementRec' ,
+			'uxExtSpect.object.rec.HtmlDocumentRec' ,
+			'uxExtSpect.object.rec.HtmlElementRec' ,
+			'uxExtSpect.object.rec.ModelRec' ,
+			'uxExtSpect.object.rec.PropertyPointerRec' ,
+			'uxExtSpect.object.pointer.PropertyPointerWithInstance' ,
+			'uxExtSpect.object.pointer.PropertyPointerWithArray' ,
+			'uxExtSpect.object.rec.ProxyRec' ,
+			'uxExtSpect.object.rec.RouteRec' ,
+			'uxExtSpect.object.rec.RouterRec'  ,
+			'uxExtSpect.object.rec.SimpleObjectRec' ,
+			'uxExtSpect.object.rec.StoreRec'  ,
+			'uxExtSpect.object.rec.StoreManagerRec'
 		],
 
 		determineRecClassName : function ( object ) {
 			var recClassName;
-			if ( object.isPropertyPointerWithValue ) { recClassName = 'ux.extspect.object.rec.PropertyPointerRec'; }
+			if ( object.isPropertyPointerWithValue ) { recClassName = 'uxExtSpect.object.rec.PropertyPointerRec'; }
 			else {
 				if ( object.hasOwnProperty( "modelName" ) ) // $className
-				{ recClassName = 'ux.extspect.object.rec.ModelRec'; }
+				{ recClassName = 'uxExtSpect.object.rec.ModelRec'; }
 				else {
-					if ( object instanceof Ext.app.Application ) { recClassName = 'ux.extspect.object.rec.ApplicationRec'; }
+					if ( object instanceof Ext.app.Application ) { recClassName = 'uxExtSpect.object.rec.ApplicationRec'; }
 					else {
-						if ( object instanceof Ext.app.Controller ) { recClassName = 'ux.extspect.object.rec.ControllerRec'; }
+						if ( object instanceof Ext.app.Controller ) { recClassName = 'uxExtSpect.object.rec.ControllerRec'; }
 						else {
-							if ( object instanceof Ext.lib.Component ) { recClassName = 'ux.extspect.object.rec.ComponentRec'; }
+							if ( object instanceof Ext.lib.Component ) { recClassName = 'uxExtSpect.object.rec.ComponentRec'; }
 							else {
-								if ( object instanceof Ext.event.Dispatcher ) { recClassName = 'ux.extspect.object.rec.DispatcherRec'; }
+								if ( object instanceof Ext.event.Dispatcher ) { recClassName = 'uxExtSpect.object.rec.DispatcherRec'; }
 								else {
-									if ( object instanceof Ext.dom.Element ) { recClassName = 'ux.extspect.object.rec.ExtElementRec'; }
+									if ( object instanceof Ext.dom.Element ) { recClassName = 'uxExtSpect.object.rec.ExtElementRec'; }
 									else {
-										if ( object instanceof HTMLElement ) { recClassName = 'ux.extspect.object.rec.HtmlElementRec'; }
+										if ( object instanceof HTMLElement ) { recClassName = 'uxExtSpect.object.rec.HtmlElementRec'; }
 										else {
-											if ( object instanceof HTMLDocument ) { recClassName = 'ux.extspect.object.rec.HtmlDocumentRec'; }
+											if ( object instanceof HTMLDocument ) { recClassName = 'uxExtSpect.object.rec.HtmlDocumentRec'; }
 											else {
-												if ( object instanceof Ext.data.proxy.Proxy ) { recClassName = 'ux.extspect.object.rec.ProxyRec'; }
+												if ( object instanceof Ext.data.proxy.Proxy ) { recClassName = 'uxExtSpect.object.rec.ProxyRec'; }
 												else {
-													if ( object instanceof Ext.app.Route ) { recClassName = 'ux.extspect.object.rec.RouteRec'; }
+													if ( object instanceof Ext.app.Route ) { recClassName = 'uxExtSpect.object.rec.RouteRec'; }
 													else {
-														if ( object instanceof Ext.app.Router ) { recClassName = 'ux.extspect.object.rec.RouterRec'; }
+														if ( object instanceof Ext.app.Router ) { recClassName = 'uxExtSpect.object.rec.RouterRec'; }
 														else {
-															if ( object.isStore || ( object instanceof Ext.data.Store ) ) { recClassName = 'ux.extspect.object.rec.StoreRec'; }
+															if ( object.isStore || ( object instanceof Ext.data.Store ) ) { recClassName = 'uxExtSpect.object.rec.StoreRec'; }
 															else {
-																if ( object === Ext ) { recClassName = 'ux.extspect.object.rec.ExtRec'; }
+																if ( object === Ext ) { recClassName = 'uxExtSpect.object.rec.ExtRec'; }
 																else {
-																	if ( object instanceof Object ) { recClassName = 'ux.extspect.object.rec.SimpleObjectRec'; }
-																	else { recClassName = 'ux.extspect.object.rec.BaseRec'; }
+																	if ( object instanceof Object ) { recClassName = 'uxExtSpect.object.rec.SimpleObjectRec'; }
+																	else { recClassName = 'uxExtSpect.object.rec.BaseRec'; }
 																}
 															}
 														}

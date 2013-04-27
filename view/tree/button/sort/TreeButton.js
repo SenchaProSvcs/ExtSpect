@@ -1,5 +1,5 @@
-Ext.define( 'ux.extspect.view.tree.button.sort.TreeButton',
-	{  extend : 'ux.extspect.view.tree.button.TreeListToolbarButton',
+Ext.define( 'uxExtSpect.view.tree.button.sort.TreeButton',
+	{  extend : 'uxExtSpect.view.tree.button.TreeListToolbarButton',
 		xtype : 'treebutton',
 		config : {
 			text : 'Tree',

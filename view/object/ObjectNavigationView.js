@@ -1,13 +1,13 @@
-Ext.define('ux.extspect.view.object.ObjectNavigationView', {
-	extend: 'ux.extspect.view.ExtSpectNavigationView',
+Ext.define('uxExtSpect.view.object.ObjectNavigationView', {
+	extend: 'uxExtSpect.view.ExtSpectNavigationView',
 	xtype: 'objectnavigationview',
 	id: 'es-objectnavigationview',
-	dataListStoreName: 'ux.extspect.store.object.property.PropertiesListStore',
+	dataListStoreName: 'uxExtSpect.store.object.property.PropertiesListStore',
 
-	requires: [ 'ux.extspect.view.object.tabpanel.ArrayTabPanel',
-			'ux.extspect.view.object.tabpanel.CollectionTabPanel',
-			'ux.extspect.view.object.tabpanel.MixedCollectionTabPanel',
-			'ux.extspect.view.object.tabpanel.ExtObjectTabPanel' ],
+	requires: [ 'uxExtSpect.view.object.tabpanel.ArrayTabPanel',
+			'uxExtSpect.view.object.tabpanel.CollectionTabPanel',
+			'uxExtSpect.view.object.tabpanel.MixedCollectionTabPanel',
+			'uxExtSpect.view.object.tabpanel.ExtObjectTabPanel' ],
 
 	showOnlyOwnProperties: false,
 
@@ -33,7 +33,7 @@ Ext.define('ux.extspect.view.object.ObjectNavigationView', {
 			return false;
 		}
 
-		if (ux.extspect.util.StringOf.propertyCount(newObject) === 0) {
+		if (uxExtSpect.util.StringOf.propertyCount(newObject) === 0) {
 			return false;
 		}
 
@@ -45,7 +45,7 @@ Ext.define('ux.extspect.view.object.ObjectNavigationView', {
 
 	computeTitleString: function(object) {
 		var titleWidthInChars = this.getWidth() / 13;
-		return Ext.String.ellipsis(ux.extspect.util.StringOf.to$(object), titleWidthInChars, true);
+		return Ext.String.ellipsis(uxExtSpect.util.StringOf.to$(object), titleWidthInChars, true);
 	},
 
 	setStartObject: function(startObject) {
@@ -73,8 +73,8 @@ Ext.define('ux.extspect.view.object.ObjectNavigationView', {
 
 			var title = this.computeTitleString(newObject);
 
-			var tabPanelString = (newObject instanceof Ext.Base) ? 'ux.extspect.view.object.tabpanel.ExtObjectTabPanel'
-					: 'ux.extspect.view.object.tabpanel.InstanceTabPanel';
+			var tabPanelString = (newObject instanceof Ext.Base) ? 'uxExtSpect.view.object.tabpanel.ExtObjectTabPanel'
+					: 'uxExtSpect.view.object.tabpanel.InstanceTabPanel';
 			var tabPanel = Ext.create(tabPanelString);
 
 			tabPanel.setRootObject(newObject);
@@ -84,7 +84,7 @@ Ext.define('ux.extspect.view.object.ObjectNavigationView', {
 				layout: 'card'
 			});
 
-			var treeNavigationView = ux.extspect.instance.fetchTreeNavigationView();
+			var treeNavigationView = uxExtSpect.instance.fetchTreeNavigationView();
 			treeNavigationView.selectNewObject(newObject);
 
 			// TODO: Should refresh/update the current tree view
@@ -102,12 +102,12 @@ Ext.define('ux.extspect.view.object.ObjectNavigationView', {
 			this.pushNewPropertiesPanel(array[0]);
 		} else {
 			var previousObject = previousTabPanel.fetchRootObject();
-			var pointer = Ext.create('ux.extspect.object.pointer.PropertyPointer', {});
+			var pointer = Ext.create('uxExtSpect.object.pointer.PropertyPointer', {});
 			pointer.object = previousObject;
 			pointer.property = previousProperty;
 			this.setRootObject(pointer);
 
-			var newTabPanel = Ext.create(panelClass || 'ux.extspect.view.object.tabpanel.ArrayTabPanel');
+			var newTabPanel = Ext.create(panelClass || 'uxExtSpect.view.object.tabpanel.ArrayTabPanel');
 			newTabPanel.setRootObject(pointer);
 
 			// TODO: If you are drilling down thru an array of arrays, title$

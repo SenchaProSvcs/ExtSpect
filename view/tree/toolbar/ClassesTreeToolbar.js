@@ -1,9 +1,9 @@
-Ext.define( 'ux.extspect.view.tree.toolbar.ClassesTreeToolbar',
-	{  extend : 'ux.extspect.view.tree.toolbar.TreeListToolbar',
+Ext.define( 'uxExtSpect.view.tree.toolbar.ClassesTreeToolbar',
+	{  extend : 'uxExtSpect.view.tree.toolbar.TreeListToolbar',
 		xtype : 'classestreetoolbar',
 		requires : [
-			'ux.extspect.view.tree.button.show.InstancesButton' ,
-			'ux.extspect.view.tree.button.show.ClassesOnlyButton'
+			'uxExtSpect.view.tree.button.show.InstancesButton' ,
+			'uxExtSpect.view.tree.button.show.ClassesOnlyButton'
 		],
 
 		config : {    items : [

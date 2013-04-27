@@ -1,8 +1,8 @@
-Ext.define( 'ux.extspect.view.object.datalist.ArrayList',
-	{  extend : 'ux.extspect.view.object.datalist.PropertiesOrArrayList',
+Ext.define( 'uxExtSpect.view.object.datalist.ArrayList',
+	{  extend : 'uxExtSpect.view.object.datalist.PropertiesOrArrayList',
 		xtype : 'arraylist',
-		requires : 'ux.extspect.store.object.ArrayListStore',
-		storeName : 'ux.extspect.store.object.ArrayListStore',
+		requires : 'uxExtSpect.store.object.ArrayListStore',
+		storeName : 'uxExtSpect.store.object.ArrayListStore',
 
 		determineGroupedOk : function () { return false; },
 

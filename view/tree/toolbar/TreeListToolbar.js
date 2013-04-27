@@ -1,9 +1,9 @@
-Ext.define( 'ux.extspect.view.tree.toolbar.TreeListToolbar',
-	{  extend : 'ux.extspect.view.ExtSpectToolbar',
+Ext.define( 'uxExtSpect.view.tree.toolbar.TreeListToolbar',
+	{  extend : 'uxExtSpect.view.ExtSpectToolbar',
 		xtype : 'treelisttoolbar',
 		requires : [
-			'ux.extspect.view.tree.button.sort.TreeButton' ,
-			'ux.extspect.view.tree.button.sort.ListingButton'
+			'uxExtSpect.view.tree.button.sort.TreeButton' ,
+			'uxExtSpect.view.tree.button.sort.ListingButton'
 		]
 	}
 );

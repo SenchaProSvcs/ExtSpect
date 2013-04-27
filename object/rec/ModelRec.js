@@ -1,5 +1,5 @@
-Ext.define( 'ux.extspect.object.rec.ModelRec',
-	{  extend : 'ux.extspect.object.rec.BaseRec',
+Ext.define( 'uxExtSpect.object.rec.ModelRec',
+	{  extend : 'uxExtSpect.object.rec.BaseRec',
 		properties : ["associations" , "validations"] //getFields() getProxy()
 	}
 );

@@ -1,5 +1,5 @@
-Ext.define( 'ux.extspect.object.rec.HtmlDocumentRec',
-	{  extend : 'ux.extspect.object.rec.BaseRec',
+Ext.define( 'uxExtSpect.object.rec.HtmlDocumentRec',
+	{  extend : 'uxExtSpect.object.rec.BaseRec',
 		properties : []
 	}
 );

@@ -18,8 +18,8 @@
  TODO: We could also build a tree of constructors, only Ext does not chain them
  */
 
-Ext.define( 'ux.extspect.view.tree.datalist.ClassesTree',
-	{  extend : 'ux.extspect.view.tree.datalist.TreeList',
+Ext.define( 'uxExtSpect.view.tree.datalist.ClassesTree',
+	{  extend : 'uxExtSpect.view.tree.datalist.TreeList',
 		xtype : 'classestree',
 
 		createComponentRowObject : function ( component ) { return { object : component }; },
@@ -124,7 +124,7 @@ Ext.define( 'ux.extspect.view.tree.datalist.ClassesTree',
 		computeObjectString : function ( object ) {
 			if ( object.hasOwnProperty( "$className" ) )
 			{ return this.callParent( arguments ); }
-			else { return ux.extspect.util.StringOf.to$( object ); }
+			else { return uxExtSpect.util.StringOf.to$( object ); }
 		}
 	}
 );

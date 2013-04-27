@@ -1,5 +1,5 @@
-Ext.define( 'ux.extspect.object.rec.ApplicationRec',
-	{  extend : 'ux.extspect.object.rec.ControllerRec',
+Ext.define( 'uxExtSpect.object.rec.ApplicationRec',
+	{  extend : 'uxExtSpect.object.rec.ControllerRec',
 
 		properties : [
 			"_controllerInstances" ,

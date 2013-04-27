@@ -1,4 +1,4 @@
-Ext.define( 'ux.extspect.view.ExtSpectNavigationView',
+Ext.define( 'uxExtSpect.view.ExtSpectNavigationView',
 	{  extend : 'Ext.navigation.View',
 		isExtSpectNavigationView : true,
 		defaultIdPrefix : 'es-',

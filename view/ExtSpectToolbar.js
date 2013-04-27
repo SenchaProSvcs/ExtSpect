@@ -1,4 +1,4 @@
-Ext.define( 'ux.extspect.view.ExtSpectToolbar',
+Ext.define( 'uxExtSpect.view.ExtSpectToolbar',
 	{  extend : 'Ext.Toolbar',
 		isExtSpectToolbar : true,
 		requires : 'Ext.SegmentedButton',

@@ -1,3 +1,3 @@
-Ext.define( 'ux.extspect.store.object.ArrayListStore',
-	{  extend : 'ux.extspect.store.ExtSpectDataListStore' }
+Ext.define( 'uxExtSpect.store.object.ArrayListStore',
+	{  extend : 'uxExtSpect.store.ExtSpectDataListStore' }
 );

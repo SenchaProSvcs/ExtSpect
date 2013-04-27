@@ -1,5 +1,5 @@
-Ext.define( 'ux.extspect.object.rec.ProxyRec',
-	{  extend : 'ux.extspect.object.rec.BaseRec',
+Ext.define( 'uxExtSpect.object.rec.ProxyRec',
+	{  extend : 'uxExtSpect.object.rec.BaseRec',
 
 		listenerProperties : ["eventDispatcher" , "_listeners" , "managedListeners"]
 	}

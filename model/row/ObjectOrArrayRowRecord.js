@@ -1,5 +1,5 @@
-Ext.define( 'ux.extspect.model.row.ObjectOrArrayRowRecord',
-	{  extend : 'ux.extspect.model.row.RowRecord',
+Ext.define( 'uxExtSpect.model.row.ObjectOrArrayRowRecord',
+	{  extend : 'uxExtSpect.model.row.RowRecord',
 		config : {    fields : [
 			{    name : 'id',
 				type : 'auto'

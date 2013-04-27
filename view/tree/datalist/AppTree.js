@@ -1,8 +1,8 @@
-Ext.define( 'ux.extspect.view.tree.datalist.AppTree',
-	{  extend : 'ux.extspect.view.tree.datalist.PropertiesTree',
+Ext.define( 'uxExtSpect.view.tree.datalist.AppTree',
+	{  extend : 'uxExtSpect.view.tree.datalist.PropertiesTree',
 		xtype : 'apptree',
 
-		fetchRootObject : function () { return ux.extspect.instance.getApp(); },
+		fetchRootObject : function () { return uxExtSpect.instance.getApp(); },
 
 		computeAndSetData : function () {
 			if ( this.fetchRootObject() )

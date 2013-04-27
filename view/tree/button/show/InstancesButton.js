@@ -1,5 +1,5 @@
-Ext.define( 'ux.extspect.view.tree.button.show.InstancesButton',
-	{  extend : 'ux.extspect.view.tree.button.TreeListToolbarButton',
+Ext.define( 'uxExtSpect.view.tree.button.show.InstancesButton',
+	{  extend : 'uxExtSpect.view.tree.button.TreeListToolbarButton',
 		xtype : 'instancesbutton',
 		config : {    text : 'Instances',
 			handler : function () { this.showInstances(); }

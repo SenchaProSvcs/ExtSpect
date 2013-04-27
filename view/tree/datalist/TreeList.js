@@ -1,9 +1,9 @@
-Ext.define( 'ux.extspect.view.tree.datalist.TreeList',
-	{  extend: 'ux.extspect.view.ExtSpectDataList',
+Ext.define( 'uxExtSpect.view.tree.datalist.TreeList',
+	{  extend: 'uxExtSpect.view.ExtSpectDataList',
 		xtype: 'treelist',
 
 		requires: [
-			'ux.extspect.store.tree.ListingStore' , 'ux.extspect.store.tree.TreeListStore'
+			'uxExtSpect.store.tree.ListingStore' , 'uxExtSpect.store.tree.TreeListStore'
 		],
 		config: {
 			indexBar: false
@@ -91,19 +91,19 @@ Ext.define( 'ux.extspect.view.tree.datalist.TreeList',
 		computeRowObjectString: function ( object ) {
 			var depth = this.depth;
 			var counts = this.counts;
-			var string = ux.extspect.util.StringOf.to$( object );
+			var string = uxExtSpect.util.StringOf.to$( object );
 			counts[ counts.length - 1 ]++;
 			return this.fetchParentNavigationView().showListing ?
 				string :
-				(   ux.extspect.instance.getUseTreeWithLines() ?
+				(   uxExtSpect.instance.getUseTreeWithLines() ?
 					this.computeVerticalBars().join( '' ) + this.computeObjectString( object ) :
-					Ext.String.repeat( ux.extspect.instance.getTreeIndentingChar(), depth ) + string
+					Ext.String.repeat( uxExtSpect.instance.getTreeIndentingChar(), depth ) + string
 					);
 		},
 
 		computeObjectString: function ( object ) {
 			return '<span style="font-weight:bold">' +
-				ux.extspect.util.StringOf.to$( object ) + '</span>';
+				uxExtSpect.util.StringOf.to$( object ) + '</span>';
 		},
 
 		verticalBarChar: String.fromCharCode( 0x2503 ), // 0x2503 0x2502

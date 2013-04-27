@@ -1,5 +1,5 @@
-Ext.define( 'ux.extspect.view.object.tabpanel.CollectionTabPanel',
-	{  extend : 'ux.extspect.view.ExtSpectTabPanel',
+Ext.define( 'uxExtSpect.view.object.tabpanel.CollectionTabPanel',
+	{  extend : 'uxExtSpect.view.ExtSpectTabPanel',
 		xtype : 'collectiontabpanel',
 		isCollectionTabPanel : true,
 

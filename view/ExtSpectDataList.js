@@ -1,4 +1,4 @@
-Ext.define( 'ux.extspect.view.ExtSpectDataList',
+Ext.define( 'uxExtSpect.view.ExtSpectDataList',
 	{  extend: 'Ext.dataview.List',
 		isExtSpectDataList: true,
 		defaultIdPrefix: 'es-',
@@ -45,9 +45,9 @@ Ext.define( 'ux.extspect.view.ExtSpectDataList',
 
 		// Prevents data from appearing unless you use callParent
 //		initialize : function () {
-//			var store = Ext.create( 'ux.extspect.store.ExtSpectDataListStore' );
+//			var store = Ext.create( 'uxExtSpect.store.ExtSpectDataListStore' );
 //			store.setData( [
-//				Ext.create( 'ux.extspect.model.row.RowRecord', { text : 'iniitialize' } )
+//				Ext.create( 'uxExtSpect.model.row.RowRecord', { text : 'iniitialize' } )
 //			] );
 //			this.setStore( store );
 //			this.callParent( arguments );
@@ -83,10 +83,10 @@ Ext.define( 'ux.extspect.view.ExtSpectDataList',
 		isInstance: function ( value ) {
 			var result =
 				(  ( value instanceof Object ) &&
-					( ux.extspect.util.StringOf.constructorName( value ) !== '' ) &&
+					( uxExtSpect.util.StringOf.constructorName( value ) !== '' ) &&
 					( !( value instanceof RegExp ) ) &&
 					( !( value instanceof HTMLElement ) ) && // many Ext.Loader.scriptElements
-					( ux.extspect.util.StringOf.propertyCount( Object ) > 0 )
+					( uxExtSpect.util.StringOf.propertyCount( Object ) > 0 )
 					);
 			return result;
 		},

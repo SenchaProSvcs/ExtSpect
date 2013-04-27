@@ -1,9 +1,9 @@
-Ext.define( 'ux.extspect.store.ExtSpectDataListStore',
+Ext.define( 'uxExtSpect.store.ExtSpectDataListStore',
 	{  extend : 'Ext.data.Store',
-		requires : 'ux.extspect.model.row.RowRecord',
+		requires : 'uxExtSpect.model.row.RowRecord',
 		config : {
 			clearOnPageLoad : true,
-			model : 'ux.extspect.model.row.RowRecord'
+			model : 'uxExtSpect.model.row.RowRecord'
 		}
 	}
 );

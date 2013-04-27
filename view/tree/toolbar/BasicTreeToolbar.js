@@ -1,5 +1,5 @@
-Ext.define( 'ux.extspect.view.tree.toolbar.BasicTreeToolbar',
-	{  extend : 'ux.extspect.view.tree.toolbar.TreeListToolbar',
+Ext.define( 'uxExtSpect.view.tree.toolbar.BasicTreeToolbar',
+	{  extend : 'uxExtSpect.view.tree.toolbar.TreeListToolbar',
 		xtype : 'basictreetoolbar',
 
 		config : {    items : [

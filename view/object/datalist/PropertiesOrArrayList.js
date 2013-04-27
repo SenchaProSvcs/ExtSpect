@@ -1,7 +1,7 @@
 // dataview List explained p. 4-31
 
-Ext.define( 'ux.extspect.view.object.datalist.PropertiesOrArrayList',
-	{  extend: 'ux.extspect.view.ExtSpectDataList',
+Ext.define( 'uxExtSpect.view.object.datalist.PropertiesOrArrayList',
+	{  extend: 'uxExtSpect.view.ExtSpectDataList',
 
 		config: {
 			indexBar: true, // Ext.IndexBar
@@ -26,7 +26,7 @@ Ext.define( 'ux.extspect.view.object.datalist.PropertiesOrArrayList',
 		},
 
 		createRowObject: function ( value, id ) {
-			return { id: id, value: value, text: ux.extspect.util.StringOf.to$( value ) };
+			return { id: id, value: value, text: uxExtSpect.util.StringOf.to$( value ) };
 		},
 
 		// TODO: arg list for onItemDisclosure is WRONG in doc, BUG
@@ -41,12 +41,12 @@ Ext.define( 'ux.extspect.view.object.datalist.PropertiesOrArrayList',
 				( value instanceof Ext.util.HashMap ) ) {
 				value = this.extCollectionToArray( value );
 				navigationView.pushNewArrayPanel( value, id, parentTabPanel,
-					'ux.extspect.view.object.tabpanel.MixedCollectionTabPanel' );
+					'uxExtSpect.view.object.tabpanel.MixedCollectionTabPanel' );
 			}
 			else {
 				if ( value instanceof Ext.util.Collection ) {
 					navigationView.pushNewArrayPanel( value, id, parentTabPanel,
-						'ux.extspect.view.object.tabpanel.CollectionTabPanel' );
+						'uxExtSpect.view.object.tabpanel.CollectionTabPanel' );
 				}
 				else {
 					if ( value instanceof Array ) { navigationView.pushNewArrayPanel( value, id, parentTabPanel ); }

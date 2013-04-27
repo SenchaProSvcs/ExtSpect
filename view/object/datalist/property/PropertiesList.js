@@ -1,9 +1,9 @@
-Ext.define( 'ux.extspect.view.object.datalist.property.PropertiesList',
-	{  extend : 'ux.extspect.view.object.datalist.PropertiesOrArrayList',
+Ext.define( 'uxExtSpect.view.object.datalist.property.PropertiesList',
+	{  extend : 'uxExtSpect.view.object.datalist.PropertiesOrArrayList',
 		xtype : 'propertieslist',
 		requires : [
-			'ux.extspect.store.object.property.PropertiesListStore' ,
-			'ux.extspect.store.object.property.GroupedPropertiesListStore'
+			'uxExtSpect.store.object.property.PropertiesListStore' ,
+			'uxExtSpect.store.object.property.GroupedPropertiesListStore'
 		],
 		storeName : null,
 

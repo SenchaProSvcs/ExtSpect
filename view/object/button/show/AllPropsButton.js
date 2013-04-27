@@ -1,5 +1,5 @@
-Ext.define( 'ux.extspect.view.object.button.show.AllPropsButton',
-	{  extend : 'ux.extspect.view.object.button.PropertiesListToolbarButton',
+Ext.define( 'uxExtSpect.view.object.button.show.AllPropsButton',
+	{  extend : 'uxExtSpect.view.object.button.PropertiesListToolbarButton',
 		xtype : 'allpropertiesbutton',
 		config : {
 			text : 'All',

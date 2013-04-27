@@ -1,4 +1,4 @@
-Ext.define( 'ux.extspect.model.row.RowRecord',
+Ext.define( 'uxExtSpect.model.row.RowRecord',
 	{  extend : 'Ext.data.Model',
 
 		config : {

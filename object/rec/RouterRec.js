@@ -1,5 +1,5 @@
-Ext.define( 'ux.extspect.object.rec.RouterRec',
-	{  extend : 'ux.extspect.object.rec.BaseRec',
+Ext.define( 'uxExtSpect.object.rec.RouterRec',
+	{  extend : 'uxExtSpect.object.rec.BaseRec',
 
 		properties : [],
 		listenerProperties : ["_routes"]

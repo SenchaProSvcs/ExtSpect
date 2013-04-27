@@ -1,9 +1,9 @@
-Ext.define( 'ux.extspect.view.tree.toolbar.AppTreeToolbar',
-	{  extend : 'ux.extspect.view.tree.toolbar.TreeListToolbar',
+Ext.define( 'uxExtSpect.view.tree.toolbar.AppTreeToolbar',
+	{  extend : 'uxExtSpect.view.tree.toolbar.TreeListToolbar',
 		xtype : 'apptreetoolbar',
 		requires : [
-			'ux.extspect.view.tree.button.show.NoListenersButton' ,
-			'ux.extspect.view.tree.button.show.ListenersButton'
+			'uxExtSpect.view.tree.button.show.NoListenersButton' ,
+			'uxExtSpect.view.tree.button.show.ListenersButton'
 		],
 
 		config : {    items : [

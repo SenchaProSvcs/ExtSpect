@@ -1,5 +1,5 @@
-Ext.define( 'ux.extspect.view.object.datalist.property.ExtPropertiesList',
-	{  extend : 'ux.extspect.view.object.datalist.property.PropertiesList',
+Ext.define( 'uxExtSpect.view.object.datalist.property.ExtPropertiesList',
+	{  extend : 'uxExtSpect.view.object.datalist.property.PropertiesList',
 		xtype : 'extpropertieslist'
 	}
 );

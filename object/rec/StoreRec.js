@@ -1,8 +1,8 @@
 //TODO: usefull info about a store is the number of records, page size, and
 //scrolling page(? which page you are on )
 
-Ext.define( 'ux.extspect.object.rec.StoreRec',
-	{  extend : 'ux.extspect.object.rec.BaseRec',
+Ext.define( 'uxExtSpect.object.rec.StoreRec',
+	{  extend : 'uxExtSpect.object.rec.BaseRec',
 
 		properties : [
 			"_model" , "_proxy" // ?? "getRange"

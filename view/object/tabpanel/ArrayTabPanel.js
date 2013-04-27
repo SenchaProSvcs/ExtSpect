@@ -1,7 +1,7 @@
-Ext.define( 'ux.extspect.view.object.tabpanel.ArrayTabPanel',
-	{  extend : 'ux.extspect.view.ExtSpectTabPanel',
+Ext.define( 'uxExtSpect.view.object.tabpanel.ArrayTabPanel',
+	{  extend : 'uxExtSpect.view.ExtSpectTabPanel',
 		xtype : 'arraytabpanel',
-		requires : ['ux.extspect.view.object.datalist.ArrayList'],
+		requires : ['uxExtSpect.view.object.datalist.ArrayList'],
 
 		config : {
 			items : [

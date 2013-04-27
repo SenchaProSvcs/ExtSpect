@@ -1,43 +1,43 @@
-Ext.define( 'ux.extspect.util.StringOf', { } );
+Ext.define( 'uxExtSpect.util.StringOf', { } );
 
-// ---------- ux.extspect.util.StringOf constants
+// ---------- uxExtSpect.util.StringOf constants
 
-if ( !ux.extspect.util.StringOf ) { ux.extspect.util.StringOf = {} }
+if ( !uxExtSpect.util.StringOf ) { uxExtSpect.util.StringOf = {} }
 
-ux.extspect.util.StringOf.empty$ = '';
+uxExtSpect.util.StringOf.empty$ = '';
 
-// ux.extspect.util.StringOf.doubleQuoteChar = '"';
-ux.extspect.util.StringOf.leftDoubleQuoteChar = '"'; // String.fromCharCode( 0x201c )
-ux.extspect.util.StringOf.rightDoubleQuoteChar = '"'; //String.fromCharCode( 0x201d )
-ux.extspect.util.StringOf.leftSingleQuoteChar = "'"; // String.fromCharCode( 0x2018 )
-ux.extspect.util.StringOf.rightSingleQuoteChar = "'";// String.fromCharCode( 0x2019 )
+// uxExtSpect.util.StringOf.doubleQuoteChar = '"';
+uxExtSpect.util.StringOf.leftDoubleQuoteChar = '"'; // String.fromCharCode( 0x201c )
+uxExtSpect.util.StringOf.rightDoubleQuoteChar = '"'; //String.fromCharCode( 0x201d )
+uxExtSpect.util.StringOf.leftSingleQuoteChar = "'"; // String.fromCharCode( 0x2018 )
+uxExtSpect.util.StringOf.rightSingleQuoteChar = "'";// String.fromCharCode( 0x2019 )
 
-ux.extspect.util.StringOf.leftBrace$ = '{';		// String.fromCharCode( 0x276e )
-ux.extspect.util.StringOf.rightBrace$ = '}';     // String.fromCharCode( 0x276f )
+uxExtSpect.util.StringOf.leftBrace$ = '{';		// String.fromCharCode( 0x276e )
+uxExtSpect.util.StringOf.rightBrace$ = '}';     // String.fromCharCode( 0x276f )
 
 
-// ---------- ux.extspect.util.StringOf.class$
+// ---------- uxExtSpect.util.StringOf.class$
 
-ux.extspect.util.StringOf.class$ = function ( value ) {
-	return value.hasOwnProperty( "superclass" ) ? ux.extspect.util.StringOf.object$( value, '' ) : null;
+uxExtSpect.util.StringOf.class$ = function ( value ) {
+	return value.hasOwnProperty( "superclass" ) ? uxExtSpect.util.StringOf.object$( value, '' ) : null;
 };
-ux.extspect.util.StringOf.class$._name = 'ux.extspect.util.StringOf.class$';
+uxExtSpect.util.StringOf.class$._name = 'uxExtSpect.util.StringOf.class$';
 
-// ---------- ux.extspect.util.StringOf.ellipsis$
+// ---------- uxExtSpect.util.StringOf.ellipsis$
 
 // TODO: 50 needs to be a function of the width of the panel
 // Ext.Viewport.getWindowWidth() / 2
-// or ux.extspect.getColumnWidth()
-ux.extspect.util.StringOf.ellipsis$ = function ( string ) {
+// or uxExtSpect.getColumnWidth()
+uxExtSpect.util.StringOf.ellipsis$ = function ( string ) {
 	return Ext.String.ellipsis( string, 50, true );
 };
-ux.extspect.util.StringOf.ellipsis$._name = 'ux.extspect.util.StringOf.ellipsis$';
+uxExtSpect.util.StringOf.ellipsis$._name = 'uxExtSpect.util.StringOf.ellipsis$';
 
-// ---------- ux.extspect.util.StringOf.to$
+// ---------- uxExtSpect.util.StringOf.to$
 
-ux.extspect.util.StringOf.to$ = function ( value ) {
+uxExtSpect.util.StringOf.to$ = function ( value ) {
 	var typeString = typeof( value );
-	// console.log( 'ux.extspect.util.StringOf.to$ 0: ' + typeString , value );
+	// console.log( 'uxExtSpect.util.StringOf.to$ 0: ' + typeString , value );
 
 	if ( value === undefined ) { return 'undefined'; }
 
@@ -62,13 +62,13 @@ ux.extspect.util.StringOf.to$ = function ( value ) {
 
 	return this.object$( value, typeString );
 };
-ux.extspect.util.StringOf.to$._name = 'ux.extspect.util.StringOf.to$';
+uxExtSpect.util.StringOf.to$._name = 'uxExtSpect.util.StringOf.to$';
 
-// ---------- ux.extspect.util.StringOf.object$
+// ---------- uxExtSpect.util.StringOf.object$
 
-ux.extspect.util.StringOf.object$ = function ( object, typeString ) {
+uxExtSpect.util.StringOf.object$ = function ( object, typeString ) {
 	if ( !( object instanceof Object ) ) {
-		console.error( ux.extspect.util.StringOf.functionName( arguments.callee ) + ': object =', object );
+		console.error( uxExtSpect.util.StringOf.functionName( arguments.callee ) + ': object =', object );
 		debugger;
 	}
 	else {
@@ -77,7 +77,7 @@ ux.extspect.util.StringOf.object$ = function ( object, typeString ) {
 		if ( object.hasOwnProperty( "$className" ) ) {
 			dataString = this.lastPartOfName( object.$className || dataString, 2 );
 			// if ( ! object.hasOwnProperty( "superclass" ) ) Ext.Base
-			// {	console.warn( 'ux.extspect.util.StringOf.object$, $className but no superclass, ' , object ) }
+			// {	console.warn( 'uxExtSpect.util.StringOf.object$, $className but no superclass, ' , object ) }
 		}
 
 		typeString = object.type || typeString;
@@ -123,44 +123,44 @@ ux.extspect.util.StringOf.object$ = function ( object, typeString ) {
 		this.embrace$( typeString, dataString );
 	return string;
 };
-ux.extspect.util.StringOf.object$._name = 'ux.extspect.util.StringOf.object$';
+uxExtSpect.util.StringOf.object$._name = 'uxExtSpect.util.StringOf.object$';
 
-// ---------- ux.extspect.util.StringOf.quote$
+// ---------- uxExtSpect.util.StringOf.quote$
 
-ux.extspect.util.StringOf.quote$ = function ( dataString ) {
+uxExtSpect.util.StringOf.quote$ = function ( dataString ) {
 	return this.leftSingleQuoteChar + dataString + this.rightSingleQuoteChar;
 };
-ux.extspect.util.StringOf.quote$._name = 'ux.extspect.util.StringOf.quote$';
+uxExtSpect.util.StringOf.quote$._name = 'uxExtSpect.util.StringOf.quote$';
 
-// ---------- ux.extspect.util.StringOf.embrace$
+// ---------- uxExtSpect.util.StringOf.embrace$
 
-ux.extspect.util.StringOf.embrace$ = function ( typeString, dataString ) {
+uxExtSpect.util.StringOf.embrace$ = function ( typeString, dataString ) {
 	var string = this.leftBrace$ + dataString + this.rightBrace$;
 	if ( typeString ) { string = typeString + string;}
 	return string;
 };
-ux.extspect.util.StringOf.embrace$._name = 'ux.extspect.util.StringOf.embrace$';
+uxExtSpect.util.StringOf.embrace$._name = 'uxExtSpect.util.StringOf.embrace$';
 
-// ---------- ux.extspect.util.StringOf.element$
+// ---------- uxExtSpect.util.StringOf.element$
 
-ux.extspect.util.StringOf.element$ = function ( typeString, dataString ) {
+uxExtSpect.util.StringOf.element$ = function ( typeString, dataString ) {
 	return '&lt;' + typeString + ' ' + dataString + '&gt;';
 };
-ux.extspect.util.StringOf.element$._name = 'ux.extspect.util.StringOf.element$';
+uxExtSpect.util.StringOf.element$._name = 'uxExtSpect.util.StringOf.element$';
 
-// ---------- ux.extspect.util.StringOf.propertyCount
+// ---------- uxExtSpect.util.StringOf.propertyCount
 
-ux.extspect.util.StringOf.propertyCount = function ( object ) {
+uxExtSpect.util.StringOf.propertyCount = function ( object ) {
 	var count = 0;
 	for ( var property in object ) { count++; }
 	return count;
 };
-ux.extspect.util.StringOf.propertyCount._name = 'propertyCount.object$';
+uxExtSpect.util.StringOf.propertyCount._name = 'propertyCount.object$';
 
-// ---------- ux.extspect.util.StringOf.ownPropertyCount
+// ---------- uxExtSpect.util.StringOf.ownPropertyCount
 
 /*
- ux.extspect.util.StringOf.ownPropertyCount = function ( object )
+ uxExtSpect.util.StringOf.ownPropertyCount = function ( object )
  {	var count = 0
  for (	var property in object )
  {	if ( object.hasOwnProperty( property ) )
@@ -168,14 +168,14 @@ ux.extspect.util.StringOf.propertyCount._name = 'propertyCount.object$';
  }
  return count
  }
- ux.extspect.util.StringOf.ownPropertyCount._name = 'ownPropertyCount.object$'
+ uxExtSpect.util.StringOf.ownPropertyCount._name = 'ownPropertyCount.object$'
  */
 
-// ---------- ux.extspect.util.StringOf.objectData$
+// ---------- uxExtSpect.util.StringOf.objectData$
 
-ux.extspect.util.StringOf.to$_depth = 0;
+uxExtSpect.util.StringOf.to$_depth = 0;
 
-ux.extspect.util.StringOf.objectData$ = function ( object ) {
+uxExtSpect.util.StringOf.objectData$ = function ( object ) {
 	var propertyCount = 0;
 	var methodCount = 0;
 	var dataString = '';
@@ -195,17 +195,17 @@ ux.extspect.util.StringOf.objectData$ = function ( object ) {
 		if ( ( propertyCount <= 4 ) && ( propertyCount > 0 ) ) { dataString = this.objectProperties$( object ); }
 		else {
 			dataString = '...' + propertyCount + 'p/' + methodCount + 'm';
-			//	( methodCount ? ( 'p/' + methodCount + 'm' ) : ux.extspect.util.StringOf.empty$ )
+			//	( methodCount ? ( 'p/' + methodCount + 'm' ) : uxExtSpect.util.StringOf.empty$ )
 		}
 	}
 	this.to$_depth--;
 	return dataString;
 };
-ux.extspect.util.StringOf.objectData$._name = 'ux.extspect.util.StringOf.object$';
+uxExtSpect.util.StringOf.objectData$._name = 'uxExtSpect.util.StringOf.object$';
 
-// ---------- ux.extspect.util.StringOf.objectProperties$
+// ---------- uxExtSpect.util.StringOf.objectProperties$
 
-ux.extspect.util.StringOf.objectProperties$ = function ( object ) {
+uxExtSpect.util.StringOf.objectProperties$ = function ( object ) {
 	var string = '';
 	for ( var property in object ) {
 		var value = object[ property ];
@@ -215,13 +215,13 @@ ux.extspect.util.StringOf.objectProperties$ = function ( object ) {
 	string = this.ellipsis$( string );
 	return string;
 };
-ux.extspect.util.StringOf.objectProperties$._name = 'ux.extspect.util.StringOf.object2$';
+uxExtSpect.util.StringOf.objectProperties$._name = 'uxExtSpect.util.StringOf.object2$';
 
-// ---------- ux.extspect.util.StringOf.nodeType$
+// ---------- uxExtSpect.util.StringOf.nodeType$
 
 // domTraces.js
 
-ux.extspect.util.StringOf.nodeType$ = function ( nodeTypeInteger ) {
+uxExtSpect.util.StringOf.nodeType$ = function ( nodeTypeInteger ) {
 	switch ( nodeTypeInteger ) {
 		case Node.ELEMENT_NODE :
 			return 'ELEMENT_NODE';                                // 1
@@ -251,26 +251,26 @@ ux.extspect.util.StringOf.nodeType$ = function ( nodeTypeInteger ) {
 			return 'no nodeType_num';
 	}
 };
-ux.extspect.util.StringOf.nodeType$._name = 'ux.extspect.util.StringOf.nodeType$';
+uxExtSpect.util.StringOf.nodeType$._name = 'uxExtSpect.util.StringOf.nodeType$';
 
-// ---------- ux.extspect.util.StringOf.functionName
+// ---------- uxExtSpect.util.StringOf.functionName
 
-ux.extspect.util.StringOf.functionName = function ( fnctn ) {
+uxExtSpect.util.StringOf.functionName = function ( fnctn ) {
 	if ( !( fnctn instanceof Function ) ) {
-		console.error( 'ux.extspect.util.StringOf.functionName : fnctn = ', fnctn );
+		console.error( 'uxExtSpect.util.StringOf.functionName : fnctn = ', fnctn );
 		return null;
 	}
 	var name = fnctn.name || fnctn._name || fnctn.displayName || fnctn.$name || 'function';
-	return ux.extspect.util.StringOf.lastPartOfName( name );
+	return uxExtSpect.util.StringOf.lastPartOfName( name );
 };
-ux.extspect.util.StringOf.functionName._name = 'ux.extspect.util.StringOf.functionName';
+uxExtSpect.util.StringOf.functionName._name = 'uxExtSpect.util.StringOf.functionName';
 
-// ---------- ux.extspect.util.StringOf.constructorName
+// ---------- uxExtSpect.util.StringOf.constructorName
 
 // determine the typeString from the object's constuctor
 // The function name of a config = ''
 
-ux.extspect.util.StringOf.constructorName = function ( value ) {
+uxExtSpect.util.StringOf.constructorName = function ( value ) {
 	var fnctnName = null;
 	var fnctn = value.constructor;
 
@@ -288,13 +288,13 @@ ux.extspect.util.StringOf.constructorName = function ( value ) {
 	}
 	return fnctnName;
 };
-ux.extspect.util.StringOf.constructorName._name = 'ux.extspect.util.StringOf.determineConstructorName';
+uxExtSpect.util.StringOf.constructorName._name = 'uxExtSpect.util.StringOf.determineConstructorName';
 
-// ---------- ux.extspect.util.StringOf.lastPartOfName
+// ---------- uxExtSpect.util.StringOf.lastPartOfName
 
 // if the name contains dots , take the last part of the name
 
-ux.extspect.util.StringOf.lastPartOfName = function ( name, count, separator ) {
+uxExtSpect.util.StringOf.lastPartOfName = function ( name, count, separator ) {
 	if ( !separator ) { separator = '.';}
 	var index = name.lastIndexOf( separator );
 	if ( index > 4 ) {
@@ -307,11 +307,11 @@ ux.extspect.util.StringOf.lastPartOfName = function ( name, count, separator ) {
 	}
 	return name;
 };
-ux.extspect.util.StringOf.lastPartOfName._name = 'ux.extspect.util.StringOf.lastPartOfName';
+uxExtSpect.util.StringOf.lastPartOfName._name = 'uxExtSpect.util.StringOf.lastPartOfName';
 
-// ---------- ux.extspect.util.StringOf.array$
+// ---------- uxExtSpect.util.StringOf.array$
 
-ux.extspect.util.StringOf.array$ = function ( array ) {
+uxExtSpect.util.StringOf.array$ = function ( array ) {
 	var string;
 	var len = array.length;
 	if ( this.to$_depth > 0 ) { string = '[' + '...' + len; }
@@ -326,68 +326,68 @@ ux.extspect.util.StringOf.array$ = function ( array ) {
 	}
 	return string + ']';
 };
-ux.extspect.util.StringOf.array$._name = 'ux.extspect.util.StringOf.array$';
-// Array.map( ux.extspect.util.StringOf.to$ ) // Does not work with Arguments
+uxExtSpect.util.StringOf.array$._name = 'uxExtSpect.util.StringOf.array$';
+// Array.map( uxExtSpect.util.StringOf.to$ ) // Does not work with Arguments
 
 
-// ---------- ux.extspect.util.StringOf.date$
+// ---------- uxExtSpect.util.StringOf.date$
 
 // typeof( new Date ) -> 'object'
 
-ux.extspect.util.StringOf.date$ = function ( date ) {
+uxExtSpect.util.StringOf.date$ = function ( date ) {
 	if ( !date ) { date = this;}
 	return 'Date' + this.leftBrace$ +
 		date.getFullYear() + '.' +
 		( date.getMonth() + 1 ) + '.' +
 		date.getDate() + ' ' +
 		date.toLocaleTimeString() +
-		ux.extspect.util.StringOf.rightBrace$;
+		uxExtSpect.util.StringOf.rightBrace$;
 };
-ux.extspect.util.StringOf.date$._name = 'ux.extspect.util.StringOf.date$';
+uxExtSpect.util.StringOf.date$._name = 'uxExtSpect.util.StringOf.date$';
 
-// ---------- ux.extspect.util.StringOf.CONST
+// ---------- uxExtSpect.util.StringOf.CONST
 
-ux.extspect.util.StringOf.CONST = {};
+uxExtSpect.util.StringOf.CONST = {};
 
-ux.extspect.util.StringOf.CONST.KEY_BACKSPACE = 8;
-ux.extspect.util.StringOf.CONST.KEY_ENTER_RETURN = 13;
-ux.extspect.util.StringOf.CONST.KEY_PAUSE_BREAK = 19;
-ux.extspect.util.StringOf.CONST.KEY_CAPS_LOCK = 20;
-ux.extspect.util.StringOf.CONST.KEY_ESCAPE = 27;
-ux.extspect.util.StringOf.CONST.KEY_PAGE_UP = 33;
-ux.extspect.util.StringOf.CONST.KEY_PAGE_DOWN = 34;
-ux.extspect.util.StringOf.CONST.KEY_END = 35;
-ux.extspect.util.StringOf.CONST.KEY_HOME = 36;
-ux.extspect.util.StringOf.CONST.KEY_LEFT_ARW = 37;
-ux.extspect.util.StringOf.CONST.KEY_UP_ARW = 38;
-ux.extspect.util.StringOf.CONST.KEY_RIGHT_ARW = 39;
-ux.extspect.util.StringOf.CONST.KEY_DOWN_ARW = 40;
+uxExtSpect.util.StringOf.CONST.KEY_BACKSPACE = 8;
+uxExtSpect.util.StringOf.CONST.KEY_ENTER_RETURN = 13;
+uxExtSpect.util.StringOf.CONST.KEY_PAUSE_BREAK = 19;
+uxExtSpect.util.StringOf.CONST.KEY_CAPS_LOCK = 20;
+uxExtSpect.util.StringOf.CONST.KEY_ESCAPE = 27;
+uxExtSpect.util.StringOf.CONST.KEY_PAGE_UP = 33;
+uxExtSpect.util.StringOf.CONST.KEY_PAGE_DOWN = 34;
+uxExtSpect.util.StringOf.CONST.KEY_END = 35;
+uxExtSpect.util.StringOf.CONST.KEY_HOME = 36;
+uxExtSpect.util.StringOf.CONST.KEY_LEFT_ARW = 37;
+uxExtSpect.util.StringOf.CONST.KEY_UP_ARW = 38;
+uxExtSpect.util.StringOf.CONST.KEY_RIGHT_ARW = 39;
+uxExtSpect.util.StringOf.CONST.KEY_DOWN_ARW = 40;
 
-ux.extspect.util.StringOf.CONST.KEY_INSERT = 45;
-ux.extspect.util.StringOf.CONST.KEY_DELETE = 46;
+uxExtSpect.util.StringOf.CONST.KEY_INSERT = 45;
+uxExtSpect.util.StringOf.CONST.KEY_DELETE = 46;
 
-ux.extspect.util.StringOf.CONST.KEY_F1 = 112; 	// help
-ux.extspect.util.StringOf.CONST.KEY_F2 = 113; 	// info page
-ux.extspect.util.StringOf.CONST.KEY_F3 = 114;
-ux.extspect.util.StringOf.CONST.KEY_F4 = 115;
-ux.extspect.util.StringOf.CONST.KEY_F5 = 116; 	// index
-ux.extspect.util.StringOf.CONST.KEY_F6 = 117;	// table of contents
-ux.extspect.util.StringOf.CONST.KEY_F7 = 118;
-ux.extspect.util.StringOf.CONST.KEY_F8 = 119;
-ux.extspect.util.StringOf.CONST.KEY_F9 = 120;
-ux.extspect.util.StringOf.CONST.KEY_F10 = 121;
-ux.extspect.util.StringOf.CONST.KEY_F11 = 122;
-ux.extspect.util.StringOf.CONST.KEY_F12 = 123;
+uxExtSpect.util.StringOf.CONST.KEY_F1 = 112; 	// help
+uxExtSpect.util.StringOf.CONST.KEY_F2 = 113; 	// info page
+uxExtSpect.util.StringOf.CONST.KEY_F3 = 114;
+uxExtSpect.util.StringOf.CONST.KEY_F4 = 115;
+uxExtSpect.util.StringOf.CONST.KEY_F5 = 116; 	// index
+uxExtSpect.util.StringOf.CONST.KEY_F6 = 117;	// table of contents
+uxExtSpect.util.StringOf.CONST.KEY_F7 = 118;
+uxExtSpect.util.StringOf.CONST.KEY_F8 = 119;
+uxExtSpect.util.StringOf.CONST.KEY_F9 = 120;
+uxExtSpect.util.StringOf.CONST.KEY_F10 = 121;
+uxExtSpect.util.StringOf.CONST.KEY_F11 = 122;
+uxExtSpect.util.StringOf.CONST.KEY_F12 = 123;
 
-ux.extspect.util.StringOf.CONST.KEY_HOME_FN = 172;
-ux.extspect.util.StringOf.CONST.KEY_FAST_FORWARD = 176; 	// >>|
-ux.extspect.util.StringOf.CONST.KEY_FAST_RVERSE = 177; 	// |<<
-ux.extspect.util.StringOf.CONST.KEY_STOP = 178;
-ux.extspect.util.StringOf.CONST.KEY_START_PAUSE = 179; 	// >/||
+uxExtSpect.util.StringOf.CONST.KEY_HOME_FN = 172;
+uxExtSpect.util.StringOf.CONST.KEY_FAST_FORWARD = 176; 	// >>|
+uxExtSpect.util.StringOf.CONST.KEY_FAST_RVERSE = 177; 	// |<<
+uxExtSpect.util.StringOf.CONST.KEY_STOP = 178;
+uxExtSpect.util.StringOf.CONST.KEY_START_PAUSE = 179; 	// >/||
 
 /*
- ux.extspect.util.StringOf.CONST.KEY_FTAB				= 9;
- ux.extspect.util.StringOf.CONST.KEY_FSPACE			= 32;
+ uxExtSpect.util.StringOf.CONST.KEY_FTAB				= 9;
+ uxExtSpect.util.StringOf.CONST.KEY_FSPACE			= 32;
  Zero: { code: 48 , name: '0' } ,
  Semicolon: { code: 186 , name: ';' } ,
  Plus: { code: 187 , name: '+' } ,
@@ -399,7 +399,7 @@ ux.extspect.util.StringOf.CONST.KEY_START_PAUSE = 179; 	// >/||
  SingleQuote: { code: 222 , name: '\'' }
  */
 
-ux.extspect.util.StringOf.keyCode$ = function ( kyEvnt_num ) {
+uxExtSpect.util.StringOf.keyCode$ = function ( kyEvnt_num ) {
 	switch ( kyEvnt_num ) {
 		case this.CONST.KEY_BACKSPACE             :
 			return 'KEY_BACKSPACE';
@@ -469,4 +469,4 @@ ux.extspect.util.StringOf.keyCode$ = function ( kyEvnt_num ) {
 			return 'no_kyEvnt_num';
 	}
 };
-ux.extspect.util.StringOf.keyCode$._name = 'ux.extspect.util.StringOf.keyCode$';
+uxExtSpect.util.StringOf.keyCode$._name = 'uxExtSpect.util.StringOf.keyCode$';

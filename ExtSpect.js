@@ -1,14 +1,14 @@
-Ext.Loader.require( 'ux.extspect.util.StringOf' );
-Ext.Loader.require( 'ux.extspect.util.ExtspectString' );
+Ext.Loader.require( 'uxExtSpect.util.StringOf' );
+Ext.Loader.require( 'uxExtSpect.util.ExtspectString' );
 
-Ext.define( 'ux.extspect.ExtSpect',
+Ext.define( 'uxExtSpect.ExtSpect',
 	{  extend : 'Ext.Panel',
 		xtype : 'extspect',
 		id : 'es-extspect',
 		requires : [
-			'ux.extspect.view.object.ObjectNavigationView',
-			'ux.extspect.view.tree.TreeNavigationView' ,
-			'ux.extspect.object.rec.BaseRec'
+			'uxExtSpect.view.object.ObjectNavigationView',
+			'uxExtSpect.view.tree.TreeNavigationView' ,
+			'uxExtSpect.object.rec.BaseRec'
 		],
 
 		config : {
@@ -49,17 +49,18 @@ Ext.define( 'ux.extspect.ExtSpect',
 		},
 
 		constructor : function ( config ) {
-			ux.extspect.instance = this;
+			uxExtSpect.instance = this;
+			// uxExtSpect.instance = this;
 			this.callParent( arguments );
 		},
 
 		initialize : function () {
 			// this.callParent( arguments );
 
-			this.addCssLinkElement( 'ux/extspect/resources/extspect.css' );
+			this.addCssLinkElement( '../ux/extspect/resources/extspect.css' );
 
 			if ( !this.getApp() ) {
-				console.error( 'ux.extspect.initialize() did not receive a value for the config property app:' );
+				console.error( 'uxExtSpect.initialize() did not receive a value for the config property app:' );
 			}
 			// console.log( arguments.callee.displayName, 'this.getApp()=', this.getApp() );
 			// debugger;

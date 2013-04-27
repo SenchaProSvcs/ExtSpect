@@ -1,9 +1,9 @@
-Ext.define( 'ux.extspect.view.tree.TreeNavigationView', {
-	extend: 'ux.extspect.view.ExtSpectNavigationView',
+Ext.define( 'uxExtSpect.view.tree.TreeNavigationView', {
+	extend: 'uxExtSpect.view.ExtSpectNavigationView',
 	xtype: 'treenavigationview',
 	id: 'es-treenavigationview',
-	requires: [ 'ux.extspect.view.tree.tabpanel.TreeTabPanel' ],
-	dataListStoreName: 'ux.extspect.store.tree.TreeListStore',
+	requires: [ 'uxExtSpect.view.tree.tabpanel.TreeTabPanel' ],
+	dataListStoreName: 'uxExtSpect.store.tree.TreeListStore',
 
 	showListing: false,
 	showListeners: false,
@@ -28,7 +28,7 @@ Ext.define( 'ux.extspect.view.tree.TreeNavigationView', {
 			var dataList = dataLists[index];
 			var store = dataList.getStore();
 			if ( store ) { // a list that is not visible mght not have a store
-				var record = store.findRecord( "text", ux.extspect.util.StringOf.to$( newObject ), 0, true );
+				var record = store.findRecord( "text", uxExtSpect.util.StringOf.to$( newObject ), 0, true );
 				if ( record ) {
 					dataList.deselectAll();
 					dataList.select( record, false );

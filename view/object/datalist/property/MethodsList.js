@@ -1,8 +1,8 @@
-Ext.define( 'ux.extspect.view.object.datalist.property.MethodsList',
-	{  extend : 'ux.extspect.view.object.datalist.property.PropertiesList',
+Ext.define( 'uxExtSpect.view.object.datalist.property.MethodsList',
+	{  extend : 'uxExtSpect.view.object.datalist.property.PropertiesList',
 		xtype : 'methodlist',
 
-		storeName : 'ux.extspect.store.object.property.PropertiesListStore',
+		storeName : 'uxExtSpect.store.object.property.PropertiesListStore',
 		determineGroupedOk : function () { return false; }, // we do not group methods yet
 
 		isValueOk : function ( value, property ) { return ( value instanceof Function ); }

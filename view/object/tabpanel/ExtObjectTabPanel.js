@@ -1,11 +1,11 @@
-Ext.define( 'ux.extspect.view.object.tabpanel.ExtObjectTabPanel',
-	{  extend : 'ux.extspect.view.object.tabpanel.InstanceTabPanel',
+Ext.define( 'uxExtSpect.view.object.tabpanel.ExtObjectTabPanel',
+	{  extend : 'uxExtSpect.view.object.tabpanel.InstanceTabPanel',
 		xtype : 'extobjecttabpanel',
 
 		requires : [
-			'ux.extspect.view.object.datalist.property.ExtPropertiesList' ,
-			'ux.extspect.view.object.datalist.property.InternalList' ,
-			'ux.extspect.view.object.datalist.property.MethodsList'
+			'uxExtSpect.view.object.datalist.property.ExtPropertiesList' ,
+			'uxExtSpect.view.object.datalist.property.InternalList' ,
+			'uxExtSpect.view.object.datalist.property.MethodsList'
 		],
 
 		config : {    items : [

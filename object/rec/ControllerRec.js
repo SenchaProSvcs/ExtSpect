@@ -1,5 +1,5 @@
-Ext.define( 'ux.extspect.object.rec.ControllerRec',
-	{  extend : 'ux.extspect.object.rec.BaseRec',
+Ext.define( 'uxExtSpect.object.rec.ControllerRec',
+	{  extend : 'uxExtSpect.object.rec.BaseRec',
 
 		properties : ["_models" , "_stores" , "_views"],
 

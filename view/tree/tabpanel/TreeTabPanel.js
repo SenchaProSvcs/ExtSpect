@@ -1,14 +1,14 @@
-Ext.define( 'ux.extspect.view.tree.tabpanel.TreeTabPanel',
-	{  extend : 'ux.extspect.view.ExtSpectTabPanel',
+Ext.define( 'uxExtSpect.view.tree.tabpanel.TreeTabPanel',
+	{  extend : 'uxExtSpect.view.ExtSpectTabPanel',
 		xtype : 'treetabpanel',
 		requires : [
-			'ux.extspect.view.tree.datalist.ExtTree' ,
-			'ux.extspect.view.tree.datalist.AppTree' ,
-			'ux.extspect.view.tree.toolbar.AppTreeToolbar' ,
-			'ux.extspect.view.tree.datalist.ComponentsTree' ,
-			'ux.extspect.view.tree.toolbar.BasicTreeToolbar' ,
-			'ux.extspect.view.tree.datalist.ClassesTree' ,
-			'ux.extspect.view.tree.toolbar.ClassesTreeToolbar'
+			'uxExtSpect.view.tree.datalist.ExtTree' ,
+			'uxExtSpect.view.tree.datalist.AppTree' ,
+			'uxExtSpect.view.tree.toolbar.AppTreeToolbar' ,
+			'uxExtSpect.view.tree.datalist.ComponentsTree' ,
+			'uxExtSpect.view.tree.toolbar.BasicTreeToolbar' ,
+			'uxExtSpect.view.tree.datalist.ClassesTree' ,
+			'uxExtSpect.view.tree.toolbar.ClassesTreeToolbar'
 		],
 
 		config : {    items : [

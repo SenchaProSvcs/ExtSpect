@@ -4,7 +4,7 @@
  */
 // used in ObjectNavigationView#pushNewArrayPanel()
 
-Ext.define( 'ux.extspect.object.pointer.PropertyPointer',
+Ext.define( 'uxExtSpect.object.pointer.PropertyPointer',
 	{  defaultIdPrefix : 'es-pp-',
 
 		object : undefined,
@@ -12,6 +12,6 @@ Ext.define( 'ux.extspect.object.pointer.PropertyPointer',
 
 		fetchValue : function () { return this.object[ this.property ]; },
 
-		extspectString : function () { return ux.extspect.util.StringOf.to$( this.object ) + '.' + this.property; }
+		extspectString : function () { return uxExtSpect.util.StringOf.to$( this.object ) + '.' + this.property; }
 
 	} );

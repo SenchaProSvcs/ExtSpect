@@ -1,4 +1,4 @@
-Ext.define( 'ux.extspect.view.ExtSpectTabPanel',
+Ext.define( 'uxExtSpect.view.ExtSpectTabPanel',
 	{  extend : 'Ext.tab.Panel',
 		defaultIdPrefix : 'es-',
 		isExtSpectTabPanel : true,

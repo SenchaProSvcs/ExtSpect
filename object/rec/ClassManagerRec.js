@@ -1,6 +1,6 @@
 /*
-Ext.define ( 'ux.extspect.object.rec.ClassManagerRec' ,
-	{	extend : 'ux.extspect.object.rec.BaseRec' ,
+Ext.define ( 'uxExtSpect.object.rec.ClassManagerRec' ,
+	{	extend : 'uxExtSpect.object.rec.BaseRec' ,
 		properties : []
 		// classes maps
 		// createdListeners, namedCreatedListeners

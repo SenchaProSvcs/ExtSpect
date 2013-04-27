@@ -1,5 +1,5 @@
-Ext.define( 'ux.extspect.object.rec.ComponentRec',
-	{  extend : 'ux.extspect.object.rec.BaseRec',
+Ext.define( 'uxExtSpect.object.rec.ComponentRec',
+	{  extend : 'uxExtSpect.object.rec.BaseRec',
 		properties : []
 	}
 );

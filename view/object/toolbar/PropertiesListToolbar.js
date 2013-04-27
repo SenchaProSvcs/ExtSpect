@@ -1,12 +1,12 @@
-Ext.define( 'ux.extspect.view.object.toolbar.PropertiesListToolbar',
-	{  extend : 'ux.extspect.view.ExtSpectToolbar',
+Ext.define( 'uxExtSpect.view.object.toolbar.PropertiesListToolbar',
+	{  extend : 'uxExtSpect.view.ExtSpectToolbar',
 		xtype : 'propertieslisttoolbar',
 
 		requires : [
-			'ux.extspect.view.object.button.show.AllPropsButton' ,
-			'ux.extspect.view.object.button.show.OwnPropsButton' ,
-			'ux.extspect.view.object.button.sort.AlphaButton' ,
-			'ux.extspect.view.object.button.sort.GroupButton'
+			'uxExtSpect.view.object.button.show.AllPropsButton' ,
+			'uxExtSpect.view.object.button.show.OwnPropsButton' ,
+			'uxExtSpect.view.object.button.sort.AlphaButton' ,
+			'uxExtSpect.view.object.button.sort.GroupButton'
 		],
 
 		config : {    minWidth : '300', // BUG: this should not be necessary

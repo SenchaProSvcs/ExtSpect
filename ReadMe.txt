@@ -1,6 +1,8 @@
 MOVED THIS TO A UX FOLDER
-ux.extspect
-move StringOf to ux.extspect.util.StringOf
+uxExtSpect
+move StringOf to uxExtSpect.util.StringOf
+
+Note: this.addCssLinkElement( '../ux/extspect/resources/extspect.css' );
 
 Release notes for ExtSpect
 
@@ -24,7 +26,7 @@ For installation of ExtSpect as a plugin, there are 2 things that you must
 do, and a couple more optional choices.
 
 o The 'extspect' folder can be found inside the folder for the demo app,
-ExtSpectSolo, included in the zipped file. Copy only the 'ux.extspect' folder
+ExtSpectSolo, included in the zipped file. Copy only the 'uxExtSpect' folder
 to just inside your app's main folder, at the same level as your index.html file.
 
 o Somewhere inside the views that you build, add ExtSpect as a component.
@@ -38,7 +40,7 @@ with no quotes.
 
 Adding ExtSpect to your top level viewport would look like this:
 
-	Ext.Viewport.add( Ext.create( 'ux.extspect.ExtSpect', { app : MyApp.app } ) )
+	Ext.Viewport.add( Ext.create( 'uxExtSpect.ExtSpect', { app : MyApp.app } ) )
 
 As an item in a tab panel, it would look something like this:
 
@@ -51,7 +53,7 @@ sencha-touch-debug.js.
 
 The file that adds ExtSpect to a container must also declare
 
-	requires : [ 'ux.extspect.ExtSpect' ]
+	requires : [ 'uxExtSpect.ExtSpect' ]
 
 
 ========== USAGE

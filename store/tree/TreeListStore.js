@@ -1,7 +1,7 @@
-Ext.define( 'ux.extspect.store.tree.TreeListStore',
-	{  extend : 'ux.extspect.store.ExtSpectDataListStore',
+Ext.define( 'uxExtSpect.store.tree.TreeListStore',
+	{  extend : 'uxExtSpect.store.ExtSpectDataListStore',
 		config : { clearOnPageLoad : true,
-			model : 'ux.extspect.model.row.RowRecord'
+			model : 'uxExtSpect.model.row.RowRecord'
 		}
 	}
 );

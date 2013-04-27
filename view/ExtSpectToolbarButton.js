@@ -1,4 +1,4 @@
-Ext.define( 'ux.extspect.view.ExtSpectToolbarButton',
+Ext.define( 'uxExtSpect.view.ExtSpectToolbarButton',
 	{  extend : 'Ext.Button',
 		defaultIdPrefix : 'es-',
 

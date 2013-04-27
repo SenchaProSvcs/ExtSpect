@@ -1,5 +1,5 @@
-Ext.define( 'ux.extspect.view.object.tabpanel.FunctionTabPanel',
-	{  extend : 'ux.extspect.view.ExtSpectTabPanel',
+Ext.define( 'uxExtSpect.view.object.tabpanel.FunctionTabPanel',
+	{  extend : 'uxExtSpect.view.ExtSpectTabPanel',
 		xtype : 'functioncodetabpanel',
 	}
 );

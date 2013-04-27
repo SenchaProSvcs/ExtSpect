@@ -1,10 +1,10 @@
-Ext.define( 'ux.extspect.view.object.datalist.property.InternalList',
-	{  extend : 'ux.extspect.view.object.datalist.property.PropertiesList',
+Ext.define( 'uxExtSpect.view.object.datalist.property.InternalList',
+	{  extend : 'uxExtSpect.view.object.datalist.property.PropertiesList',
 		xtype : 'internallist',
-		requires : 'ux.extspect.store.object.property.InternalListStore',
+		requires : 'uxExtSpect.store.object.property.InternalListStore',
 		config : { indexBar : false },
 
-		storeName : 'ux.extspect.store.object.property.InternalListStore',
+		storeName : 'uxExtSpect.store.object.property.InternalListStore',
 
 		determineStoreName : function () {
 			var storeName = this.getGrouped() ?

@@ -1,5 +1,5 @@
-Ext.define( 'ux.extspect.view.tree.button.TreeListToolbarButton',
-	{   extend : 'ux.extspect.view.ExtSpectToolbarButton',
+Ext.define( 'uxExtSpect.view.tree.button.TreeListToolbarButton',
+	{   extend : 'uxExtSpect.view.ExtSpectToolbarButton',
 
 		showInstances : function () {
 			this.fetchParentNavigationView().showInstances = true;
@@ -24,14 +24,14 @@ Ext.define( 'ux.extspect.view.tree.button.TreeListToolbarButton',
 		showListing : function () {
 			var navigationView = this.fetchParentNavigationView();
 			navigationView.showListing = true;
-			navigationView.dataListStoreName = 'ux.extspect.store.tree.ListingStore';
+			navigationView.dataListStoreName = 'uxExtSpect.store.tree.ListingStore';
 			this.fetchDataList().computeAndSetData();
 		},
 
 		showTree : function () {
 			var navigationView = this.fetchParentNavigationView();
 			navigationView.showListing = false;
-			navigationView.dataListStoreName = 'ux.extspect.store.tree.TreeListStore';
+			navigationView.dataListStoreName = 'uxExtSpect.store.tree.TreeListStore';
 			this.fetchDataList().computeAndSetData();
 		}
 	}

@@ -1,5 +1,5 @@
-Ext.define( 'ux.extspect.object.rec.SimpleObjectRec',
-	{  extend : 'ux.extspect.object.rec.BaseRec',
+Ext.define( 'uxExtSpect.object.rec.SimpleObjectRec',
+	{  extend : 'uxExtSpect.object.rec.BaseRec',
 
 		fetchProperties : function () {
 			var properties = [];

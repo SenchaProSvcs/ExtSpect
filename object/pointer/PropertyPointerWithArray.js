@@ -1,5 +1,5 @@
-Ext.define( 'ux.extspect.object.pointer.PropertyPointerWithArray',
-	{  extend : 'ux.extspect.object.pointer.PropertyPointerWithValue',
+Ext.define( 'uxExtSpect.object.pointer.PropertyPointerWithArray',
+	{  extend : 'uxExtSpect.object.pointer.PropertyPointerWithValue',
 
 		isPropertyPointerWithArray : true,
 

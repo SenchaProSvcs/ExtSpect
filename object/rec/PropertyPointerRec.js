@@ -1,5 +1,5 @@
-Ext.define( 'ux.extspect.object.rec.PropertyPointerRec',
-	{  extend : 'ux.extspect.object.rec.BaseRec',
+Ext.define( 'uxExtSpect.object.rec.PropertyPointerRec',
+	{  extend : 'uxExtSpect.object.rec.BaseRec',
 		isPropertyPointerRec : true,
 		properties : ["value"]
 

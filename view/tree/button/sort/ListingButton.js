@@ -1,5 +1,5 @@
-Ext.define( 'ux.extspect.view.tree.button.sort.ListingButton',
-	{  extend : 'ux.extspect.view.tree.button.TreeListToolbarButton',
+Ext.define( 'uxExtSpect.view.tree.button.sort.ListingButton',
+	{  extend : 'uxExtSpect.view.tree.button.TreeListToolbarButton',
 		xtype : 'listingbutton',
 		config : {    text : 'Listing',
 			handler : function () { this.showListing(); }
