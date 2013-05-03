@@ -3,7 +3,8 @@ Ext.define( 'uxExtSpect.view.tree.datalist.TreeList',
 		xtype: 'treelist',
 
 		requires: [
-			'uxExtSpect.store.tree.ListingStore' , 'uxExtSpect.store.tree.TreeListStore'
+			'uxExtSpect.store.tree.ListingStore' ,
+			'uxExtSpect.store.tree.TreeListStore'
 		],
 		config: {
 			indexBar: false
@@ -15,6 +16,7 @@ Ext.define( 'uxExtSpect.view.tree.datalist.TreeList',
 		},
 
 		// TODO : Ext.ComponentManger.map has all the components
+		// Normally the root object is the Ext.Viewport
 		collectComponentRowObjects: function () {
 			var rootObject = this.fetchRootObject();
 			this.componentRecs = [];
@@ -24,6 +26,7 @@ Ext.define( 'uxExtSpect.view.tree.datalist.TreeList',
 				this.counts = [];
 				this.collectComponentRowObjects2( rootObject );
 			}
+			console.log( arguments.callee.displayName, this.componentRecs.length );
 			return this.componentRecs;
 		},
 
@@ -31,7 +34,7 @@ Ext.define( 'uxExtSpect.view.tree.datalist.TreeList',
 		collectComponentRowObjects2: function ( component, index_, len_ ) {
 			var newRowObject = this.createComponentRowObject( component );
 			this.componentRecs.push( newRowObject );
-			if ( "items" in component ) {
+			if ( "items" in component && !this.fetchIsClosed( component ) ) {
 				var collection = component.items;
 				var totalCount = collection.getCount();
 				if ( totalCount > 0 ) {
@@ -91,19 +94,23 @@ Ext.define( 'uxExtSpect.view.tree.datalist.TreeList',
 		computeRowObjectString: function ( object ) {
 			var depth = this.depth;
 			var counts = this.counts;
-			var string = uxExtSpect.util.StringOf.to$( object );
+			var objectString = uxExtSpect.util.StringOf.to$( object );
+			if ( this.fetchIsClosed( object ) ) {
+				objectString += ' +';
+			}
 			counts[ counts.length - 1 ]++;
 			return this.fetchParentNavigationView().showListing ?
-				string :
+				objectString :
 				(   uxExtSpect.instance.getUseTreeWithLines() ?
-					this.computeVerticalBars().join( '' ) + this.computeObjectString( object ) :
-					Ext.String.repeat( uxExtSpect.instance.getTreeIndentingChar(), depth ) + string
+					this.computeVerticalBars().join( '' ) + this.computeObjectString( object, objectString ) :
+					Ext.String.repeat( uxExtSpect.instance.getTreeIndentingChar(), depth ) + objectString
 					);
 		},
 
-		computeObjectString: function ( object ) {
+		computeObjectString: function ( object, objectString ) {
 			return '<span style="font-weight:bold">' +
-				uxExtSpect.util.StringOf.to$( object ) + '</span>';
+				// uxExtSpect.util.StringOf.to$( object )
+				objectString + '</span>';
 		},
 
 		verticalBarChar: String.fromCharCode( 0x2503 ), // 0x2503 0x2502
@@ -139,13 +146,13 @@ Ext.define( 'uxExtSpect.view.tree.datalist.TreeList',
 			this.setIndexBar( isListing );
 		},
 
-		handleItemTap: function ( dataview, index, element, record, event, object, eOptsObject ) {
-
+		handleSingleItemTap: function ( dataview, index, listItem, record, mouseEvent, obj, eOptsObject ) {
+			console.log( arguments.callee.displayName, arguments );
+			console.log( arguments.callee.displayName, record );
 			var value = record.data.value;
-			// console.log( 'TreeList#handleItemTap record = ', record );
+			console.log( arguments.callee.displayName, value.id || value.$className );
 
 			if ( value && value.isPropertyPointerWithValue ) { value = value.fetchValue(); }
-			// console.log( 'TreeList#handleItemTap value = ', value );
 
 			if ( this.isInstance( value ) ) {
 				var objectNavigationView = this.fetchObjectNavigationView();
@@ -155,8 +162,44 @@ Ext.define( 'uxExtSpect.view.tree.datalist.TreeList',
 				console.warn( Ext.displayName( arguments.callee ) +
 					' selected item not an instance :', value );
 			}
+		},
 
+		fetchIsClosedObject: function ( object ) {
+			var isClosedObject = object.extSpectisClosedObject;
+			return isClosedObject
+		},
+
+		fetchIsClosed: function ( object ) {
+			var isClosedObject = this.fetchIsClosedObject( object );
+			var listId = this.id;
+			if ( !isClosedObject ) {
+				object.extSpectisClosedObject = {}
+				object.extSpectisClosedObject[listId] = false;
+				isClosedObject = object.extSpectisClosedObject;
+			}
+			var isClosed = isClosedObject[ listId ];
+			// console.log( arguments.callee.displayName, object.id, isClosed );
+			// console.log( arguments.callee.displayName, "isClosedObject=", isClosedObject );
+			return isClosed;
+		},
+
+		assignIsClosed: function ( object, bool ) {
+			// console.log( arguments.callee.displayName, "bool=", bool );
+			var isClosedObject = this.fetchIsClosedObject( object );
+			// console.log( arguments.callee.displayName, "isClosedObject=", isClosedObject );
+			isClosedObject[ this.id ] = bool;
+			console.log( arguments.callee.displayName, "isClosedObject=", isClosedObject );
+		},
+
+		handleDoubleItemtap: function ( dataview, index, listItem, record, mouseEvent, obj, eOptsObject ) {
+			console.log( arguments.callee.displayName, arguments );
+			var object = record.data.value
+			var isClosed = this.fetchIsClosed( object );
+			console.log( arguments.callee.displayName, object.id || object.$className );
+			// console.log( arguments.callee.displayName, dataview.id );
+			console.log( arguments.callee.displayName, "isClosed=", isClosed );
+			this.assignIsClosed( object, !isClosed );
+			this.computeAndSetData();
+			this.handleSingleItemTap( dataview, index, listItem, record, mouseEvent, obj, eOptsObject );
 		}
-
 	} );
-

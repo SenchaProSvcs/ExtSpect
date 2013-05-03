@@ -22,7 +22,7 @@ Ext.define( 'uxExtSpect.view.tree.TreeNavigationView', {
 	// A new object has appeared in the Object view
 	// Try to select it on the datalist in the tree
 	selectNewObject: function ( newObject ) {
-		console.log( arguments.callee.displayName, newObject );
+		// console.log( arguments.callee.displayName, "newObject=", newObject );
 		var dataLists = this.fetchDataLists();
 		for ( var index = 0, len = dataLists.length; index < len; index++ ) {
 			var dataList = dataLists[index];

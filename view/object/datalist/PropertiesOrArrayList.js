@@ -30,7 +30,7 @@ Ext.define( 'uxExtSpect.view.object.datalist.PropertiesOrArrayList',
 		},
 
 		// TODO: arg list for onItemDisclosure is WRONG in doc, BUG
-		handleItemTap: function ( dataview, index, element, record, event, object, eOptsObject ) {
+		handleSingleItemTap: function ( dataview, index, element, record, event, object, eOptsObject ) {
 			var value = record.data.value;
 
 			var id = record.data.id;

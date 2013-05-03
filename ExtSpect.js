@@ -2,44 +2,48 @@ Ext.Loader.require( 'uxExtSpect.util.StringOf' );
 Ext.Loader.require( 'uxExtSpect.util.ExtspectString' );
 
 Ext.define( 'uxExtSpect.ExtSpect',
-	{  extend : 'Ext.Panel',
-		xtype : 'extspect',
-		id : 'es-extspect',
-		requires : [
+	{  extend: 'Ext.Panel',
+		xtype: 'extspect',
+		id: 'es-extspect',
+		requires: [
 			'uxExtSpect.view.object.ObjectNavigationView',
 			'uxExtSpect.view.tree.TreeNavigationView' ,
 			'uxExtSpect.object.rec.BaseRec'
 		],
 
-		config : {
+		config: {
 			// iconCls, iconMask and title are here in case the view is used inside a tab panel
-			iconCls : 'search',
-			iconMask : true,
-			title : 'ExtSpect',
-			app:undefined,
+			iconCls: 'search',
+			iconMask: true,
+			title: 'ExtSpect',
+			app: undefined,
 
-			flex : 1,
-
-			items : [
-				{  xtype : 'container',
-					layout : { type : 'hbox' },
-					items : [
-						{ xtype : 'treenavigationview' } ,
-						{ xtype : 'objectnavigationview' }
+			items: [
+				{  xtype: 'container',
+					layout: { type: 'hbox' },
+					items: [
+						{ xtype: 'treenavigationview' } ,
+						{ xtype: 'objectnavigationview' }
 					]
 				}
 			],
 
 			// The top/starting object in the tree views
-			rootObject : Ext.Viewport,
+			rootObject: Ext.Viewport,
 
-			useTreeWithLines : true, // see note below
-			treeIndentingChar : '&ensp;'  // &emsp; &ensp; &nbsp;
+			useTreeWithLines: true, // see note below
+			treeIndentingChar: '&ensp;'  // &emsp; &ensp; &nbsp;
+		},
+
+		constructor: function ( config ) {
+			uxExtSpect.instance = this;
+			// uxExtSpect.instance = this;
+			this.callParent( arguments );
 		},
 
 		// Add a CSS link to the document
 		// <link type = "text/css" rel = "stylesheet" href = "....css">
-		addCssLinkElement : function ( href ) {
+		addCssLinkElement: function ( href ) {
 			// console.log( arguments.callee.displayName, href);
 			var linkElement = document.createElement( 'link' );
 			linkElement.type = 'text/css';
@@ -48,16 +52,18 @@ Ext.define( 'uxExtSpect.ExtSpect',
 			document.head.appendChild( linkElement );
 		},
 
-		constructor : function ( config ) {
-			uxExtSpect.instance = this;
-			// uxExtSpect.instance = this;
-			this.callParent( arguments );
+		addCssFile: function ( fileName ) {
+			var path = Ext.Loader.getPath( 'uxExtSpect.ExtSpect' );
+			var index = path.indexOf( 'ExtSpect.js' );
+			path = path.substring( 0, index ) + 'resources/' + fileName;
+			// console.log( arguments.callee.displayName, index, path );
+			this.addCssLinkElement( path );
 		},
 
-		initialize : function () {
+		initialize: function () {
 			// this.callParent( arguments );
 
-			this.addCssLinkElement( '../ux/extspect/resources/extspect.css' );
+			this.addCssFile( 'extspect.css' );
 
 			if ( !this.getApp() ) {
 				console.error( 'uxExtSpect.initialize() did not receive a value for the config property app:' );
@@ -70,11 +76,11 @@ Ext.define( 'uxExtSpect.ExtSpect',
 			}
 		},
 
-		fetchObjectNavigationView : function () {
+		fetchObjectNavigationView: function () {
 			return Ext.ComponentQuery.query( 'objectnavigationview' )[ 0 ];
 		},
 
-		fetchTreeNavigationView : function () {
+		fetchTreeNavigationView: function () {
 			return Ext.ComponentQuery.query( 'treenavigationview' )[ 0 ];
 		}
 	}

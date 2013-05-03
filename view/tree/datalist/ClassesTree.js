@@ -19,12 +19,12 @@
  */
 
 Ext.define( 'uxExtSpect.view.tree.datalist.ClassesTree',
-	{  extend : 'uxExtSpect.view.tree.datalist.TreeList',
-		xtype : 'classestree',
+	{  extend: 'uxExtSpect.view.tree.datalist.TreeList',
+		xtype: 'classestree',
 
-		createComponentRowObject : function ( component ) { return { object : component }; },
+		createComponentRowObject: function ( component ) { return { object: component }; },
 
-		collectRowObjects : function () {
+		collectRowObjects: function () {
 			var componentRecs = this.collectComponentRowObjects(); // @ TreeList
 
 			if ( componentRecs.length > 0 ) {
@@ -32,11 +32,13 @@ Ext.define( 'uxExtSpect.view.tree.datalist.ClassesTree',
 				this.rowObjects = [];
 				this.buildFinalRowObjects( this.baseClassRec );
 			}
-			else { this.rowObjects = []; }
+			else {
+				this.rowObjects = [];
+			}
 			return this.rowObjects;
 		},
 
-		collectClassRowObjects : function ( componentRecs ) {
+		collectClassRowObjects: function ( componentRecs ) {
 			var classRecs = [];
 			var classRec , instanceRec , instance;
 			var showInstancesOk = this.fetchParentNavigationView().showInstances;
@@ -48,30 +50,26 @@ Ext.define( 'uxExtSpect.view.tree.datalist.ClassesTree',
 
 				var pos = this.findItemPos( templateClass, "object", classRecs );
 				if ( pos === -1 ) {
-					classRec = { object : templateClass };
-					classRecs.push( classRec );;
-					if ( showInstancesOk )
-					{ classRec.instanceRecs = [instanceRec]; }
+					classRec = { object: templateClass };
+					classRecs.push( classRec );
+					;
+					if ( showInstancesOk ) { classRec.instanceRecs = [instanceRec]; }
 				}
 				else {
 					classRec = classRecs[ pos ];
-					if ( showInstancesOk )
-					{ classRec.instanceRecs.push( instanceRec ); }
+					if ( showInstancesOk ) { classRec.instanceRecs.push( instanceRec ); }
 				}
 
 				var superClass = templateClass.superclass;
-				if ( superClass )
-				{ this.processSuperClass( superClass, classRec, classRecs ); }
+				if ( superClass ) { this.processSuperClass( superClass, classRec, classRecs ); }
 			}
 			return classRecs;
 		},
 
-		processSuperClass : function ( superClass, classRec, classRecs ) {
-			if ( superClass )
-			{
+		processSuperClass: function ( superClass, classRec, classRecs ) {
+			if ( superClass ) {
 				var pos = this.findItemPos( superClass, "object", classRecs );
-				if ( pos === -1 )
-				{ this.addNewRowObject4SuperClass( superClass, classRec, classRecs ); }
+				if ( pos === -1 ) { this.addNewRowObject4SuperClass( superClass, classRec, classRecs ); }
 				else {
 					var superClassRec = classRecs[ pos ];
 					this.addSubClassToClassRowObject( classRec, superClassRec );
@@ -79,23 +77,20 @@ Ext.define( 'uxExtSpect.view.tree.datalist.ClassesTree',
 			}
 		},
 
-		addSubClassToClassRowObject : function ( classRec, superClassRec ) {
+		addSubClassToClassRowObject: function ( classRec, superClassRec ) {
 			if ( !superClassRec.subClassRecs ) { superClassRec.subClassRecs = []; }
 			var subClassRecs = superClassRec.subClassRecs;
-			if ( subClassRecs.indexOf( classRec ) === -1 )
-			{ subClassRecs.push( classRec ); }
+			if ( subClassRecs.indexOf( classRec ) === -1 ) { subClassRecs.push( classRec ); }
 		},
 
-		addNewRowObject4SuperClass : function ( newTemplateClass, subClassRec, classRecs ) {
-			var newRec = { object : newTemplateClass, subClassRecs : [subClassRec], instanceRecs : [] };
+		addNewRowObject4SuperClass: function ( newTemplateClass, subClassRec, classRecs ) {
+			var newRec = { object: newTemplateClass, subClassRecs: [subClassRec], instanceRecs: [] };
 			classRecs.push( newRec );
 
 			var superClass = newTemplateClass.superclass;
-			if ( superClass )
-			{ this.processSuperClass( superClass, newRec, classRecs ); }
+			if ( superClass ) { this.processSuperClass( superClass, newRec, classRecs ); }
 			else {
-				if ( newTemplateClass.$className === 'Ext.Base' )
-				{  this.baseClassRec = newRec; }
+				if ( newTemplateClass.$className === 'Ext.Base' ) { this.baseClassRec = newRec; }
 			}
 		},
 
@@ -107,24 +102,27 @@ Ext.define( 'uxExtSpect.view.tree.datalist.ClassesTree',
 		//	{ text : string , value : templateClassObject }
 		//	We store this array in this.rowObjects for collectRowObjects to return
 
-		buildFinalRowObject2 : function ( classRec, index, forEachArray ) {
+		buildFinalRowObject2: function ( classRec, index, forEachArray ) {
 			this.rowObjects.push( this.createRowObject( classRec ) );
 			var array = ( classRec.subClassRecs || [] ).concat( classRec.instanceRecs || [] );
 			this.addNewRowObjects( array );
 		},
 
 		// in an array of objects, return the index of the first object that has value in property
-		findItemPos : function ( value, property, array ) {
-			for ( var len = array.length , index = 0; index < len; index++ )
-			{  if ( array[ index ][ property ] === value ) { return index; }
+		findItemPos: function ( value, property, array ) {
+			for ( var len = array.length , index = 0; index < len; index++ ) {
+				if ( array[ index ][ property ] === value ) { return index; }
 			}
 			return -1;
 		},
 
-		computeObjectString : function ( object ) {
-			if ( object.hasOwnProperty( "$className" ) )
-			{ return this.callParent( arguments ); }
-			else { return uxExtSpect.util.StringOf.to$( object ); }
+		computeObjectString: function ( object, objectString ) {
+			if ( object.hasOwnProperty( "$className" ) ) {
+				return this.callParent( arguments );
+			}
+			else {
+				return objectString; // uxExtSpect.util.StringOf.to$( object );
+			}
 		}
 	}
 );

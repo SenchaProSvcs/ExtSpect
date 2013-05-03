@@ -20,7 +20,8 @@ Ext.define( 'uxExtSpect.view.ExtSpectDataList',
 			// itemCls:'es-list-item', // Touch 2.1
 
 			listeners: {
-				itemtap: function () { this.handleItemTap.apply( this, arguments ); },
+				itemsingletap: function () { this.handleSingleItemTap.apply( this, arguments ); },
+				itemdoubletap: function () { this.handleDoubleItemtap.apply( this, arguments ); },
 				painted: function () { this.handlePainted.apply( this, arguments ); }
 			}
 		},
@@ -43,19 +44,10 @@ Ext.define( 'uxExtSpect.view.ExtSpectDataList',
 			return rootObject;
 		},
 
-		// Prevents data from appearing unless you use callParent
-//		initialize : function () {
-//			var store = Ext.create( 'uxExtSpect.store.ExtSpectDataListStore' );
-//			store.setData( [
-//				Ext.create( 'uxExtSpect.model.row.RowRecord', { text : 'iniitialize' } )
-//			] );
-//			this.setStore( store );
-//			this.callParent( arguments );
-//		},
-
 		// ========== handlePainted
 
 		handlePainted: function () { this.computeAndSetData(); },
+		handleDoubleItemtap: function () { /* Do nothing*/ },
 
 		computeAndSetData: function () {
 			var previousStore = this.getStore();

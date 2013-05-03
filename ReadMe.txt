@@ -1,7 +1,7 @@
 MOVED THIS TO A UX FOLDER
-uxExtSpect
-move StringOf to uxExtSpect.util.StringOf
+moved StringOf to uxExtSpect.util.StringOf
 
+new namespace uxExtSpect
 Note: this.addCssLinkElement( '../ux/extspect/resources/extspect.css' );
 
 Release notes for ExtSpect
@@ -18,25 +18,24 @@ but we will be adding features to allow you to look at other parts of Touch.
 
 ========== INSTALLATION
 
-For users of the demo app, ExtSpectSolo, the index.html file expects
-that a touch2 directory will be a sibling of the app directory.
+For users of the demo app, ux/extspect/ExtSpectExample, the index.html
+file expects that a touch2 directory will bein a root directory.
 Please make adjustments in index.html as needed.
 
 For installation of ExtSpect as a plugin, there are 2 things that you must
 do, and a couple more optional choices.
 
-o The 'extspect' folder can be found inside the folder for the demo app,
-ExtSpectSolo, included in the zipped file. Copy only the 'uxExtSpect' folder
-to just inside your app's main folder, at the same level as your index.html file.
+o Copy only the ux/extspect folder to just inside your app's main folder,
+at the same level as your index.html file.
 
-o Somewhere inside the views that you build, add ExtSpect as a component.
+o Somewhere inside the views that you build, add ExtSpect as a panel.
 The ExtSpect class extends Ext.Panel, but it can also be added using the
 xtype 'extspect'. There are default values for the title and iconCls, so it should
 fit into a tab panel with no further work.
 
 There is also a config property to the ExtSpect class called app:. This is required.
 The variable that follows app: is the name of your app (eg. MyApp) plus .app
-with no quotes.
+with no quotes. See the ExtSpectExample.
 
 Adding ExtSpect to your top level viewport would look like this:
 
@@ -83,8 +82,8 @@ of the main window.
 Some objects appear wrapped with braces,with letters in front of them.
 Those letters indicate the name of the class the object instantiates. For
 example, O{0...} is an instance of Object, and it has no properties.
-A default config may show {21p/1m...}. This is an object that belongs to
-no class, and has 21 properties and 1 method. Some of the abbreviations
+A default config may show {21p/9m...}. This is an object that belongs to
+no class, and has 21 properties and 9 methods. Some of the abbreviations
 for classes are:
 
 TC : TemplateClass (not documented)
@@ -121,7 +120,7 @@ if you press the <Back] button to get to it, the title shows Ext.Viewport.
 The actual object is, however, the start object.
 
 o At this point, the ExtSpect panel does not automatically fill the all
-available space. I've had to set the height in ExtSpectNavigationVIew.js
-manually in order to get something reasonable inside both the 2 demo apps.
+available space. I've had to set the minHeight in ExtSpectNavigationView.js
+manually in order to get something reasonable inside the 2 demo apps.
 Suggestions as to how to fix this would be appreciated.
 
