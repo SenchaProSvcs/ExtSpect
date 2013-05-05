@@ -4,7 +4,7 @@ Ext.define( 'uxExtSpect.view.ExtSpectTabPanel',
 		isExtSpectTabPanel : true,
 
 		config : {
-			title : 'ExtSpect 0.3.0',
+			title : 'ExtSpect 0.3.' + Ext.version.version,
 			rootObject : Ext.Viewport,
 			layout : 'card',
 			defaults : { layout : 'fit' } // 'fit' is important

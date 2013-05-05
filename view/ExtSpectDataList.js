@@ -50,6 +50,7 @@ Ext.define( 'uxExtSpect.view.ExtSpectDataList',
 		handleDoubleItemtap: function () { /* Do nothing*/ },
 
 		computeAndSetData: function () {
+			console.group( arguments.callee.displayName, this.id );
 			var previousStore = this.getStore();
 			if ( previousStore ) { Ext.StoreManager.unregister( previousStore ); }
 
@@ -59,6 +60,7 @@ Ext.define( 'uxExtSpect.view.ExtSpectDataList',
 			var store = Ext.create( storeName );
 			store.setData( recs );
 			this.setStore( store );
+			console.groupEnd( arguments.callee.displayName, this.id );
 		},
 
 		determineStoreName: function () {

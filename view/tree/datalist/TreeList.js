@@ -95,8 +95,9 @@ Ext.define( 'uxExtSpect.view.tree.datalist.TreeList',
 			var depth = this.depth;
 			var counts = this.counts;
 			var objectString = uxExtSpect.util.StringOf.to$( object );
+			console.log( arguments.callee.displayName, objectString );
 			if ( this.fetchIsClosed( object ) ) {
-				objectString += ' +';
+				objectString += ' ++';
 			}
 			counts[ counts.length - 1 ]++;
 			return this.fetchParentNavigationView().showListing ?
@@ -148,9 +149,9 @@ Ext.define( 'uxExtSpect.view.tree.datalist.TreeList',
 
 		handleSingleItemTap: function ( dataview, index, listItem, record, mouseEvent, obj, eOptsObject ) {
 			console.log( arguments.callee.displayName, arguments );
-			console.log( arguments.callee.displayName, record );
+			console.log( arguments.callee.displayName, "record=", record );
 			var value = record.data.value;
-			console.log( arguments.callee.displayName, value.id || value.$className );
+			console.log( arguments.callee.displayName, "value.id||$className=", value.id || value.$className )
 
 			if ( value && value.isPropertyPointerWithValue ) { value = value.fetchValue(); }
 
@@ -166,36 +167,51 @@ Ext.define( 'uxExtSpect.view.tree.datalist.TreeList',
 
 		fetchIsClosedObject: function ( object ) {
 			var isClosedObject = object.extSpectisClosedObject;
+			console.log( arguments.callee.displayName, object.id || object.$className,
+				"isClosedObject=", isClosedObject );
+			if ( !isClosedObject ) {
+				isClosedObject = new Object();
+				var listId = this.id;
+				isClosedObject[ listId ] = false;
+				isClosedObject[ ( object.id || object.$className) + "fICO"] = Math.random();
+				object.extSpectisClosedObject = isClosedObject;
+				console.log( arguments.callee.displayName, object.id || object.$className, "==", isClosedObject );
+			//	debugger;
+			}
 			return isClosedObject
 		},
 
 		fetchIsClosed: function ( object ) {
 			var isClosedObject = this.fetchIsClosedObject( object );
+			console.log( arguments.callee.displayName, object.id || object.$className, isClosedObject );
 			var listId = this.id;
 			if ( !isClosedObject ) {
-				object.extSpectisClosedObject = {}
-				object.extSpectisClosedObject[listId] = false;
-				isClosedObject = object.extSpectisClosedObject;
+				isClosedObject = new Object();
+				isClosedObject[ listId ] = false;
+				isClosedObject[ ( object.id || object.$className) + "fIC" ] = Math.random();
+				object.extSpectisClosedObject = isClosedObject;
+				console.log( arguments.callee.displayName, object.id || object.$className, "==", isClosedObject );
+				debugger;
 			}
 			var isClosed = isClosedObject[ listId ];
-			// console.log( arguments.callee.displayName, object.id, isClosed );
-			// console.log( arguments.callee.displayName, "isClosedObject=", isClosedObject );
+			console.log( arguments.callee.displayName, object.id || object.$className, isClosed );
 			return isClosed;
 		},
 
 		assignIsClosed: function ( object, bool ) {
-			// console.log( arguments.callee.displayName, "bool=", bool );
+			console.group( arguments.callee.displayName, object.id || object.$className, "bool=", bool );
 			var isClosedObject = this.fetchIsClosedObject( object );
-			// console.log( arguments.callee.displayName, "isClosedObject=", isClosedObject );
-			isClosedObject[ this.id ] = bool;
 			console.log( arguments.callee.displayName, "isClosedObject=", isClosedObject );
+			isClosedObject[ this.id ] = bool;
+			isClosedObject[ object.id || object.$className ] = Math.random();
+			console.groupEnd( arguments.callee.displayName, "isClosedObject=", isClosedObject );
 		},
 
 		handleDoubleItemtap: function ( dataview, index, listItem, record, mouseEvent, obj, eOptsObject ) {
 			console.log( arguments.callee.displayName, arguments );
 			var object = record.data.value
 			var isClosed = this.fetchIsClosed( object );
-			console.log( arguments.callee.displayName, object.id || object.$className );
+			console.log( arguments.callee.displayName, "object.id||$className=", object.id || object.$className )
 			// console.log( arguments.callee.displayName, dataview.id );
 			console.log( arguments.callee.displayName, "isClosed=", isClosed );
 			this.assignIsClosed( object, !isClosed );
