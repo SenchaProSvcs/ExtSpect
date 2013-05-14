@@ -26,7 +26,7 @@ Ext.define( 'uxExtSpect.view.tree.datalist.TreeList',
 				this.counts = [];
 				this.collectComponentRowObjects2( rootObject );
 			}
-			console.log( arguments.callee.displayName, this.componentRecs.length );
+			// console.log( arguments.callee.displayName, this.componentRecs.length );
 			return this.componentRecs;
 		},
 
@@ -95,7 +95,7 @@ Ext.define( 'uxExtSpect.view.tree.datalist.TreeList',
 			var depth = this.depth;
 			var counts = this.counts;
 			var objectString = uxExtSpect.util.StringOf.to$( object );
-			console.log( arguments.callee.displayName, objectString );
+			// console.log( arguments.callee.displayName, objectString );
 			if ( this.fetchIsClosed( object ) ) {
 				objectString += ' ++';
 			}
@@ -148,10 +148,10 @@ Ext.define( 'uxExtSpect.view.tree.datalist.TreeList',
 		},
 
 		handleSingleItemTap: function ( dataview, index, listItem, record, mouseEvent, obj, eOptsObject ) {
-			console.log( arguments.callee.displayName, arguments );
-			console.log( arguments.callee.displayName, "record=", record );
+			// console.log( arguments.callee.displayName, arguments );
+			// console.log( arguments.callee.displayName, "record=", record );
 			var value = record.data.value;
-			console.log( arguments.callee.displayName, "value.id||$className=", value.id || value.$className )
+			// console.log( arguments.callee.displayName, "value.id||$className=", value.id || value.$className )
 
 			if ( value && value.isPropertyPointerWithValue ) { value = value.fetchValue(); }
 
@@ -165,57 +165,55 @@ Ext.define( 'uxExtSpect.view.tree.datalist.TreeList',
 			}
 		},
 
+		fetchItemId: function ( object ) {
+			return  (object.superclass || object === Ext.Base) ? object.$className : object.id;
+			// uxExtSpect.util.StringOf.to$( object );//
+		},
+
+		extspectItemsClosedObject: {},
+
 		fetchIsClosedObject: function ( object ) {
-			var isClosedObject = object.extSpectisClosedObject;
-			console.log( arguments.callee.displayName, object.id || object.$className,
-				"isClosedObject=", isClosedObject );
-			if ( !isClosedObject ) {
-				isClosedObject = new Object();
-				var listId = this.id;
-				isClosedObject[ listId ] = false;
-				isClosedObject[ ( object.id || object.$className) + "fICO"] = Math.random();
-				object.extSpectisClosedObject = isClosedObject;
-				console.log( arguments.callee.displayName, object.id || object.$className, "==", isClosedObject );
+			var isClosedObject = this.extspectItemsClosedObject;
+//			console.log( arguments.callee.displayName, object.$className || object.id,
+//				"isClosedObject=", isClosedObject );
+			var itemId = this.fetchItemId( object );
+			isClosedObject[ itemId ] = false;
+			// isClosedObject[ ( object.$className || object.id) + "fICO"] = Math.random();
+			// console.log( arguments.callee.displayName, object.$className || object.id, "==", isClosedObject );
 			//	debugger;
-			}
+			//	}
 			return isClosedObject
 		},
 
 		fetchIsClosed: function ( object ) {
 			var isClosedObject = this.fetchIsClosedObject( object );
-			console.log( arguments.callee.displayName, object.id || object.$className, isClosedObject );
-			var listId = this.id;
-			if ( !isClosedObject ) {
-				isClosedObject = new Object();
-				isClosedObject[ listId ] = false;
-				isClosedObject[ ( object.id || object.$className) + "fIC" ] = Math.random();
-				object.extSpectisClosedObject = isClosedObject;
-				console.log( arguments.callee.displayName, object.id || object.$className, "==", isClosedObject );
-				debugger;
-			}
-			var isClosed = isClosedObject[ listId ];
-			console.log( arguments.callee.displayName, object.id || object.$className, isClosed );
+			// console.log( arguments.callee.displayName, object.$className || object.id, isClosedObject );
+			var itemId = this.fetchItemId( object );
+			var isClosed = isClosedObject[ itemId ];
+			console.log( arguments.callee.displayName, object.$className || object.id, isClosed );
 			return isClosed;
 		},
 
 		assignIsClosed: function ( object, bool ) {
-			console.group( arguments.callee.displayName, object.id || object.$className, "bool=", bool );
+			console.group( arguments.callee.displayName, object.$className || object.id, "bool=", bool );
 			var isClosedObject = this.fetchIsClosedObject( object );
 			console.log( arguments.callee.displayName, "isClosedObject=", isClosedObject );
-			isClosedObject[ this.id ] = bool;
-			isClosedObject[ object.id || object.$className ] = Math.random();
+			var itemId = this.fetchItemId( object );
+			isClosedObject[ itemId ] = bool;
+			// isClosedObject[ object.$className || object.id ] = Math.random();
+			console.log( arguments.callee.displayName, "isClosedObject=", isClosedObject );
 			console.groupEnd( arguments.callee.displayName, "isClosedObject=", isClosedObject );
 		},
 
 		handleDoubleItemtap: function ( dataview, index, listItem, record, mouseEvent, obj, eOptsObject ) {
-			console.log( arguments.callee.displayName, arguments );
+			// console.log( arguments.callee.displayName, arguments );
 			var object = record.data.value
+			console.group( arguments.callee.displayName, "object.id||$className=", object.$className || object.id )
 			var isClosed = this.fetchIsClosed( object );
-			console.log( arguments.callee.displayName, "object.id||$className=", object.id || object.$className )
 			// console.log( arguments.callee.displayName, dataview.id );
-			console.log( arguments.callee.displayName, "isClosed=", isClosed );
 			this.assignIsClosed( object, !isClosed );
 			this.computeAndSetData();
 			this.handleSingleItemTap( dataview, index, listItem, record, mouseEvent, obj, eOptsObject );
+			console.groupEnd( arguments.callee.displayName, "isClosed=", isClosed );
 		}
 	} );
