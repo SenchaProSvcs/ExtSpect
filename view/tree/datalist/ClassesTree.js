@@ -52,7 +52,6 @@ Ext.define( 'uxExtSpect.view.tree.datalist.ClassesTree',
 				if ( pos === -1 ) {
 					classRec = { object: templateClass };
 					classRecs.push( classRec );
-					;
 					if ( showInstancesOk ) { classRec.instanceRecs = [instanceRec]; }
 				}
 				else {
