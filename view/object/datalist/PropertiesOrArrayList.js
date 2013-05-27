@@ -37,8 +37,7 @@ Ext.define( 'uxExtSpect.view.object.datalist.PropertiesOrArrayList',
 			var navigationView = this.up( 'objectnavigationview' );
 			var parentTabPanel = this.fetchParentTabPanel();
 
-			if ( ( value instanceof Ext.util.MixedCollection ) ||
-				( value instanceof Ext.util.HashMap ) ) {
+			if ( ( value instanceof Ext.util.MixedCollection ) || ( value instanceof Ext.util.HashMap ) ) {
 				value = this.extCollectionToArray( value );
 				navigationView.pushNewArrayPanel( value, id, parentTabPanel,
 					'uxExtSpect.view.object.tabpanel.MixedCollectionTabPanel' );

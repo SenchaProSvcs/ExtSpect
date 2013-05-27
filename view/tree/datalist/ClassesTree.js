@@ -1,4 +1,5 @@
 /* THIS INFO IS OUT OF DATE!
+
  1) collectRowObjects
  collect a list of the components in the app
 
@@ -14,8 +15,6 @@
  4) buildFinalRowObjects
  build a new, sorted array of row records.
  We store this array in this.rowObjects for collectRowObjects to return.
-
- TODO: We could also build a tree of constructors, only Ext does not chain them
  */
 
 Ext.define( 'uxExtSpect.view.tree.datalist.ClassesTree',
@@ -23,73 +22,100 @@ Ext.define( 'uxExtSpect.view.tree.datalist.ClassesTree',
 		xtype: 'classestree',
 
 		createComponentRowObject: function ( component ) { return { object: component }; },
+		//// createComponentRowObject: function ( component ) { return component },
+
+		collectComponentRowObjects: function () {
+			var mapObject = Ext.ComponentManager.map;
+			var rowObjects = [];
+			var index = 0;
+			for ( var property in mapObject ) {
+				// console.log( arguments.callee.displayName, index, property );
+				rowObjects[index ++] = this.createComponentRowObject( mapObject[property] );
+			}
+			// console.log( arguments.callee.displayName, index, rowObjects );
+			return rowObjects;
+		},
 
 		collectRowObjects: function () {
-			var componentRecs = this.collectComponentRowObjects(); // @ TreeList
+			var componentRowObjects = this.collectComponentRowObjects(); // @ TreeList
 
-			if ( componentRecs.length > 0 ) {
-				this.collectClassRowObjects( componentRecs );
+			if ( componentRowObjects.length > 0 ) {
+				this.collectClassRowObjects( componentRowObjects );
 				this.rowObjects = [];
-				this.buildFinalRowObjects( this.baseClassRec );
+				this.buildFinalRowObjects( this.baseClassRowObject );
 			}
-			else {
-				this.rowObjects = [];
-			}
+			else { this.rowObjects = []; }
+			console.log( arguments.callee.displayName, componentRowObjects.length, this.rowObjects.length );
 			return this.rowObjects;
 		},
 
-		collectClassRowObjects: function ( componentRecs ) {
-			var classRecs = [];
-			var classRec , instanceRec , instance;
+		collectClassRowObjects: function ( componentRowObjects ) {
+			var classRowObjects = [];
+			var classRowObject, componentRowObject, component;
 			var showInstancesOk = this.fetchParentNavigationView().showInstances;
 
-			for ( var len = componentRecs.length , index = 0; index < len; index++ ) {
-				instanceRec = componentRecs[ index ];
-				instance = instanceRec.object;
-				var templateClass = instance.self.prototype;
+			for ( var len = componentRowObjects.length , index = 0; index < len; index ++ ) {
+				componentRowObject = componentRowObjects[ index ];
+				component = componentRowObject.object;
+				//// component = componentRowObject;
+				var templateClass = component.self.prototype;
 
-				var pos = this.findItemPos( templateClass, "object", classRecs );
-				if ( pos === -1 ) {
-					classRec = { object: templateClass };
-					classRecs.push( classRec );
-					if ( showInstancesOk ) { classRec.instanceRecs = [instanceRec]; }
+				var pos = this.findItemPos( templateClass, "object", classRowObjects );
+				var classIsClosed = this.fetchIsClosed( templateClass );
+				if ( pos === - 1 ) {
+					classRowObject = { object: templateClass };
+					classRowObjects.push( classRowObject );
+					if ( showInstancesOk ) {
+						classRowObject.instanceRowObjects =
+							classIsClosed ? [] : [componentRowObject];
+					}
 				}
 				else {
-					classRec = classRecs[ pos ];
-					if ( showInstancesOk ) { classRec.instanceRecs.push( instanceRec ); }
+					classRowObject = classRowObjects[ pos ];
+					if ( showInstancesOk && ! classIsClosed ) {
+						classRowObject.instanceRowObjects.push( componentRowObject );
+					}
 				}
 
 				var superClass = templateClass.superclass;
-				if ( superClass ) { this.processSuperClass( superClass, classRec, classRecs ); }
+				if ( superClass ) { this.processSuperClass( superClass, classRowObject, classRowObjects ); }
 			}
-			return classRecs;
+			return classRowObjects;
 		},
 
-		processSuperClass: function ( superClass, classRec, classRecs ) {
+		processSuperClass: function ( superClass, classRowObject, classRowObjects ) {
 			if ( superClass ) {
-				var pos = this.findItemPos( superClass, "object", classRecs );
-				if ( pos === -1 ) { this.addNewRowObject4SuperClass( superClass, classRec, classRecs ); }
+				var pos = this.findItemPos( superClass, "object", classRowObjects );
+
+				if ( pos === - 1 ) { this.addNewRowObject4SuperClass( superClass, classRowObject, classRowObjects ); }
 				else {
-					var superClassRec = classRecs[ pos ];
-					this.addSubClassToClassRowObject( classRec, superClassRec );
+					var superClassRowObject = classRowObjects[ pos ];
+					this.addSubClassToClassRowObject( classRowObject, superClassRowObject );
 				}
 			}
 		},
 
-		addSubClassToClassRowObject: function ( classRec, superClassRec ) {
-			if ( !superClassRec.subClassRecs ) { superClassRec.subClassRecs = []; }
-			var subClassRecs = superClassRec.subClassRecs;
-			if ( subClassRecs.indexOf( classRec ) === -1 ) { subClassRecs.push( classRec ); }
+		addSubClassToClassRowObject: function ( classRowObject, superClassRowObject ) {
+			if ( ! superClassRowObject.subClassRowObjects ) {
+				superClassRowObject.subClassRowObjects = [];
+			}
+			var subClassRowObjects = superClassRowObject.subClassRowObjects;
+			if ( subClassRowObjects.indexOf( classRowObject ) === - 1 ) {
+				subClassRowObjects.push( classRowObject );
+			}
 		},
 
-		addNewRowObject4SuperClass: function ( newTemplateClass, subClassRec, classRecs ) {
-			var newRec = { object: newTemplateClass, subClassRecs: [subClassRec], instanceRecs: [] };
-			classRecs.push( newRec );
+		addNewRowObject4SuperClass: function ( newTemplateClass, subClassRowObject, classRowObjects ) {
+			var newRowObject = {
+				object: newTemplateClass, subClassRowObjects: [
+					subClassRowObject
+				], instanceRowObjects: [] };
+			classRowObjects.push( newRowObject );
 
 			var superClass = newTemplateClass.superclass;
-			if ( superClass ) { this.processSuperClass( superClass, newRec, classRecs ); }
+			if ( superClass ) { this.processSuperClass( superClass, newRowObject, classRowObjects ); }
 			else {
-				if ( newTemplateClass.$className === 'Ext.Base' ) { this.baseClassRec = newRec; }
+				if ( newTemplateClass.$className === 'Ext.Base' ) { this.baseClassRowObject = newRowObject; }
 			}
 		},
 
@@ -97,31 +123,31 @@ Ext.define( 'uxExtSpect.view.tree.datalist.ClassesTree',
 		// Starting with Ext.Base
 		//	work through the class records, building a new array of the row
 		//	records, ordered top to bottom according to their position in the hierarchy.
-		//	The record produced by createRowObject looks like this:
+		//	The finalRowObject produced by createRowObject looks like this:
 		//	{ text : string , value : templateClassObject }
 		//	We store this array in this.rowObjects for collectRowObjects to return
 
-		buildFinalRowObject2: function ( classRec, index, forEachArray ) {
-			this.rowObjects.push( this.createRowObject( classRec ) );
-			var array = ( classRec.subClassRecs || [] ).concat( classRec.instanceRecs || [] );
+		buildFinalRowObject2: function ( classRowObject ) {
+			var finalRowObject = this.createRowObject( classRowObject );
+			this.rowObjects.push( finalRowObject );
+			var array = ( classRowObject.subClassRowObjects ||
+				[] ).concat( classRowObject.instanceRowObjects || [] );
 			this.addNewRowObjects( array );
 		},
 
 		// in an array of objects, return the index of the first object that has value in property
 		findItemPos: function ( value, property, array ) {
-			for ( var len = array.length , index = 0; index < len; index++ ) {
+			for ( var len = array.length , index = 0; index < len; index ++ ) {
 				if ( array[ index ][ property ] === value ) { return index; }
 			}
-			return -1;
+			return - 1;
 		},
 
 		computeObjectString: function ( object, objectString ) {
 			if ( object.hasOwnProperty( "$className" ) ) {
 				return this.callParent( arguments );
 			}
-			else {
-				return objectString; // uxExtSpect.util.StringOf.to$( object );
-			}
+			else { return objectString; }
 		}
 	}
 );

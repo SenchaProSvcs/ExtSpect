@@ -1,10 +1,10 @@
 body.x-desktop { font-size: 100%} /* For Mac Safari */
 
 /*
-    http://www.sencha.com/blog/whats-new-in-sencha-touch-21
+http://www.sencha.com/blog/whats-new-in-sencha-touch-21
 #es-extspect .x-dock-body,
 */
-/* Experiemnts
+/* Experiments
 #es-extspect .x-list .x-list-disclosure, 2.2.0
 #es-extspect .x-list .x-list-item .inner-html, 2.2.0
 */
@@ -18,8 +18,8 @@ body.x-desktop { font-size: 100%} /* For Mac Safari */
 
 	border-top: 0;
 	border-bottom: 0;
-	/*padding-top: 0; Experiment*/
-	/*padding-bottom: 0;*/
+	padding-top: 0 ; /* Experiment*/
+	padding-bottom: 0;
 	margin-top: 0;
 	margin-bottom: 0;
 }

@@ -15,33 +15,35 @@ Ext.define( 'uxExtSpect.view.tree.datalist.TreeList',
 			return this.rowObjects;
 		},
 
+		addComponentRowObject: function ( component ) {
+			var newRowObject = this.createComponentRowObject( component );
+			this.componentRowObjects.push( newRowObject );
+		},
+
 		// TODO : Ext.ComponentManger.map has all the components
 		// Normally the root object is the Ext.Viewport
 		collectComponentRowObjects: function () {
 			var rootObject = this.fetchRootObject();
-			this.componentRecs = [];
+			this.componentRowObjects = [];
 			if ( rootObject ) {
 				this.depth = 1;
 				this.totalCounts = [];
 				this.counts = [];
-				this.collectComponentRowObjects2( rootObject );
+				this.addComponentRowObjects2( rootObject );
 			}
-			// console.log( arguments.callee.displayName, this.componentRecs.length );
-			return this.componentRecs;
+			return this.componentRowObjects;
 		},
 
 		// see also buildFinalRowRecs2 and addNewRowObjects
-		collectComponentRowObjects2: function ( component, index_, len_ ) {
-			var newRowObject = this.createComponentRowObject( component );
-			this.componentRecs.push( newRowObject );
-			if ( "items" in component && !this.fetchIsClosed( component ) ) {
+		addComponentRowObjects3: function ( component ) {
+			if ( component.isContainer ) {
 				var collection = component.items;
 				var totalCount = collection.getCount();
 				if ( totalCount > 0 ) {
 					this.depth++;
 					this.totalCounts.push( totalCount );
 					this.counts.push( 0 );
-					collection.each( this.collectComponentRowObjects2, this );
+					collection.each( this.addComponentRowObjects2, this );
 					this.counts.pop();
 					this.totalCounts.pop();
 					this.depth--;
@@ -55,39 +57,39 @@ Ext.define( 'uxExtSpect.view.tree.datalist.TreeList',
 
 		// see also collectComponentRowObjects
 		buildFinalRowObjects: function ( rec ) {
+			console.log( arguments.callee.displayName, rec );
 			this.depth = 1;
 			this.totalCounts = [];
 			this.counts = [];
 			this.buildFinalRowObject2( rec );
 		},
 
-		// see also collectComponentRecs2
-		addNewRowObjects: function ( recs ) {
-			var totalCount = recs.length;
+		// see also addComponentRowObjects3
+		addNewRowObjects: function ( rowObjects ) {
+			var totalCount = rowObjects.length;
 			if ( totalCount > 0 ) {
 				this.depth++;
 				this.totalCounts.push( totalCount );
 				this.counts.push( 0 );
-				recs.forEach( this.buildFinalRowObject2, this );
+				rowObjects.forEach( this.buildFinalRowObject2, this );
 				this.counts.pop();
 				this.totalCounts.pop();
 				this.depth--;
 			}
 		},
 
-		buildFinalRowObject2: function ( baseRec, index, forEachArray ) {
-			this.rowObjects.push( this.createRowObject( baseRec ) );
-			var array = baseRec.children || [];
+		buildFinalRowObject2: function ( baseRowObject ) {
+			this.rowObjects.push( this.createRowObject( baseRowObject ) );
+			var array = baseRowObject.children || [];
 			this.addNewRowObjects( array );
 		},
 
-		// Ext.getClassName(), Ext.ClassManager.getDisplayName( Mixed object )
-		createRowObject: function ( baseRec ) {
-			if ( !baseRec ) {
-				console.error( Ext.getDisplayName( arguments.callee ) + ': no baseRec', baseRec );
+		createRowObject: function ( baseRowObject ) {
+			if ( !baseRowObject ) {
+				console.error( Ext.getDisplayName( arguments.callee ) + ': no baseRowObject', baseRowObject );
 				debugger;
 			}
-			var object = baseRec.object;
+			var object = baseRowObject.object;
 			return { text: this.computeRowObjectString( object ), value: object };
 		},
 
@@ -95,7 +97,6 @@ Ext.define( 'uxExtSpect.view.tree.datalist.TreeList',
 			var depth = this.depth;
 			var counts = this.counts;
 			var objectString = uxExtSpect.util.StringOf.to$( object );
-			// console.log( arguments.callee.displayName, objectString );
 			if ( this.fetchIsClosed( object ) ) {
 				objectString += ' ++';
 			}
@@ -109,9 +110,7 @@ Ext.define( 'uxExtSpect.view.tree.datalist.TreeList',
 		},
 
 		computeObjectString: function ( object, objectString ) {
-			return '<span style="font-weight:bold">' +
-				// uxExtSpect.util.StringOf.to$( object )
-				objectString + '</span>';
+			return '<span style="font-weight:bold">' + objectString + '</span>';
 		},
 
 		verticalBarChar: String.fromCharCode( 0x2503 ), // 0x2503 0x2502
@@ -120,6 +119,7 @@ Ext.define( 'uxExtSpect.view.tree.datalist.TreeList',
 		// leftAndDownChar : String.fromCharCode( 0x2513 ) , // 0x2513 0x2511 0x2512
 		// hotizontalAndDownChar : String.fromCharCode( 0x2533 ) , // 0x2533
 
+		// return an array of chars representing on the left the tree and its branches
 		computeVerticalBars: function () {
 			var chars = [];
 			var totalCounts = this.totalCounts;
@@ -142,6 +142,7 @@ Ext.define( 'uxExtSpect.view.tree.datalist.TreeList',
 			return chars;
 		},
 
+		// show the indexBar on the right only if this is a listing and not a tree
 		determineAndSetIndexBar: function () {
 			var isListing = this.fetchParentNavigationView().showListing;
 			this.setIndexBar( isListing );
@@ -165,55 +166,73 @@ Ext.define( 'uxExtSpect.view.tree.datalist.TreeList',
 			}
 		},
 
-		fetchItemId: function ( object ) {
-			return  (object.superclass || object === Ext.Base) ? object.$className : object.id;
-			// uxExtSpect.util.StringOf.to$( object );//
-		},
+		fetchIdString: function ( object ) { return this.id; },
 
-		extspectItemsClosedObject: {},
-
-		fetchIsClosedObject: function ( object ) {
-			var isClosedObject = this.extspectItemsClosedObject;
-//			console.log( arguments.callee.displayName, object.$className || object.id,
-//				"isClosedObject=", isClosedObject );
-			var itemId = this.fetchItemId( object );
-			isClosedObject[ itemId ] = false;
-			// isClosedObject[ ( object.$className || object.id) + "fICO"] = Math.random();
-			// console.log( arguments.callee.displayName, object.$className || object.id, "==", isClosedObject );
-			//	debugger;
-			//	}
+		fetchIsClosedObject: function ( object, idString ) {
+			var isClosedObject = object.hasOwnProperty( 'extSpectisClosedObject' ) &&
+				object.extSpectisClosedObject;
+			// console.log( arguments.callee.displayName, idString, "isClosedObject=", isClosedObject );
+			if ( !isClosedObject ) {
+				isClosedObject = new Object();
+				isClosedObject[ idString ] = false;
+				// isClosedObject[ ( object.$className || object.id) + "fICO" ] = Math.random();
+				object.extSpectisClosedObject = isClosedObject;
+				// console.log( arguments.callee.displayName, object.$className || object.id, "==", isClosedObject );
+				// debugger;
+			}
 			return isClosedObject
 		},
 
+//		extspectItemsClosedObject: {},
+
+//		fetchIdString: function ( object ) {
+//			return ( object.hasOwnProperty( "$className" ) ) ? // object.superclass || object === Ext.Base
+//				object.$className : object.id;
+//		},
+
+//		fetchIsClosedObject: function ( object, idString ) {
+//			var isClosedObject = this.extspectItemsClosedObject;
+////			console.log( arguments.callee.displayName, object.$className || object.id,
+////				"isClosedObject=", isClosedObject );
+//			isClosedObject[ idString ] = false;
+//			// isClosedObject[ ( object.$className || object.id) + "fICO"] = Math.random();
+//			// console.log( arguments.callee.displayName, object.$className || object.id, "==", isClosedObject );
+//			//	debugger;
+//			//	}
+//			return isClosedObject
+//		},
+
 		fetchIsClosed: function ( object ) {
-			var isClosedObject = this.fetchIsClosedObject( object );
+			var idString = this.fetchIdString( object );
+			var isClosedObject = this.fetchIsClosedObject( object, idString );
 			// console.log( arguments.callee.displayName, object.$className || object.id, isClosedObject );
-			var itemId = this.fetchItemId( object );
-			var isClosed = isClosedObject[ itemId ];
-			console.log( arguments.callee.displayName, object.$className || object.id, isClosed );
+			var isClosed = isClosedObject[ idString ];
+			// console.log( arguments.callee.displayName, idString, isClosed );
 			return isClosed;
 		},
 
 		assignIsClosed: function ( object, bool ) {
-			console.group( arguments.callee.displayName, object.$className || object.id, "bool=", bool );
-			var isClosedObject = this.fetchIsClosedObject( object );
+			var idString = this.fetchIdString( object );
+			console.group( arguments.callee.displayName, idString, "bool=", bool );
+			var isClosedObject = this.fetchIsClosedObject( object, idString );
 			console.log( arguments.callee.displayName, "isClosedObject=", isClosedObject );
-			var itemId = this.fetchItemId( object );
-			isClosedObject[ itemId ] = bool;
+			isClosedObject[ idString ] = bool;
 			// isClosedObject[ object.$className || object.id ] = Math.random();
-			console.log( arguments.callee.displayName, "isClosedObject=", isClosedObject );
+			// console.log( arguments.callee.displayName, "isClosedObject=", isClosedObject );
 			console.groupEnd( arguments.callee.displayName, "isClosedObject=", isClosedObject );
 		},
 
 		handleDoubleItemtap: function ( dataview, index, listItem, record, mouseEvent, obj, eOptsObject ) {
 			// console.log( arguments.callee.displayName, arguments );
 			var object = record.data.value
-			console.group( arguments.callee.displayName, "object.id||$className=", object.$className || object.id )
+			console.group( arguments.callee.displayName, "object.$className||id=", object.$className || object.id )
 			var isClosed = this.fetchIsClosed( object );
-			// console.log( arguments.callee.displayName, dataview.id );
+			console.log( arguments.callee.displayName, isClosed );
 			this.assignIsClosed( object, !isClosed );
 			this.computeAndSetData();
 			this.handleSingleItemTap( dataview, index, listItem, record, mouseEvent, obj, eOptsObject );
 			console.groupEnd( arguments.callee.displayName, "isClosed=", isClosed );
 		}
-	} );
+	}
+)
+;

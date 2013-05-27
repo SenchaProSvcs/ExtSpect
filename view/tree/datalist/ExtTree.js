@@ -9,7 +9,7 @@ Ext.define( 'uxExtSpect.view.tree.datalist.ExtTree' ,
 
 		// Do NOT put Ext as a value in a config. You get to stackoverflow from cloning
 		fetchRootObject : function ( )
-		{	return Ext; } ,
+		{ return Ext; },
 
 		determineRecClassName : function ( object )
 		{	var recClassName;

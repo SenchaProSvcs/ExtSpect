@@ -12,8 +12,8 @@ Ext.define( 'uxExtSpect.view.ExtSpectDataList',
 			// variableHeights: true, // Touch 2.2.0
 			infinite: true, // Touch 2.2.0
 
-			// itemHeight: 10, // added for Touch 2.1
-			itemHeight: 16, // added for Touch 2.2
+			itemHeight: 10, // added for Touch 2.1
+			// itemHeight: 16, // added for Touch 2.2
 			// This becomes style="min-height:10px !important!" in the elements
 
 			// baseCls: 'es-list-item',
@@ -47,8 +47,9 @@ Ext.define( 'uxExtSpect.view.ExtSpectDataList',
 
 		// ========== handlePainted
 
-		handlePainted: function () { this.computeAndSetData(); },
 		handleDoubleItemtap: function () { /* Do nothing*/ },
+
+		handlePainted: function () { this.computeAndSetData(); },
 
 		computeAndSetData: function () {
 			// console.group( arguments.callee.displayName, this.id );
@@ -102,31 +103,12 @@ Ext.define( 'uxExtSpect.view.ExtSpectDataList',
 
 		htmlCollectionToArray: function ( collection ) {
 			var array = [];
-			for ( var len = collection.length , index = 0; index < len; index++ ) { array.push( collection.item( index ) ); }
+			for ( var len = collection.length , index = 0; index < len; index++ ) {
+				array.push( collection.item( index ) ); }
 			return array;
 		}
 	}
 );
-
-/*
-createComparisonFunction : function ( property )
- {	var fnctn = function ( firstObject , secondObject )
- {	var firstValue = firstObject[ property ]
- var secondValue = secondObject[ property ]
- return ( firstValue === secondValue ? 0 : ( firstValue > secondValue ) ? 1 : -1 )
- }
- return fnctn
- } ,*/
-
-/*checkForDuplicates : function ( array )
- {	var len = array.length
- for ( var index1 = 0 ;  index1 < len ; index1 ++ )
- {	for ( var index2 = 0 ; index2 < len ; index2 ++ )
- {	if 	(	(	index1 !== index2 ) &&
- (	array[ index1 ] === array[ index2 ] )
- )
- { console.warn( 'checkForDuplicates failed' ) }
- }	}	}*/
 
 /*
  setTabBadge : function ( )

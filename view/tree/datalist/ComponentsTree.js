@@ -3,47 +3,28 @@ Ext.define( 'uxExtSpect.view.tree.datalist.ComponentsTree',
 		xtype: 'componentstree',
 
 		computeObjectString: function ( object, objectString ) {
-			if ( "items" in object ) {
+			if ( object.isContainer ) {
 				return this.callParent( arguments );
 			}
 			else {
-				return objectString; //  uxExtSpect.util.StringOf.to$( object );
+				return objectString;
 			}
-		},
-		fetchIsClosedObject: function ( object ) {
-			var isClosedObject = object.extSpectisClosedObject;
-//			console.log( arguments.callee.displayName, object.$className || object.id,
-//				"isClosedObject=", isClosedObject );
-			if ( !isClosedObject ) {
-				isClosedObject = new Object();
-				var listId = this.id;
-				isClosedObject[ listId ] = false;
-				// isClosedObject[ ( object.$className || object.id) + "fICO" ] = Math.random();
-				object.extSpectisClosedObject = isClosedObject;
-				// console.log( arguments.callee.displayName, object.$className || object.id, "==", isClosedObject );
-				// debugger;
-			}
-			return isClosedObject
 		},
 
-		fetchIsClosed: function ( object ) {
-			var isClosedObject = this.fetchIsClosedObject( object );
-			// console.log( arguments.callee.displayName, object.$className || object.id, isClosedObject );
-			var listId = this.id;
-			var isClosed = isClosedObject[ listId ];
-			// console.log( arguments.callee.displayName, object.$className || object.id, isClosed );
-			return isClosed;
+		// see also buildFinalRowRecs2 and addNewRowObjects
+		addComponentRowObjects2: function ( component ) {
+			this.addComponentRowObject( component );
+			if ( !this.fetchIsClosed( component ) ) {
+				this.addComponentRowObjects3( component );
+			}
 		},
 
 		assignIsClosed: function ( object, bool ) {
-			console.group( arguments.callee.displayName, object.$className || object.id, "bool=", bool );
+			console.group( arguments.callee.displayName, this.fetchIdString( object ), "bool=", bool );
 			if ( object.isContainer ) {
-			var isClosedObject = this.fetchIsClosedObject( object );
-			console.log( arguments.callee.displayName, "isClosedObject=", isClosedObject );
-			isClosedObject[ this.id ] = bool;
-			// isClosedObject[ object.$className || object.id ] = Math.random();
+				this.callParent( arguments );
 			}
-			console.groupEnd( arguments.callee.displayName, "isClosedObject=", isClosedObject );
+			console.groupEnd( arguments.callee.displayName );
 		}
 	}
 );

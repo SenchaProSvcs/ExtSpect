@@ -37,14 +37,12 @@ Ext.define( 'uxExtSpect.ExtSpect',
 
 		constructor: function ( config ) {
 			uxExtSpect.instance = this;
-			// uxExtSpect.instance = this;
 			this.callParent( arguments );
 		},
 
 		// Add a CSS link to the document
 		// <link type = "text/css" rel = "stylesheet" href = "....css">
 		addCssLinkElement: function ( href ) {
-			// console.log( arguments.callee.displayName, href);
 			var linkElement = document.createElement( 'link' );
 			linkElement.type = 'text/css';
 			linkElement.rel = 'stylesheet';
@@ -69,7 +67,6 @@ Ext.define( 'uxExtSpect.ExtSpect',
 				console.error( 'uxExtSpect.initialize() did not receive a value for the config property app:' );
 			}
 			// console.log( arguments.callee.displayName, 'this.getApp()=', this.getApp() );
-			// debugger;
 			if ( this.startObject ) {
 				var navView = this.fetchObjectNavigationView();
 				navView.setStartObject( this.startObject );
