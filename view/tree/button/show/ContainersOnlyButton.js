@@ -1,4 +1,4 @@
-Ext.define( 'uxExtSpect.view.tree.button.show.NoListenersButton',
+Ext.define( 'uxExtSpect.view.tree.button.show.ContainersOnlyButton',
 	{  extend : 'uxExtSpect.view.tree.button.TreeListToolbarButton',
 		xtype : 'nolistenersbutton',
 		config : {    text : 'No Listeners',
