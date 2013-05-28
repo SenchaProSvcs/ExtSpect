@@ -1,11 +1,10 @@
 Ext.define( 'uxExtSpect.object.pointer.PropertyPointerWithValue',
-	{  extend : 'uxExtSpect.object.pointer.PropertyPointer',
-		isPropertyPointerWithValue : true,
-		value : null,
-		listenersOk : false,
+	{  extend: 'uxExtSpect.object.pointer.PropertyPointer',
+		isPropertyPointerWithValue: true,
+		value: null,
+		listenersOk: false,
 
-		extspectString : function () {
-			//var value = this.object ? this.fetchValue() : null;
+		extspectString: function () {
 
 			var property = this.property;
 			if ( this.object instanceof Array ) { property = '[' + property + ']'; }

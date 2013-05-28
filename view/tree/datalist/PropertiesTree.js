@@ -1,9 +1,9 @@
 Ext.define( 'uxExtSpect.view.tree.datalist.PropertiesTree',
-	{  extend : 'uxExtSpect.view.tree.datalist.TreeList',
+	{  extend: 'uxExtSpect.view.tree.datalist.TreeList',
 
-		collectRowObjects : function () {
+		collectRowObjects: function () {
 			var object = this.fetchRootObject();
-			if ( !object ) { return null; }
+			if ( ! object ) { return null; }
 
 			this.baseRecs = [];
 			this.branchObjects = [];
@@ -12,40 +12,46 @@ Ext.define( 'uxExtSpect.view.tree.datalist.PropertiesTree',
 
 			this.rowObjects = [];
 
-			if ( this.baseRecs.length > 0 ) { this.buildFinalRowObjects( startRec ); }
+			if ( this.baseRecs.length > 0 ) {
+				this.buildFinalRowObjects( startRec );
+			}
 
 			return this.rowObjects;
 		},
 
-		createRecTree : function ( object, parentRec, parentRecChildRecs ) {
+		createRecTree: function ( object, parentRec, parentRecChildRecs ) {
+
 			if ( this.depth > 19 ) {
 				console.error( Ext.getDisplayName( arguments.callee ) + ': Exceeded depth = ' + this.depth );
 				debugger;
 			}
+
 			var rec;
 			// block repetition of an object in a branch
 			var nextObject = object;
 			if ( object.isPropertyPointerWithInstance ) { nextObject = object.fetchValue(); }
-			if ( this.branchObjects.indexOf( nextObject ) !== -1 ) {
-				console.groupEnd( "STOP BRANCH " + uxExtSpect.util.StringOf.to$( nextObject ) );
+			if ( this.branchObjects.indexOf( nextObject ) !== - 1 ) {
+				console.groupEnd( "STOP BRANCH " + this.valueString( nextObject ) );
 			}
 			else {
 				rec = this.createRec( object );
-				this.depth++;
+				this.depth ++;
 				this.branchObjects.push( object );
 
 				if ( this.isInstance( object ) ) {
 					var skipDirectChild = parentRec.isPropertyPointerRec &&
-						( !parentRec.object.isPropertyPointerWithArray );
+						( ! parentRec.object.isPropertyPointerWithArray );
 					var childRecs = this.createChildRecs( object, rec );
 					if ( skipDirectChild ) {
 						var recIndex = parentRecChildRecs.indexOf( rec );
-						if ( recIndex !== -1 ) {
+						if ( recIndex !== - 1 ) {
 							console.error( 'createRecTree : rec found in parentRec.childRecs, rec =' +
 								StringOf.to$( rec ), rec );
 							debugger;
 						}
-						for ( var index = 0 , len = childRecs.length; index < len; index++ ) { parentRecChildRecs.push( childRecs[ index ] ); }
+						for ( var index = 0 , len = childRecs.length; index < len; index ++ ) {
+							parentRecChildRecs.push( childRecs[ index ] );
+						}
 					}
 					else {
 						rec.children = childRecs;
@@ -53,30 +59,36 @@ Ext.define( 'uxExtSpect.view.tree.datalist.PropertiesTree',
 					}
 				}
 
-				this.depth--;
+				this.depth --;
 				this.branchObjects.pop();
 			}
 			return rec; // rec expected by collectRowObjects()
 		},
 
-		createChildRecs : function ( parentObject, parentRec ) {
+		createChildRecs: function ( parentObject, parentRec ) {
 			var properties = parentRec.fetchProperties();
 			var childRecs = [];
-			for ( var index = 0 , len = properties.length; index < len; index++ ) {
+			for ( var index = 0 , len = properties.length; index < len; index ++ ) {
 				var property = properties[ index ];
-				if ( !( property in parentObject ) ) {
+				if ( ! ( property in parentObject ) ) {
 					console.warn( '>>>> createChildRecs' +
 						': "' + property + '" not in parentObject', parentObject );
 				}
 				else {
 					var value = parentObject[ property ];
 
-					if ( ( value instanceof Ext.util.MixedCollection ) || ( value instanceof Ext.util.Collection ) ) { value = this.extCollectionToArray( value ); }
+					if ( ( value instanceof Ext.util.MixedCollection ) || ( value instanceof Ext.util.Collection ) ) {
+						value = this.extCollectionToArray( value );
+					}
 					else {
-						if ( ( value instanceof NodeList ) || ( value instanceof HTMLCollection ) ) { value = this.htmlCollectionToArray( value ); }
+						if ( ( value instanceof NodeList ) || ( value instanceof HTMLCollection ) ) {
+							value = this.htmlCollectionToArray( value );
+						}
 					}
 
-					if ( value instanceof Array ) { this.createArrayRecs( parentObject, property, value, parentRec, childRecs ); }
+					if ( value instanceof Array ) {
+						this.createArrayRecs( parentObject, property, value, parentRec, childRecs );
+					}
 					else {
 						if ( this.isInstance( value ) ) {
 							this.createChildRec( parentObject, property, value, parentRec, childRecs );
@@ -87,9 +99,11 @@ Ext.define( 'uxExtSpect.view.tree.datalist.PropertiesTree',
 			return childRecs;
 		},
 
-		createArrayRecs : function ( parentObject, property, array, parentRec, childRecs ) {
+		createArrayRecs: function ( parentObject, property, array, parentRec, childRecs ) {
 			if ( parentObject.isPropertyPointerWithArray ) {
-				for ( var index2 = 0 , len2 = array.length; index2 < len2; index2++ ) { this.createChildRec( array, index2, array[ index2 ], parentRec, childRecs ); }
+				for ( var index2 = 0 , len2 = array.length; index2 < len2; index2 ++ ) {
+					this.createChildRec( array, index2, array[ index2 ], parentRec, childRecs );
+				}
 			}
 			else {
 				if ( ( array.length > 0 ) && this.isInstance( array[0] ) ) {
@@ -99,7 +113,7 @@ Ext.define( 'uxExtSpect.view.tree.datalist.PropertiesTree',
 			}
 		},
 
-		createChildRec : function ( parentObject, property, value, parentRec, childRecs ) {
+		createChildRec: function ( parentObject, property, value, parentRec, childRecs ) {
 			if ( ( property !== 'superclass' ) && ( property !== 'mixins' ) ) { }// do we need these ? (Check Ext tree)
 			if ( parentObject.isPropertyPointerWithInstance ) {
 				this.createRecTree( value, parentRec, childRecs );
@@ -111,7 +125,7 @@ Ext.define( 'uxExtSpect.view.tree.datalist.PropertiesTree',
 			}
 		},
 
-		createPropertyPointer : function ( parentObject, property, value, pointerClassName ) {
+		createPropertyPointer: function ( parentObject, property, value, pointerClassName ) {
 			var pointer;
 
 			var propertyCount = uxExtSpect.util.StringOf.propertyCount( value );
@@ -124,8 +138,8 @@ Ext.define( 'uxExtSpect.view.tree.datalist.PropertiesTree',
 			return pointer;
 		},
 
-		createRec : function ( object ) {
-			if ( !object ) {
+		createRec: function ( object ) {
+			if ( ! object ) {
 				console.error( Ext.getDisplayName( arguments.callee ) + ': no object', object );
 				debugger;
 			}
@@ -138,7 +152,7 @@ Ext.define( 'uxExtSpect.view.tree.datalist.PropertiesTree',
 			return rec;
 		},
 
-		requires : [
+		requires: [
 			'uxExtSpect.object.rec.ApplicationRec' ,
 			'uxExtSpect.object.rec.ComponentRec' ,
 			'uxExtSpect.object.rec.ControllerRec' ,
@@ -158,11 +172,13 @@ Ext.define( 'uxExtSpect.view.tree.datalist.PropertiesTree',
 			'uxExtSpect.object.rec.StoreManagerRec'
 		],
 
-		determineRecClassName : function ( object ) {
+		determineRecClassName: function ( object ) {
 			var recClassName;
-			if ( object.isPropertyPointerWithValue ) { recClassName = 'uxExtSpect.object.rec.PropertyPointerRec'; }
+			if ( object.isPropertyPointerWithValue ) {
+				recClassName = 'uxExtSpect.object.rec.PropertyPointerRec';
+			}
 			else {
-				if ( object.hasOwnProperty( "modelName" ) ) // $className
+				if ( object.hasOwnProperty( "modelName" ) )
 				{ recClassName = 'uxExtSpect.object.rec.ModelRec'; }
 				else {
 					if ( object instanceof Ext.app.Application ) { recClassName = 'uxExtSpect.object.rec.ApplicationRec'; }
@@ -185,13 +201,14 @@ Ext.define( 'uxExtSpect.view.tree.datalist.PropertiesTree',
 													else {
 														if ( object instanceof Ext.app.Router ) { recClassName = 'uxExtSpect.object.rec.RouterRec'; }
 														else {
-															if ( object.isStore || ( object instanceof Ext.data.Store ) ) { recClassName = 'uxExtSpect.object.rec.StoreRec'; }
+															if ( object.isStore || ( object instanceof Ext.data.Store ) ) {
+																recClassName = 'uxExtSpect.object.rec.StoreRec';
+															}
 															else {
-																if ( object === Ext ) { recClassName = 'uxExtSpect.object.rec.ExtRec'; }
-																else {
-																	if ( object instanceof Object ) { recClassName = 'uxExtSpect.object.rec.SimpleObjectRec'; }
-																	else { recClassName = 'uxExtSpect.object.rec.BaseRec'; }
+																if ( object instanceof Object ) {
+																	recClassName = 'uxExtSpect.object.rec.SimpleObjectRec';
 																}
+																else { recClassName = 'uxExtSpect.object.rec.BaseRec'; }
 															}
 														}
 													}

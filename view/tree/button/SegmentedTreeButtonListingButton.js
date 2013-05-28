@@ -7,7 +7,7 @@ Ext.define( 'uxExtSpect.view.tree.button.SegmentedTreeButtonListingButton',
 		],
 		config: {
 			items: [
-				{ xtype: 'treebutton' } ,
+				{ xtype: 'treebutton', pressed: true } ,
 				{ xtype: 'listingbutton' }
 			]
 		}

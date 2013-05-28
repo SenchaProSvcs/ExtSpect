@@ -3,6 +3,7 @@
  Base.implement.initConfig => Ext.Object.merge => Ext.apply.clone which executes a deep clone
  for arrays and for objects
  */
+
 Ext.define( 'uxExtSpect.object.rec.ExtRec',
 	{  extend : 'uxExtSpect.object.rec.BaseRec',
 

@@ -26,11 +26,11 @@ Ext.define( 'uxExtSpect.view.object.datalist.PropertiesOrArrayList',
 		},
 
 		createRowObject: function ( value, id ) {
-			return { id: id, value: value, text: uxExtSpect.util.StringOf.to$( value ) };
+			return { id: id, value: value, text: this.valueString( value ) };
 		},
 
 		// TODO: arg list for onItemDisclosure is WRONG in doc, BUG
-		handleSingleItemTap: function ( dataview, index, element, record, event, object, eOptsObject ) {
+		handleSingleItemTap: function ( dataview, index, element, record ) {
 			var value = record.data.value;
 
 			var id = record.data.id;

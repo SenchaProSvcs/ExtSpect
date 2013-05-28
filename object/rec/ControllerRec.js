@@ -1,8 +1,8 @@
 Ext.define( 'uxExtSpect.object.rec.ControllerRec',
-	{  extend : 'uxExtSpect.object.rec.BaseRec',
+	{  extend: 'uxExtSpect.object.rec.BaseRec',
 
-		properties : ["_models" , "_stores" , "_views"],
+		properties: ["_models" , "_stores" , "_views"],
 
-		listenerProperties : ["_refs" , "_routes" , "_control"]
+		listenerProperties: ["_refs" , "_routes" , "_control"]
 	}
 );

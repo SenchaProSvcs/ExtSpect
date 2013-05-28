@@ -5,13 +5,17 @@
 // used in ObjectNavigationView#pushNewArrayPanel()
 
 Ext.define( 'uxExtSpect.object.pointer.PropertyPointer',
-	{  defaultIdPrefix : 'es-pp-',
+	{  defaultIdPrefix: 'es-pp-',
 
-		object : undefined,
-		property : undefined,
+		object: undefined,
+		property: undefined,
 
-		fetchValue : function () { return this.object[ this.property ]; },
+		fetchValue: function () { return this.object[ this.property ]; },
 
-		extspectString : function () { return uxExtSpect.util.StringOf.to$( this.object ) + '.' + this.property; }
+		valueString: function ( value ) {
+			return uxExtSpect.util.StringOf.to$( value )
+		},
 
-	} );
+		extspectString: function () { return this.valueString( this.object ) + '.' + this.property; }
+	}
+);

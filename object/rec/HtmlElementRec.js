@@ -1,6 +1,6 @@
 Ext.define( 'uxExtSpect.object.rec.HtmlElementRec',
-	{  extend : 'uxExtSpect.object.rec.BaseRec',
-		properties : []
+	{  extend: 'uxExtSpect.object.rec.BaseRec',
+		properties: []
 	}
 );
 

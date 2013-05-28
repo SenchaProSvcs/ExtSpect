@@ -27,6 +27,10 @@ Ext.define( 'uxExtSpect.view.ExtSpectDataList',
 			}
 		},
 
+		valueString: function ( value ) {
+			return uxExtSpect.util.StringOf.to$( value )
+		},
+
 		fetchParentNavigationView: function () {
 			return this.up( '[isExtSpectNavigationView]' );
 		},
@@ -57,10 +61,10 @@ Ext.define( 'uxExtSpect.view.ExtSpectDataList',
 			if ( previousStore ) { Ext.StoreManager.unregister( previousStore ); }
 
 			this.determineAndSetIndexBar();
-			var recs = this.collectRowObjects();
+			var rowObjects = this.collectRowObjects();
 			var storeName = this.determineStoreName();
 			var store = Ext.create( storeName );
-			store.setData( recs );
+			store.setData( rowObjects );
 			this.setStore( store );
 			// console.groupEnd( arguments.callee.displayName, this.id );
 		},
@@ -80,8 +84,8 @@ Ext.define( 'uxExtSpect.view.ExtSpectDataList',
 			var result =
 				(  ( value instanceof Object ) &&
 					( uxExtSpect.util.StringOf.constructorName( value ) !== '' ) &&
-					( !( value instanceof RegExp ) ) &&
-					( !( value instanceof HTMLElement ) ) && // many Ext.Loader.scriptElements
+					( ! ( value instanceof RegExp ) ) &&
+					( ! ( value instanceof HTMLElement ) ) && // many Ext.Loader.scriptElements
 					( uxExtSpect.util.StringOf.propertyCount( Object ) > 0 )
 					);
 			return result;
@@ -103,8 +107,9 @@ Ext.define( 'uxExtSpect.view.ExtSpectDataList',
 
 		htmlCollectionToArray: function ( collection ) {
 			var array = [];
-			for ( var len = collection.length , index = 0; index < len; index++ ) {
-				array.push( collection.item( index ) ); }
+			for ( var len = collection.length , index = 0; index < len; index ++ ) {
+				array.push( collection.item( index ) );
+			}
 			return array;
 		}
 	}

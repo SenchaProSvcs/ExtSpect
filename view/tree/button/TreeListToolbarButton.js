@@ -6,18 +6,18 @@ Ext.define( 'uxExtSpect.view.tree.button.TreeListToolbarButton',
 			this.fetchDataList().computeAndSetData();
 		},
 
-		showNoInstances : function () {
+		showClassesOnly : function () {
 			this.fetchParentNavigationView().showInstances = false;
 			this.fetchDataList().computeAndSetData();
 		},
 
-		showNoListeners : function () {
-			this.fetchParentNavigationView().showListeners = false;
+		showContainersOnly : function () {
+			this.fetchParentNavigationView().showComponents = false;
 			this.fetchDataList().computeAndSetData();
 		},
 
-		showListeners : function () {
-			this.fetchParentNavigationView().showListeners = true;
+		showAllComponents : function () {
+			this.fetchParentNavigationView().showComponents = true;
 			this.fetchDataList().computeAndSetData();
 		},
 

@@ -1,25 +1,28 @@
 Ext.define( 'uxExtSpect.view.object.datalist.ArrayList',
-	{  extend : 'uxExtSpect.view.object.datalist.PropertiesOrArrayList',
-		xtype : 'arraylist',
-		requires : 'uxExtSpect.store.object.ArrayListStore',
-		storeName : 'uxExtSpect.store.object.ArrayListStore',
+	{  extend: 'uxExtSpect.view.object.datalist.PropertiesOrArrayList',
+		xtype: 'arraylist',
+		requires: 'uxExtSpect.store.object.ArrayListStore',
+		storeName: 'uxExtSpect.store.object.ArrayListStore',
 
-		determineGroupedOk : function () { return false; },
+		determineGroupedOk: function () { return false; },
 
-		collectRowObjects : function () {
+		collectRowObjects: function () {
 			var rootObject = this.fetchRootObject();
 			var value = rootObject.fetchValue();
 			var array = value;
 
-			if ( ( value instanceof Ext.util.MixedCollection ) || ( value instanceof Ext.util.HashMap ) )
-			{ array = this.extCollectionToArray( array ); }
+			if ( ( value instanceof Ext.util.MixedCollection ) || ( value instanceof Ext.util.HashMap ) ) {
+				array = this.extCollectionToArray( array );
+			}
 			else {
-				if ( value instanceof Ext.util.Collection )
-				{ array = ( this.parent.title === 'All' ) ? value.all : value.items; }
+				if ( value instanceof Ext.util.Collection ) {
+					array = ( this.parent.title === 'All' ) ? value.all : value.items;
+				}
 			}
 
-			if ( array === undefined )
-			{ console.error( 'ArrayList#collectRowObjects array is undefined, dataObject = ', rootObject ); }
+			if ( array === undefined ) {
+				console.error( 'ArrayList#collectRowObjects array is undefined, dataObject = ', rootObject );
+			}
 
 			var rowObjects = array.map( this.createRowObject );
 			return rowObjects;
