@@ -4,7 +4,7 @@ Ext.define( 'uxExtSpect.view.object.datalist.ArrayList',
 		requires: 'uxExtSpect.store.object.ArrayListStore',
 		storeName: 'uxExtSpect.store.object.ArrayListStore',
 
-		determineGroupedOk: function () { return false; },
+		isGroupedOk: function () { return false; },
 
 		collectRowObjects: function () {
 			var rootObject = this.fetchRootObject();
@@ -24,7 +24,7 @@ Ext.define( 'uxExtSpect.view.object.datalist.ArrayList',
 				console.error( 'ArrayList#collectRowObjects array is undefined, dataObject = ', rootObject );
 			}
 
-			var rowObjects = array.map( this.createRowObject );
+			var rowObjects = array.map( this.createRowObject, this );
 			return rowObjects;
 		}
 	}

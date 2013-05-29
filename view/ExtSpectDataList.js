@@ -12,8 +12,8 @@ Ext.define( 'uxExtSpect.view.ExtSpectDataList',
 			// variableHeights: true, // Touch 2.2.0
 			infinite: true, // Touch 2.2.0
 
-			itemHeight: 10, // added for Touch 2.1
-			// itemHeight: 16, // added for Touch 2.2
+			// itemHeight: 10, // added for Touch 2.1
+			itemHeight: 16, // added for Touch 2.2
 			// This becomes style="min-height:10px !important!" in the elements
 
 			// baseCls: 'es-list-item',
@@ -91,19 +91,16 @@ Ext.define( 'uxExtSpect.view.ExtSpectDataList',
 			return result;
 		},
 
-		pushItemOnArray: function ( item, index, len ) {
-			this.push( item );
-			return true;
-		},
-
+//		pushItemOnArray: function ( item, index, len ) {
+//			this.push( item );
+//			return true;
+//		},
 		extCollectionToArray: function ( collection ) {
-			var array = [];
-			collection.each( this.pushItemOnArray, array );
-			return array;
+//			var array = [];
+//			collection.each( this.pushItemOnArray, array );
+//			return array;
+			return collection.items; // 5/28/13
 		},
-		// TODO: BUG. Ext.Array.toArray does not work
-		// function extCollectionToArray( collection )
-		// {	return Ext.Array.toArray( collection ) }
 
 		htmlCollectionToArray: function ( collection ) {
 			var array = [];

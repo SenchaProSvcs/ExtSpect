@@ -11,42 +11,43 @@ Ext.define( 'uxExtSpect.view.tree.tabpanel.TreeTabPanel',
 			'uxExtSpect.view.tree.toolbar.ClassesTreeToolbar'
 		],
 
-		config: {    items: [
-			{  title: 'Components',
-				items: [
-					{ xtype: 'componentstree' } ,
-					{ xtype: 'componentstreetoolbar' }
-				]
-			} ,
-			{  title: 'Classes',
-				items: [
-					{ xtype: 'classestree' } ,
-					{ xtype: 'classestreetoolbar' }
-				]
-			} ,
-			{  title: 'App',
-				items: [
-					{ xtype: 'apptree' } ,
-					{ xtype: 'basictreetoolbar' }
-				]
-			} ,
-			{  title: 'Ext',
-				items: [
-					{ xtype: 'exttree' } ,
-					{ xtype: 'basictreetoolbar' }
-				]
-			}
-			/*
-			 {	title : '! Doc' ,
-			 html : 'UNDER CONSTRUCTION'
-			 } ,
-			 {	title : '! Dom' ,
-			 html : 'UNDER CONSTRUCTION'
-			 }
-			 {	title : '! Css' ,
-			 html : 'UNDER CONSTRUCTION'
-			 } */
-		] }
+		config: {
+			items: [
+				{  title: 'Components',
+					items: [
+						{ xtype: 'componentstree' } ,
+						{ xtype: 'componentstreetoolbar' }
+					]
+				} ,
+				{  title: 'Classes',
+					items: [
+						{ xtype: 'classestree' } ,
+						{ xtype: 'classestreetoolbar' }
+					]
+				} ,
+				{  title: 'App',
+					items: [
+						{ xtype: 'apptree' } ,
+						{ xtype: 'basictreetoolbar' }
+					]
+				} ,
+				{  title: 'Ext',
+					items: [
+						{ xtype: 'exttree' } ,
+						{ xtype: 'basictreetoolbar' }
+					]
+				}
+				/*
+				 {	title : '! Doc' ,
+				 html : 'UNDER CONSTRUCTION'
+				 } ,
+				 {	title : '! Dom' ,
+				 html : 'UNDER CONSTRUCTION'
+				 }
+				 {	title : '! Css' ,
+				 html : 'UNDER CONSTRUCTION'
+				 } */
+			] }
 
 	}
 );

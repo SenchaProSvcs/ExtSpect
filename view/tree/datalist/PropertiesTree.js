@@ -13,10 +13,19 @@ Ext.define( 'uxExtSpect.view.tree.datalist.PropertiesTree',
 			this.rowObjects = [];
 
 			if ( this.baseRecs.length > 0 ) {
-				this.buildFinalRowObjects( startRec );
+				this.addRowObjects( startRec );
 			}
 
 			return this.rowObjects;
+		},
+
+		createRowObject: function ( rec ) {
+			if ( ! rec ) {
+				console.error( Ext.getDisplayName( arguments.callee ) + ': no baseRowObject', rec );
+				debugger;
+			}
+			var value = rec.object;
+			return { text: this.computeRowObjectString( value ), value: value };
 		},
 
 		createRecTree: function ( object, parentRec, parentRecChildRecs ) {

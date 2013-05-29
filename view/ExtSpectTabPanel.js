@@ -4,7 +4,7 @@ Ext.define( 'uxExtSpect.view.ExtSpectTabPanel',
 		isExtSpectTabPanel : true,
 
 		config : {
-			title : 'ExtSpect 0.3.' + Ext.version.version,
+			title : 'ExtSpect 0.4.' + Ext.version.version,
 			rootObject : Ext.Viewport,
 			layout : 'card',
 			defaults : { layout : 'fit' } // 'fit' is important
@@ -14,7 +14,7 @@ Ext.define( 'uxExtSpect.view.ExtSpectTabPanel',
 			var rootObject = this.getRootObject();
 			if ( !rootObject ) {
 				rootObject = this.fetchParentNavigationView().getRootObject();
-				console.warn( 'rootObject from NavView', rootObject );
+				console.warn( arguments.callee.displayName,  'rootObject from NavView', rootObject );
 			}
 			return rootObject;
 		},

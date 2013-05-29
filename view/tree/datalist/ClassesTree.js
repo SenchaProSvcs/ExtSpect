@@ -1,14 +1,13 @@
 /*
-
  1) collectRowObjects
  collect a list of the components in the app
 
  2) addTemplateClasses
- add for each component the associated TemplateClass
+ for each component, add the associated TemplateClass
  and add a new record for each super TemplateClass ( addNewRowObject4Superclass )
  noting the associated subclasses ( addSubclassToClassRowObject )
 
- 4) buildFinalRowObjects
+ 4) addRowObjects
  build a new, sorted array of final row records.
  We store this array in this.rowObjects for collectRowObjects to return.
  */
@@ -25,10 +24,8 @@ Ext.define( 'uxExtSpect.view.tree.datalist.ClassesTree',
 			var rowObjects = [];
 			var index = 0;
 			for ( var property in mapObject ) {
-				// console.log( arguments.callee.displayName, index, property );
 				rowObjects[index ++] = this.createRowObject( mapObject[property] );
 			}
-			// console.log( arguments.callee.displayName, index, rowObjects );
 			return rowObjects;
 		},
 
@@ -38,10 +35,9 @@ Ext.define( 'uxExtSpect.view.tree.datalist.ClassesTree',
 			if ( componentRowObjects.length > 0 ) {
 				this.collectClassRowObjects( componentRowObjects );
 				this.rowObjects = [];
-				this.buildFinalRowObjects( this.baseClassRowObject );
+				this.addRowObjects( this.baseClassRowObject );
 			}
 			else { this.rowObjects = []; }
-			// console.log( arguments.callee.displayName, componentRowObjects.length, this.rowObjects.length );
 			return this.rowObjects;
 		},
 
@@ -111,34 +107,40 @@ Ext.define( 'uxExtSpect.view.tree.datalist.ClassesTree',
 
 			classRowObjects.push( newRowObject );
 
+			if ( newTemplateClass.$className === 'Ext.Component' ) {
+				// console.log( arguments.callee.displayName, newTemplateClass.$className );
+				this.baseClassRowObject = newRowObject;
+			}
+
 			var superClass = newTemplateClass.superclass;
 			if ( superClass ) {
 				this.processSuperclass( superClass, newRowObject, classRowObjects );
 			}
-			else {
-				if ( newTemplateClass.$className === 'Ext.Base' ) {
-					this.baseClassRowObject = newRowObject;
-				}
-			}
 		},
 
-		// buildFinalRowObjects
-		// Starting with Ext.Base
+		// addRowObjects
+		// Starting with this.baseClassRowObject which is Ext.Component
 		//	work through the class records, building a new array of the row objects,
 		//	ordered top to bottom according to their position in the hierarchy.
-		//	The finalRowObject produced by createFinalRowObject looks like this:
+		//	At the end, a RowObject looks like this:
 		//	{ text : string , value : templateClassObject }
 		//	We store this array in this.rowObjects for collectRowObjects to return
 
-		buildFinalRowObject2: function ( classRowObject ) {
-			classRowObject.text = this.computeRowObjectString( classRowObject.value );
-			this.rowObjects.push( classRowObject );
-			if ( ! this.fetchIsClosed( classRowObject.value ) ) {
-				var array =
-					( classRowObject.subclassRowObjects ||
-						[] ).concat( classRowObject.instanceRowObjects || [] );
-				this.addNewRowObjects( array );
+		addRowObject: function ( rowObject ) {
+			rowObject.text = this.computeRowObjectString( rowObject.value );
+			this.rowObjects.push( rowObject );
+		},
+
+		addRowObjectsForObjectAndChildren: function ( rowObject ) {
+			this.addRowObject( rowObject );
+			if ( ! this.fetchIsClosed( rowObject.value ) ) {
+				this.addChildRowObjects( rowObject );
 			}
+		},
+
+		objectChildren: function ( rowObject ) {
+			return ( rowObject.subclassRowObjects || [] ).concat( rowObject.instanceRowObjects ||
+				[] );
 		},
 
 		// in an array of objects, return the index of the first object that has value in property
@@ -149,11 +151,24 @@ Ext.define( 'uxExtSpect.view.tree.datalist.ClassesTree',
 			return - 1;
 		},
 
-		valueString2: function ( object, objectString ) {
+		spanString: function ( object, objectString ) {
 			if ( object.hasOwnProperty( "$className" ) ) {
 				return this.callParent( arguments );
 			}
 			else { return objectString; }
+		},
+
+		assignIsClosed: function ( object, bool ) {
+			if ( object.hasOwnProperty( "$className" ) ) {
+				this.callParent( arguments );
+			}
 		}
+//		assignIsClosed: function ( object, bool, record ) {
+//			console.log( arguments.callee.displayName, object, record );
+//			var rowObject = record.raw;
+//			if ( this.objectChildren( rowObject ).length > 0 ) {
+//				this.callParent( arguments );
+//			}
+//		}
 	}
 );

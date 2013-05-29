@@ -1,11 +1,11 @@
 Ext.define( 'uxExtSpect.view.object.datalist.property.MethodsList',
-	{  extend : 'uxExtSpect.view.object.datalist.property.PropertiesList',
-		xtype : 'methodlist',
+	{  extend: 'uxExtSpect.view.object.datalist.property.PropertiesList',
+		xtype: 'methodlist',
 
-		storeName : 'uxExtSpect.store.object.property.PropertiesListStore',
-		determineGroupedOk : function () { return false; }, // we do not group methods yet
+		storeName: 'uxExtSpect.store.object.property.PropertiesListStore',
+		isGroupedOk: function () { return false; }, // we do not group methods yet
 
-		isValueOk : function ( value, property ) { return ( value instanceof Function ); }
+		isValueOk: function ( value, property ) { return ( value instanceof Function ); }
 	}
 );
 

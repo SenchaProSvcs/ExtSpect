@@ -2,6 +2,7 @@
  Base.implement.initConfig => Ext.Object.merge => Ext.apply.clone which executes a deep clone
  for arrays and for objects.
  */
+
 // used in ObjectNavigationView#pushNewArrayPanel()
 
 Ext.define( 'uxExtSpect.object.pointer.PropertyPointer',

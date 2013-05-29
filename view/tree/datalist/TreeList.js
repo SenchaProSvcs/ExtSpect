@@ -7,11 +7,10 @@ Ext.define( 'uxExtSpect.view.tree.datalist.TreeList',
 			'uxExtSpect.store.tree.TreeListStore'
 		],
 		config: {
-			indexBar: false,
 			scrollToTopOnRefresh: false,
 		},
 
-		valueString2: function ( object, objectString ) {
+		spanString: function ( object, objectString ) {
 			return '<span style="font-weight:bold">' + objectString + '</span>';
 		},
 
@@ -27,46 +26,54 @@ Ext.define( 'uxExtSpect.view.tree.datalist.TreeList',
 			}
 		},
 
-		// see also collectComponentRowObjects
-		buildFinalRowObjects: function ( object ) {
-			// console.log( arguments.callee.displayName, object );
-			this.depth = 1;
+		addRowObjects: function ( object ) {
+			this.depth = 1; // used when getUseTreeWithLines is false
 			this.totalCounts = [];
 			this.counts = [];
-			this.buildFinalRowObject2( object );
+			this.addRowObjectsForObjectAndChildren( object );
 		},
 
-		// see also addSubcomponentRowObjects
-		addNewRowObjects: function ( objects ) {
-			var totalCount = objects.length;
+		objectChildren: function ( object ) {
+			return object.children || [];
+		},
+
+		addChildRowObjects: function ( object ) {
+			var array = this.objectChildren( object );
+			var totalCount = array.length;
 			if ( totalCount > 0 ) {
-				this.depth ++;
+				this.depth ++ // used when showListing
 				this.totalCounts.push( totalCount );
 				this.counts.push( 0 );
-				objects.forEach( this.buildFinalRowObject2, this );
+				array.forEach( this.addRowObjectsForObjectAndChildren, this );
 				this.counts.pop();
 				this.totalCounts.pop();
 				this.depth --;
 			}
 		},
 
-		buildFinalRowObject2: function ( object ) {
-			this.rowObjects.push( this.createFinalRowObject( object ) );
-			var array = object.children || [];
-			this.addNewRowObjects( array );
+		addRowObject: function ( object ) {
+			this.rowObjects.push( this.createRowObject( object ) );
 		},
 
-		createFinalRowObject: function ( object ) {
-			if ( ! object ) {
-				console.error( Ext.getDisplayName( arguments.callee ) + ': no baseRowObject', object );
-				debugger;
-			}
-			var value = object.object;
-			return { text: this.computeRowObjectString( value ), value: value };
+		addRowObjectsForObjectAndChildren: function ( object ) {
+			this.addRowObject( object );
+			this.addChildRowObjects( object );
 		},
 
+		/*
+		 Counts and totalCounts are arrays that keep track of the number of rows are in a group at a given level.
+		 Each element in the array contains the count for group of items at that level of indentation.
+		 TotalCount represents the total number of rows in the group.
+		 Count is an index to the current row withing the group.
+		 addChildRowObjects pushes these counts onto the arrays.
+		 ext.viewport
+		 ┣ ext-container-1       count = 0, totalCount = 2
+		 ┃┣ ext-component-11    count = 0, totalCount = 3
+		 ┃┣ ext-component-12    count = 1, totalCount = 3
+		 ┃┗ ext-component-12    count = 2, totalCount = 3
+		 ┗ ext-component-1     count = 1, totalCount = 2
+		 */
 		computeRowObjectString: function ( object ) {
-			var depth = this.depth;
 			var counts = this.counts;
 			var objectString = this.valueString( object );
 			if ( this.fetchIsClosed( object ) ) {
@@ -74,47 +81,57 @@ Ext.define( 'uxExtSpect.view.tree.datalist.TreeList',
 			}
 			counts[ counts.length - 1 ] ++;
 
-			return this.fetchParentNavigationView().showListing ?
-				objectString :
-				(   uxExtSpect.instance.getUseTreeWithLines() ?
-					this.computeVerticalBars().join( '' ) + this.valueString2( object, objectString ) :
-					Ext.String.repeat( uxExtSpect.instance.getTreeIndentingChar(), depth ) + objectString
-					);
+			var navigationView = this.fetchParentNavigationView();
+			if ( navigationView.showListing ) {
+				return objectString;
+			}
+			else {
+				if ( navigationView.showIndented ) {
+					return Ext.String.repeat( this.treeIndentingChar, this.depth ) + this.spanString( object, objectString );
+				}
+				else {
+					return this.computeVerticalBars( object, objectString ).join( '' ) + this.spanString( object, objectString );
+				}
+			}
 		},
 
+		treeIndentingChar: '&ensp;',  // &emsp; &ensp; &nbsp;
 		verticalBarChar: String.fromCharCode( 0x2503 ), // 0x2503 0x2502
 		verticalRightChar: String.fromCharCode( 0x2523 ), // 0x2523 0x251C 0x2520
 		upAndRightChar: String.fromCharCode( 0x2517 ), // 0x2517 0x2514 0x2516
 		// leftAndDownChar : String.fromCharCode( 0x2513 ) , // 0x2513 0x2511 0x2512
 		// hotizontalAndDownChar : String.fromCharCode( 0x2533 ) , // 0x2533
 
-		// return an array of chars representing on the left the tree and its branches
-		computeVerticalBars: function () {
+		// for each row, return an array of chars representing on the left the tree and its branches
+		computeVerticalBars: function ( object, objectString ) {
 			var chars = [];
 			var totalCounts = this.totalCounts;
 			var totalCountsLen = totalCounts.length;
 			var counts = this.counts;
+			var index = 0;
 
-			for ( var index = 0 , len = totalCountsLen - 1; index < len; index ++ ) {
+			// add on the vertical bars
+			for ( var len = totalCountsLen - 1; index < len; index ++ ) {
 				if ( counts[ index ] < totalCounts[ index ] ) { chars.push( this.verticalBarChar ); } // ┃
 				else { chars.push( '&emsp;' ); }
 			}
 
+			// console.log( objectString, counts[ index ], totalCounts[ index ] );//, counts, totalCounts );
+
+			// index === ( totalCountsLen - 1 ), the last item in the array
 			if ( totalCountsLen > 0 ) {
-				if ( counts[ index ] === totalCounts[ index ] ) { chars.push( this.upAndRightChar ); } // ┗
-				else {
-					chars.push( this.verticalRightChar ); // ┣
-				}
+				if ( counts[ index ] === totalCounts[ index ] ) // last row in the group
+				{ chars.push( this.upAndRightChar ); } // ┗
+				else { chars.push( this.verticalRightChar ); } // ┣
 
 				chars.push( '&nbsp;' );
 			}
+
 			return chars;
 		},
 
-		// show the indexBar on the right only if this is a listing and not a tree
 		determineAndSetIndexBar: function () {
-			var isListing = this.fetchParentNavigationView().showListing;
-			this.setIndexBar( isListing );
+			this.setIndexBar( false );
 		},
 
 		handleSingleItemTap: function ( dataview, index, listItem, record ) {
@@ -150,32 +167,26 @@ Ext.define( 'uxExtSpect.view.tree.datalist.TreeList',
 			var idString = this.fetchIdString( object );
 			var isClosedObject = this.fetchIsClosedObject( object, idString );
 			var isClosed = isClosedObject[ idString ];
-			// console.log( arguments.callee.displayName, idString, isClosed );
 			return isClosed;
 		},
 
 		assignIsClosed: function ( object, bool ) {
 			var idString = this.fetchIdString( object );
-			//console.group( arguments.callee.displayName, idString, "bool=", bool );
 			var isClosedObject = this.fetchIsClosedObject( object, idString );
-			// console.log( arguments.callee.displayName, "isClosedObject=", isClosedObject );
 			isClosedObject[ idString ] = bool;
-			// isClosedObject[ object.$className || object.id ] = Math.random();
-			// console.log( arguments.callee.displayName, "isClosedObject=", isClosedObject );
-			// console.groupEnd( arguments.callee.displayName, "isClosedObject=", isClosedObject );
 		},
 
 		handleDoubleItemtap: function ( dataview, index, listItem, record ) {
 			// console.log( arguments.callee.displayName, arguments );
 			var object = record.data.value
-			console.group( arguments.callee.displayName, "object.$className||id=", object.$className || object.id )
+			// console.group( arguments.callee.displayName, "object.$className||id=", object.$className || object.id )
 			var isClosed = this.fetchIsClosed( object );
-			console.log( arguments.callee.displayName, isClosed );
-			this.assignIsClosed( object, ! isClosed );
+			// console.log( arguments.callee.displayName, isClosed );
+			this.assignIsClosed( object, ! isClosed /*, record */ );
 			this.computeAndSetData();
 
 			this.selectValue( object );
-			console.groupEnd( arguments.callee.displayName, "isClosed=", isClosed );
+			// console.groupEnd( arguments.callee.displayName, "isClosed=", isClosed );
 		}
 	}
 );

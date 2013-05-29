@@ -1,10 +1,4 @@
-MOVED THIS TO A UX FOLDER
-moved StringOf to uxExtSpect.util.StringOf
-
-new namespace uxExtSpect
-Note: this.addCssLinkElement( '../ux/extspect/resources/extspect.css' );
-
-Release notes for ExtSpect
+ReadMe.txt for ExtSpect
 
 by Jim.Soper@Sencha.com
 
@@ -22,11 +16,17 @@ For users of the demo app, ux/extspect/ExtSpectExample, the index.html
 file expects that a touch2 directory will bein a root directory.
 Please make adjustments in index.html as needed.
 
-For installation of ExtSpect as a plugin, there are 2 things that you must
+For installation of ExtSpect as a plugin, there are 3 things that you must
 do, and a couple more optional choices.
 
-o Copy only the ux/extspect folder to just inside your app's main folder,
-at the same level as your index.html file.
+o Copy only the ../ux/extspect folder to be a sibling of your app's main folder.
+
+o In your app.js file, or in the file that uses Extspect, add the following:
+		Ext.Loader.setPath( {
+			uxExtSpect: '../ux/extspect'
+		} );
+This creates a namespace called uxExtSpect.
+You then require 'uxExtSpect.ExtSpect' to load in ExtSpect.
 
 o Somewhere inside the views that you build, add ExtSpect as a panel.
 The ExtSpect class extends Ext.Panel, but it can also be added using the
@@ -54,6 +54,8 @@ The file that adds ExtSpect to a container must also declare
 
 	requires : [ 'uxExtSpect.ExtSpect' ]
 
+o Note that we also load in '/ux/extspect/resources/extspect.css'
+
 
 ========== USAGE
 
@@ -72,9 +74,6 @@ sibling tab, and back again.
 The [Group] button at the bottom attempts to group the properties according
 to categories found in the property name. Properties with no identified
 category are listed at the bottom, according to the datatype of their value.
-
-Users of ExtSpectCrimeFinder demo will find an ExtSpect tab at the bottom
-of the main window.
 
 
 ========== CLASS ABBREVIATIONS

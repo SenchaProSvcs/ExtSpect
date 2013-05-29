@@ -9,18 +9,18 @@ Ext.define( 'uxExtSpect.view.object.datalist.PropertiesOrArrayList',
 
 			// TODO: TEST FOR DIRECT DATA  object.hasOwnProperty( pname )
 			itemTpl: // direct data should be bold, inherited plain
-				'<span style = "font-weight : bold">{id} : </span>' +
-					'<span style = "font-weight : normal">{text}</span>'
+				'<span style = "font-weight: bold">{id}: </span>' +
+					'<span style = "font-weight: normal">{text}</span>'
 		},
 
 		determineAndSetIndexBar: function () {
-			var groupedOk = this.determineGroupedOk();
+			var groupedOk = this.isGroupedOk();
 			this.setGrouped( groupedOk );
 			// determineStoreName() depends on this.getGrouped()
 
 			// We do not use the indexBar for groups because the
 			// groupings by datatype follow at the bottom in lowercase.
-			this.setIndexBar( !groupedOk );
+			this.setIndexBar( ! groupedOk );
 
 			// this.callParent( arguments )
 		},

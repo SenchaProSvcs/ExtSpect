@@ -6,6 +6,7 @@ Ext.define( 'uxExtSpect.view.tree.TreeNavigationView', {
 	dataListStoreName: 'uxExtSpect.store.tree.TreeListStore',
 
 	showListing: false,
+	showIndented: false,
 	showComponents: false,
 	showInstances: false,
 

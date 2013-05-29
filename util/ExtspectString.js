@@ -1,6 +1,6 @@
-// Adds an extspectString() method to various Ext classes so that ExtSpect display them abbreviated fashion
+// Adds an extspectString() method to various Ext classes so that ExtSpect can display them abbreviated fashion
 
-Ext.define( 'uxExtSpect.util.ExtspectString', { } );
+Ext.define( 'uxExtSpect.util.ExtspectString', { } ); // This is for the class loader
 
 if ( !uxExtSpect.util.StringOf ) { uxExtSpect.util.StringOf = {} }
 

@@ -2,7 +2,7 @@ Ext.define( 'uxExtSpect.util.StringOf', { } );
 
 // ---------- uxExtSpect.util.StringOf constants
 
-if ( !uxExtSpect.util.StringOf ) { uxExtSpect.util.StringOf = {} }
+if ( ! uxExtSpect.util.StringOf ) { uxExtSpect.util.StringOf = {} }
 
 uxExtSpect.util.StringOf.empty$ = '';
 
@@ -14,7 +14,6 @@ uxExtSpect.util.StringOf.rightSingleQuoteChar = "'";// String.fromCharCode( 0x20
 
 uxExtSpect.util.StringOf.leftBrace$ = '{';		// String.fromCharCode( 0x276e )
 uxExtSpect.util.StringOf.rightBrace$ = '}';     // String.fromCharCode( 0x276f )
-
 
 // ---------- uxExtSpect.util.StringOf.class$
 
@@ -48,11 +47,11 @@ uxExtSpect.util.StringOf.to$ = function ( value ) {
 			return this.leftDoubleQuoteChar +
 				this.ellipsis$( value ) +
 				this.rightDoubleQuoteChar;
-		case 'number'    :
-			return value.toString();// 123 instanceof Number -> false
-		case 'boolean'    :
-			return value.toString();// true instanceof Boolean -> false
-		case 'regexp'        :
+		case 'number' :
+			return value.toString(); // 123 instanceof Number -> false
+		case 'boolean' :
+			return value.toString(); // true instanceof Boolean -> false
+		case 'regexp' :
 			return this.ellipsis$( value.toString() );
 		// other built-in types : date , error , array , function
 	}
@@ -67,7 +66,7 @@ uxExtSpect.util.StringOf.to$._name = 'uxExtSpect.util.StringOf.to$';
 // ---------- uxExtSpect.util.StringOf.object$
 
 uxExtSpect.util.StringOf.object$ = function ( object, typeString ) {
-	if ( !( object instanceof Object ) ) {
+	if ( ! ( object instanceof Object ) ) {
 		console.error( uxExtSpect.util.StringOf.functionName( arguments.callee ) + ': object =', object );
 		debugger;
 	}
@@ -99,7 +98,8 @@ uxExtSpect.util.StringOf.object$ = function ( object, typeString ) {
 			// HTMLElements : id, title, className
 			{
 				if ( "localName" in object ) // Node
-				{	typeString = object.localName || object.nodeName || object.tagName ||
+				{
+					typeString = object.localName || object.nodeName || object.tagName ||
 						this.nodeType$( object.nodeType );
 					dataString = object.nodeValue || object.id || dataString || object.src || object.href;
 					if ( dataString ) { dataString = this.lastPartOfName( dataString, 2, '/' ); }
@@ -108,14 +108,14 @@ uxExtSpect.util.StringOf.object$ = function ( object, typeString ) {
 				}
 				else {
 					if ( "$className" in object ) // Sencha
-					{  typeString = this.lastPartOfName( object.$className || typeString );}
+					{ typeString = this.lastPartOfName( object.$className || typeString );}
 					else { typeString = this.constructorName( object );}
 				}
 			}
 		}
 	}
 
-	if ( !dataString ) { dataString = this.objectData$( object ); }
+	if ( ! dataString ) { dataString = this.objectData$( object ); }
 	else { dataString = this.quote$( dataString );}
 
 	var string = ( object instanceof Element ) ?
@@ -152,7 +152,7 @@ uxExtSpect.util.StringOf.element$._name = 'uxExtSpect.util.StringOf.element$';
 
 uxExtSpect.util.StringOf.propertyCount = function ( object ) {
 	var count = 0;
-	for ( var property in object ) { count++; }
+	for ( var property in object ) { count ++; }
 	return count;
 };
 uxExtSpect.util.StringOf.propertyCount._name = 'propertyCount.object$';
@@ -179,13 +179,15 @@ uxExtSpect.util.StringOf.objectData$ = function ( object ) {
 	var propertyCount = 0;
 	var methodCount = 0;
 	var dataString = '';
-	this.to$_depth++;
+	this.to$_depth ++;
 	if ( this.to$_depth > 5 ) // Ext.browser.version , Ext.DomHelper
 	{ return '...etc...'; }
 
 	for ( var property in object ) {
-		if ( object[ property ] instanceof Function ) { methodCount++;}
-		else { propertyCount++;}
+		if ( object[ property ] instanceof Function ) {
+			methodCount ++;
+		}
+		else { propertyCount ++;}
 	}
 
 	if ( ( propertyCount === 0 ) &&
@@ -198,7 +200,7 @@ uxExtSpect.util.StringOf.objectData$ = function ( object ) {
 			//	( methodCount ? ( 'p/' + methodCount + 'm' ) : uxExtSpect.util.StringOf.empty$ )
 		}
 	}
-	this.to$_depth--;
+	this.to$_depth --;
 	return dataString;
 };
 uxExtSpect.util.StringOf.objectData$._name = 'uxExtSpect.util.StringOf.object$';
@@ -209,7 +211,7 @@ uxExtSpect.util.StringOf.objectProperties$ = function ( object ) {
 	var string = '';
 	for ( var property in object ) {
 		var value = object[ property ];
-		if ( !( value instanceof Function ) ) { string += property + ': ' + this.to$( value ) + ', '; }
+		if ( ! ( value instanceof Function ) ) { string += property + ': ' + this.to$( value ) + ', '; }
 	}
 	string = string.substring( 0, string.length - 2 );
 	string = this.ellipsis$( string );
@@ -256,7 +258,7 @@ uxExtSpect.util.StringOf.nodeType$._name = 'uxExtSpect.util.StringOf.nodeType$';
 // ---------- uxExtSpect.util.StringOf.functionName
 
 uxExtSpect.util.StringOf.functionName = function ( fnctn ) {
-	if ( !( fnctn instanceof Function ) ) {
+	if ( ! ( fnctn instanceof Function ) ) {
 		console.error( 'uxExtSpect.util.StringOf.functionName : fnctn = ', fnctn );
 		return null;
 	}
@@ -295,7 +297,7 @@ uxExtSpect.util.StringOf.constructorName._name = 'uxExtSpect.util.StringOf.deter
 // if the name contains dots , take the last part of the name
 
 uxExtSpect.util.StringOf.lastPartOfName = function ( name, count, separator ) {
-	if ( !separator ) { separator = '.';}
+	if ( ! separator ) { separator = '.';}
 	var index = name.lastIndexOf( separator );
 	if ( index > 4 ) {
 		if ( count > 1 ) {
@@ -317,25 +319,24 @@ uxExtSpect.util.StringOf.array$ = function ( array ) {
 	if ( this.to$_depth > 0 ) { string = '[' + '...' + len; }
 	else {
 		string = '[' + ( array[ 0 ] ? this.to$( array [ 0 ] ) : this.empty$ );
-		this.to$_depth++;
+		this.to$_depth ++;
 		if ( len <= 6 ) {
-			for ( var index = 1; index < len; index++ ) { string += ', ' + this.to$( array[ index ] );}
+			for ( var index = 1; index < len; index ++ ) { string += ', ' + this.to$( array[ index ] );}
 		}
 		else { string += ', ...+' + ( len - 1 );}
-		this.to$_depth--;
+		this.to$_depth --;
 	}
 	return string + ']';
 };
 uxExtSpect.util.StringOf.array$._name = 'uxExtSpect.util.StringOf.array$';
 // Array.map( uxExtSpect.util.StringOf.to$ ) // Does not work with Arguments
 
-
 // ---------- uxExtSpect.util.StringOf.date$
 
 // typeof( new Date ) -> 'object'
 
 uxExtSpect.util.StringOf.date$ = function ( date ) {
-	if ( !date ) { date = this;}
+	if ( ! date ) { date = this;}
 	return 'Date' + this.leftBrace$ +
 		date.getFullYear() + '.' +
 		( date.getMonth() + 1 ) + '.' +

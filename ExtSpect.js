@@ -5,6 +5,7 @@ Ext.define( 'uxExtSpect.ExtSpect',
 	{  extend: 'Ext.Panel',
 		xtype: 'extspect',
 		id: 'es-extspect',
+
 		requires: [
 			'uxExtSpect.view.object.ObjectNavigationView',
 			'uxExtSpect.view.tree.TreeNavigationView' ,
@@ -29,10 +30,7 @@ Ext.define( 'uxExtSpect.ExtSpect',
 			],
 
 			// The top/starting object in the tree views
-			rootObject: Ext.Viewport,
-
-			useTreeWithLines: true, // see note below
-			treeIndentingChar: '&ensp;'  // &emsp; &ensp; &nbsp;
+			rootObject: Ext.Viewport ///,
 		},
 
 		constructor: function ( config ) {
@@ -63,7 +61,7 @@ Ext.define( 'uxExtSpect.ExtSpect',
 
 			this.addCssFile( 'extspect.css' );
 
-			if ( !this.getApp() ) {
+			if ( ! this.getApp() ) {
 				console.error( 'uxExtSpect.initialize() did not receive a value for the config property app:' );
 			}
 			// console.log( arguments.callee.displayName, 'this.getApp()=', this.getApp() );
@@ -82,16 +80,3 @@ Ext.define( 'uxExtSpect.ExtSpect',
 		}
 	}
 );
-
-/* Notes for getUseTreeWithLines and getTreeIndentingChar
- Extpect provides 2 options for showning trees in the left pane -
- with indenting and with lines.
-
- If you choose to have lines appear in the tree, then set
- useTreeWithLines : true
-
- If  you prefer to have a standard list appearence in both panes, then set
- useTreeWithLines : false ,
- In this case, ExtSpect will indent the contents of the list items using
- getTreeIndentingChar()
- */

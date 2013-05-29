@@ -8,16 +8,16 @@ Ext.define( 'uxExtSpect.view.tree.toolbar.ComponentsTreeToolbar',
 
 		config: {
 			items: [
-				{  xtype: 'treelistingbuttons' },
-				{  xtype: 'spacer',
-					width: 20
-				} ,
 				{  xtype: 'segmentedbutton',
 					items: [
 						{ xtype: 'containersonlybutton', pressed: true },
 						{ xtype: 'componentsbutton' }
 					]
-				}
+				},
+				{  xtype: 'spacer',
+					width: 20
+				} ,
+				{  xtype: 'treelistingbuttons' }
 			]
 		}
 	}
