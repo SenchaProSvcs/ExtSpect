@@ -1,6 +1,18 @@
 Ext.define( 'uxExtSpect.view.tree.datalist.PropertiesTree',
 	{  extend: 'uxExtSpect.view.tree.datalist.TreeList',
 
+		isContainerOrClass: function ( rec ) {
+			return true;
+		},
+
+		parentOf: function ( rec ) {
+			return undefined;
+		},
+
+		objectChildren: function ( rec ) {
+			return rec.children || [];
+		},
+
 		collectRowObjects: function () {
 			var object = this.fetchRootObject();
 			if ( ! object ) { return null; }
@@ -25,7 +37,7 @@ Ext.define( 'uxExtSpect.view.tree.datalist.PropertiesTree',
 				debugger;
 			}
 			var value = rec.object;
-			return { text: this.computeRowObjectString( value ), value: value };
+			return { text: this.rowStringOf( value ), value: value };
 		},
 
 		createRecTree: function ( object, parentRec, parentRecChildRecs ) {
@@ -40,7 +52,7 @@ Ext.define( 'uxExtSpect.view.tree.datalist.PropertiesTree',
 			var nextObject = object;
 			if ( object.isPropertyPointerWithInstance ) { nextObject = object.fetchValue(); }
 			if ( this.branchObjects.indexOf( nextObject ) !== - 1 ) {
-				console.groupEnd( "STOP BRANCH " + this.valueString( nextObject ) );
+				console.groupEnd( "STOP BRANCH " + this.valueStringOf( nextObject ) );
 			}
 			else {
 				rec = this.createRec( object );
@@ -123,7 +135,6 @@ Ext.define( 'uxExtSpect.view.tree.datalist.PropertiesTree',
 		},
 
 		createChildRec: function ( parentObject, property, value, parentRec, childRecs ) {
-			if ( ( property !== 'superclass' ) && ( property !== 'mixins' ) ) { }// do we need these ? (Check Ext tree)
 			if ( parentObject.isPropertyPointerWithInstance ) {
 				this.createRecTree( value, parentRec, childRecs );
 			}

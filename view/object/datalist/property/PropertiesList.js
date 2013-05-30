@@ -8,9 +8,7 @@ Ext.define( 'uxExtSpect.view.object.datalist.property.PropertiesList',
 		storeName: null,
 
 		isValueOk: function ( value, property ) {
-			return ! ( ( value instanceof Function ) ||
-				( this.isInternalPropertyName( property ) )
-				);
+			return ! ( this.isFunction( value ) || this.isInternalPropertyName( property ) );
 		},
 
 		firstSixCharsAreUpperCase: function ( string ) {
@@ -26,14 +24,11 @@ Ext.define( 'uxExtSpect.view.object.datalist.property.PropertiesList',
 		},
 
 		isInternalPropertyName: function ( property ) {
-			return    ( property.charAt( 0 ) === '_' ) ||
-				this.firstSixCharsAreUpperCase( property );
+			return ( property.charAt( 0 ) === '_' ) || this.firstSixCharsAreUpperCase( property );
 		},
 
 		isCollectionValue: function ( value ) {
-			return    (    (    value instanceof Array ) ||
-				(    value instanceof Ext.util.AbstractMixedCollection )
-				);
+			return ( ( value instanceof Array ) || ( value instanceof Ext.util.AbstractMixedCollection ) );
 		},
 
 		determineCollectionGroup: function ( value, property ) {
@@ -41,7 +36,7 @@ Ext.define( 'uxExtSpect.view.object.datalist.property.PropertiesList',
 		},
 
 		determineObjectGroup: function ( value, property ) {
-			if ( value instanceof Function ) { return '= function ='; }
+			if ( this.isFunction( value ) ) { return '= function ='; }
 			if ( value instanceof RegExp ) { return '= regular expression ='; }
 			if ( value instanceof Date ) { return '= date ='; }
 			if ( value instanceof String ) { return '= string ='; }

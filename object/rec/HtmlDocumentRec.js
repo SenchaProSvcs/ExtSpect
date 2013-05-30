@@ -3,4 +3,4 @@ Ext.define( 'uxExtSpect.object.rec.HtmlDocumentRec',
 		properties: []
 	}
 );
-// You dont want "all" in here
+// You don't want "all" in here

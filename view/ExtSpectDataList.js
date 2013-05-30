@@ -14,20 +14,23 @@ Ext.define( 'uxExtSpect.view.ExtSpectDataList',
 
 			// itemHeight: 10, // added for Touch 2.1
 			itemHeight: 16, // added for Touch 2.2
-			// This becomes style="min-height:10px !important!" in the elements
+			// This becomes style="min-height:16px !important!" in the elements
 
 			// baseCls: 'es-list-item',
 			// cls: 'es-list-item',
 			// itemCls:'es-list-item', // Touch 2.1
 
 			listeners: {
-				itemsingletap: function () { this.handleSingleItemTap.apply( this, arguments ); },
-				itemdoubletap: function () { this.handleDoubleItemtap.apply( this, arguments ); },
+				itemsingletap: function () { this.handleItemSingleTap.apply( this, arguments ); },
 				painted: function () { this.handlePainted.apply( this, arguments ); }
 			}
 		},
 
-		valueString: function ( value ) {
+		isFunction: uxExtSpect.util.StringOf.isFunction,
+
+		isClass: uxExtSpect.util.StringOf.isExtClass,
+
+		valueStringOf: function ( value ) {
 			return uxExtSpect.util.StringOf.to$( value )
 		},
 
@@ -51,9 +54,9 @@ Ext.define( 'uxExtSpect.view.ExtSpectDataList',
 
 		// ========== handlePainted
 
-		handleDoubleItemtap: function () { /* Do nothing*/ },
-
 		handlePainted: function () { this.computeAndSetData(); },
+
+//		setRowString: function ( rowObject ) {},
 
 		computeAndSetData: function () {
 			// console.group( arguments.callee.displayName, this.id );
@@ -62,6 +65,7 @@ Ext.define( 'uxExtSpect.view.ExtSpectDataList',
 
 			this.determineAndSetIndexBar();
 			var rowObjects = this.collectRowObjects();
+			// rowObjects.forEach( this.setRowString, this );
 			var storeName = this.determineStoreName();
 			var store = Ext.create( storeName );
 			store.setData( rowObjects );
@@ -74,8 +78,9 @@ Ext.define( 'uxExtSpect.view.ExtSpectDataList',
 			return storeName;
 		},
 
-		// isExtObject : function ( value )
-		// {	return ( value instanceof Ext.Base ) || ( value && value.hasOwnProperty( "modelName" ) ) } ,
+//		isExtObject: function ( value ) {
+//			return ( value instanceof Ext.Base ) || ( value && value.hasOwnProperty( "modelName" ) )
+//		},
 
 		// An instance here is defined as an object with a named constructor
 		// The Instance must have at least 1 property
@@ -86,19 +91,13 @@ Ext.define( 'uxExtSpect.view.ExtSpectDataList',
 					( uxExtSpect.util.StringOf.constructorName( value ) !== '' ) &&
 					( ! ( value instanceof RegExp ) ) &&
 					( ! ( value instanceof HTMLElement ) ) && // many Ext.Loader.scriptElements
+					// ( ! this.isExtObject( value ) ) &&
 					( uxExtSpect.util.StringOf.propertyCount( Object ) > 0 )
 					);
 			return result;
 		},
 
-//		pushItemOnArray: function ( item, index, len ) {
-//			this.push( item );
-//			return true;
-//		},
 		extCollectionToArray: function ( collection ) {
-//			var array = [];
-//			collection.each( this.pushItemOnArray, array );
-//			return array;
 			return collection.items; // 5/28/13
 		},
 

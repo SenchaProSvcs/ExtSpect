@@ -5,8 +5,7 @@ Ext.define( 'uxExtSpect.view.tree.TreeNavigationView', {
 	requires: ['uxExtSpect.view.tree.tabpanel.TreeTabPanel'],
 	dataListStoreName: 'uxExtSpect.store.tree.TreeListStore',
 
-	showListing: false,
-	showIndented: false,
+	presentationMode: 'tree',
 	showComponents: false,
 	showInstances: false,
 

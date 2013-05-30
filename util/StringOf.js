@@ -15,6 +15,27 @@ uxExtSpect.util.StringOf.rightSingleQuoteChar = "'";// String.fromCharCode( 0x20
 uxExtSpect.util.StringOf.leftBrace$ = '{';		// String.fromCharCode( 0x276e )
 uxExtSpect.util.StringOf.rightBrace$ = '}';     // String.fromCharCode( 0x276f )
 
+// ---------- uxExtSpect.util.StringOf.isFunction
+
+uxExtSpect.util.StringOf.isFunction = function ( value ) {
+	return ( value instanceof Function ) && ! ( 'modelName' in value );
+}
+
+uxExtSpect.util.StringOf.isExtClass = function ( value ) {
+	// tests
+	if ( value.hasOwnProperty( "superclass" ) && ! value.hasOwnProperty( "$className" ) ) {
+		console.error( 'uxExtSpect.util.StringOf.isExtClass' + "UNO" );
+		debugger;
+	}
+	if ( value.hasOwnProperty( "$className" ) && ! value.hasOwnProperty( "superclass" ) &&
+		! value == Ext.Base ) {
+		console.error( 'uxExtSpect.util.StringOf.isExtClass' + "DEUX" );
+		debugger;
+	}
+	return value.hasOwnProperty( '$className' );
+	// Template classes have an own propperty 'superclass'. Does not include Ext.Base
+}
+
 // ---------- uxExtSpect.util.StringOf.class$
 
 uxExtSpect.util.StringOf.class$ = function ( value ) {
@@ -75,8 +96,6 @@ uxExtSpect.util.StringOf.object$ = function ( object, typeString ) {
 
 		if ( object.hasOwnProperty( "$className" ) ) {
 			dataString = this.lastPartOfName( object.$className || dataString, 2 );
-			// if ( ! object.hasOwnProperty( "superclass" ) ) Ext.Base
-			// {	console.warn( 'uxExtSpect.util.StringOf.object$, $className but no superclass, ' , object ) }
 		}
 
 		typeString = object.type || typeString;
@@ -184,9 +203,8 @@ uxExtSpect.util.StringOf.objectData$ = function ( object ) {
 	{ return '...etc...'; }
 
 	for ( var property in object ) {
-		if ( object[ property ] instanceof Function ) {
-			methodCount ++;
-		}
+		var value = object[ property ];
+		if ( this.isFunction( value ) ) { methodCount ++; }
 		else { propertyCount ++;}
 	}
 
@@ -202,7 +220,8 @@ uxExtSpect.util.StringOf.objectData$ = function ( object ) {
 	}
 	this.to$_depth --;
 	return dataString;
-};
+}
+;
 uxExtSpect.util.StringOf.objectData$._name = 'uxExtSpect.util.StringOf.object$';
 
 // ---------- uxExtSpect.util.StringOf.objectProperties$
@@ -211,12 +230,15 @@ uxExtSpect.util.StringOf.objectProperties$ = function ( object ) {
 	var string = '';
 	for ( var property in object ) {
 		var value = object[ property ];
-		if ( ! ( value instanceof Function ) ) { string += property + ': ' + this.to$( value ) + ', '; }
+		if ( ! this.isFunction( value ) ) {
+			string += property + ': ' + this.to$( value ) + ', ';
+		}
 	}
 	string = string.substring( 0, string.length - 2 );
 	string = this.ellipsis$( string );
 	return string;
-};
+}
+;
 uxExtSpect.util.StringOf.objectProperties$._name = 'uxExtSpect.util.StringOf.object2$';
 
 // ---------- uxExtSpect.util.StringOf.nodeType$

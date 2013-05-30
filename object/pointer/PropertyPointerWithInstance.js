@@ -7,6 +7,7 @@ Ext.define( 'uxExtSpect.object.pointer.PropertyPointerWithInstance',
 
 		extspectString: function () {
 			return this.callParent( arguments ) +
-				'<span style = "font-weight : normal">' + this.valueString( this.value ) + '</span>';
+				'<span style = "font-weight : normal">' + this.valueStringOf( this.value ) + '</span>';
 		}
-	} );
+	}
+);

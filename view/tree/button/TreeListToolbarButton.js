@@ -20,26 +20,24 @@ Ext.define( 'uxExtSpect.view.tree.button.TreeListToolbarButton',
 			this.fetchParentNavigationView().showComponents = true;
 			this.fetchDataList().computeAndSetData();
 		},
+
 		showListing: function () {
 			var navigationView = this.fetchParentNavigationView();
-			navigationView.showListing = true;
-			navigationView.showIndented = false;
+			navigationView.presentationMode = 'list';
 			navigationView.dataListStoreName = 'uxExtSpect.store.tree.ListingStore';
 			this.fetchDataList().computeAndSetData();
 		},
 
 		showIndented: function () {
 			var navigationView = this.fetchParentNavigationView();
-			navigationView.showListing = false;
-			navigationView.showIndented = true;
+			navigationView.presentationMode = 'indented';
 			navigationView.dataListStoreName = 'uxExtSpect.store.tree.TreeListStore';
 			this.fetchDataList().computeAndSetData();
 		},
 
 		showTree: function () {
 			var navigationView = this.fetchParentNavigationView();
-			navigationView.showListing = false;
-			navigationView.showIndented = false;
+			navigationView.presentationMode = 'tree';
 			navigationView.dataListStoreName = 'uxExtSpect.store.tree.TreeListStore';
 			this.fetchDataList().computeAndSetData();
 		}

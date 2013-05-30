@@ -13,10 +13,12 @@ Ext.define( 'uxExtSpect.object.pointer.PropertyPointer',
 
 		fetchValue: function () { return this.object[ this.property ]; },
 
-		valueString: function ( value ) {
+		valueStringOf: function ( value ) {
 			return uxExtSpect.util.StringOf.to$( value )
 		},
 
-		extspectString: function () { return this.valueString( this.object ) + '.' + this.property; }
+		extspectString: function () {
+			return this.valueStringOf( this.object ) + '.' + this.property;
+		}
 	}
 );

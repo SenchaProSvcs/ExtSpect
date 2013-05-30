@@ -5,7 +5,9 @@ Ext.define( 'uxExtSpect.view.object.datalist.property.MethodsList',
 		storeName: 'uxExtSpect.store.object.property.PropertiesListStore',
 		isGroupedOk: function () { return false; }, // we do not group methods yet
 
-		isValueOk: function ( value, property ) { return ( value instanceof Function ); }
+		isValueOk: function ( value, property ) {
+			return ( this.isFunction( value ) );
+		}
 	}
 );
 

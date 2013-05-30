@@ -8,16 +8,26 @@ Ext.define( 'uxExtSpect.view.tree.datalist.TreeList',
 		],
 		config: {
 			scrollToTopOnRefresh: false,
+			listeners: {
+				itemdoubletap: function () { this.handleItemDoubleTap.apply( this, arguments ); },
+				itemtaphold: function () { this.handleItemTapHold.apply( this, arguments ); },
+			}
 		},
 
-		spanString: function ( object, objectString ) {
-			return '<span style="font-weight:bold">' + objectString + '</span>';
+//		spanStringOf: function ( object, objectString ) {
+//			return '<span style="font-weight:bold">' + objectString + '</span>';
+//		},
+		spanStringOf: function ( object, objectString ) {
+			if ( this.isContainerOrClass( object ) ) {
+				return '<span style="font-weight:bold">' + objectString + '</span>';}
+			// else
+			return objectString;
 		},
 
 		selectValue: function ( value ) {
 			var store = this.getStore();
 			if ( store ) { // a list that is not visible mght not have a store
-				var objectString = this.valueString( value );
+				var objectString = this.valueStringOf( value );
 				var record = store.findRecord( "text", objectString, 0, true );
 				if ( record ) {
 					this.deselectAll();
@@ -33,9 +43,6 @@ Ext.define( 'uxExtSpect.view.tree.datalist.TreeList',
 			this.addRowObjectsForObjectAndChildren( object );
 		},
 
-		objectChildren: function ( object ) {
-			return object.children || [];
-		},
 
 		addChildRowObjects: function ( object ) {
 			var array = this.objectChildren( object );
@@ -55,9 +62,28 @@ Ext.define( 'uxExtSpect.view.tree.datalist.TreeList',
 			this.rowObjects.push( this.createRowObject( object ) );
 		},
 
+//		addRowObjectsForObjectAndChildren: function ( object ) {
+//			this.addRowObject( object );
+//			this.addChildRowObjects( object );
+//		},
+
 		addRowObjectsForObjectAndChildren: function ( object ) {
 			this.addRowObject( object );
-			this.addChildRowObjects( object );
+			if ( this.isContainerOrClass( object ) && ! this.isClosed( object ) ) {
+				this.addChildRowObjects( object );
+			}
+		},
+
+		setBranchStateNoneIfParentStateIsKids: function ( object ) {
+			//console.log( arguments.callee.displayName, 'o=' + object.id );
+
+			var parent = this.parentOf( object );
+			//	if ( parent ) {console.log( arguments.callee.displayName, 'p=' + parent.id );}
+
+			if ( parent && this.isShowingChildren( parent ) ) {
+				//	console.log( arguments.callee.displayName, 'isSC=' + this.isShowingChildren( parent ) );
+				this.setBranchState( object, 'none' );
+			}
 		},
 
 		/*
@@ -73,25 +99,31 @@ Ext.define( 'uxExtSpect.view.tree.datalist.TreeList',
 		 ┃┗ ext-component-12    count = 2, totalCount = 3
 		 ┗ ext-component-1     count = 1, totalCount = 2
 		 */
-		computeRowObjectString: function ( object ) {
+		rowStringOf: function ( object ) {
+
+			// increment the row count within the group
 			var counts = this.counts;
-			var objectString = this.valueString( object );
-			if ( this.fetchIsClosed( object ) ) {
-				objectString += ' ++';
-			}
 			counts[ counts.length - 1 ] ++;
 
-			var navigationView = this.fetchParentNavigationView();
-			if ( navigationView.showListing ) {
-				return objectString;
+			this.setBranchStateNoneIfParentStateIsKids( object );
+
+			var objectString = this.valueStringOf( object );
+			if ( this.isClosed( object ) ) {
+				objectString += ' ++';
 			}
-			else {
-				if ( navigationView.showIndented ) {
-					return Ext.String.repeat( this.treeIndentingChar, this.depth ) + this.spanString( object, objectString );
-				}
-				else {
-					return this.computeVerticalBars( object, objectString ).join( '' ) + this.spanString( object, objectString );
-				}
+			if ( this.isShowingChildren( object ) ) {
+				objectString += ' &&';
+			}
+
+			var spanString = this.spanStringOf( object, objectString );
+
+			switch ( this.fetchParentNavigationView().presentationMode ) {
+				case 'tree' :
+					return this.computeVerticalBars( object, objectString ).join( '' ) + spanString;
+				case  'indented' :
+					return Ext.String.repeat( this.treeIndentingChar, this.depth ) + spanString;
+				case  'list' :
+					return objectString;
 			}
 		},
 
@@ -130,11 +162,16 @@ Ext.define( 'uxExtSpect.view.tree.datalist.TreeList',
 			return chars;
 		},
 
+//		setRowString: function ( rowObject ) {
+//			var value = rowObject.value;
+//			rowObject.text = this.rowStringOf( value );
+//		},
+
 		determineAndSetIndexBar: function () {
 			this.setIndexBar( false );
 		},
 
-		handleSingleItemTap: function ( dataview, index, listItem, record ) {
+		handleItemSingleTap: function ( dataview, index, listItem, record ) {
 			// console.log( arguments.callee.displayName, "record=", record );
 			var value = record.data.value;
 
@@ -150,43 +187,79 @@ Ext.define( 'uxExtSpect.view.tree.datalist.TreeList',
 			}
 		},
 
-		fetchIdString: function ( object ) { return this.id; },
+		idStringFor: function ( object ) { return this.id; },
 
-		fetchIsClosedObject: function ( object, idString ) {
-			var isClosedObject = object.hasOwnProperty( 'extSpectisClosedObject' ) &&
-				object.extSpectisClosedObject;
-			if ( ! isClosedObject ) {
-				isClosedObject = new Object();
-				isClosedObject[ idString ] = false;
-				object.extSpectisClosedObject = isClosedObject;
+		branchStateObjectFor: function ( object, listIdString ) {
+			var stateObject = object.hasOwnProperty( 'extspectBranchStateObject' ) &&
+				object.extspectBranchStateObject;
+			if ( ! stateObject ) {
+				stateObject = new Object();
+				stateObject[ listIdString ] = 'all';
+				object.extspectBranchStateObject = stateObject;
 			}
-			return isClosedObject
+			return stateObject
 		},
 
-		fetchIsClosed: function ( object ) {
-			var idString = this.fetchIdString( object );
-			var isClosedObject = this.fetchIsClosedObject( object, idString );
-			var isClosed = isClosedObject[ idString ];
-			return isClosed;
+		// branchState represents how many levels of descendents will be shown from this node
+		// possible values are: 'all' | 'none' | 'kids'. Kids means 1 level.
+		branchStateOf: function ( object ) {
+			var listIdString = this.idStringFor( object );
+			var stateObject = this.branchStateObjectFor( object, listIdString );
+			return stateObject[ listIdString ];
 		},
 
-		assignIsClosed: function ( object, bool ) {
-			var idString = this.fetchIdString( object );
-			var isClosedObject = this.fetchIsClosedObject( object, idString );
-			isClosedObject[ idString ] = bool;
+		isClosed: function ( object ) {
+			return this.branchStateOf( object ) === 'none'
 		},
 
-		handleDoubleItemtap: function ( dataview, index, listItem, record ) {
-			// console.log( arguments.callee.displayName, arguments );
+		isShowingChildren: function ( object ) {
+			return this.branchStateOf( object ) === 'kids'
+		},
+
+		setBranchState: function ( object, string ) {
+			var listIdString = this.idStringFor( object );
+			var stateObject = this.branchStateObjectFor( object, listIdString );
+			stateObject[ listIdString ] = string;
+		},
+
+		handleItemDoubleTap: function ( dataview, index, listItem, record ) {
 			var object = record.data.value
-			// console.group( arguments.callee.displayName, "object.$className||id=", object.$className || object.id )
-			var isClosed = this.fetchIsClosed( object );
-			// console.log( arguments.callee.displayName, isClosed );
-			this.assignIsClosed( object, ! isClosed /*, record */ );
-			this.computeAndSetData();
+			var isClosed = this.isClosed( object );
 
+			// console.log( arguments.callee.displayName, isClosed );
+			this.setBranchState( object, isClosed ? 'kids' : 'none' );
+
+			var parent = this.parentOf( object );
+			if ( this.isShowingChildren( parent ) ) {
+				this.setBranchState( parent, 'all' );
+			}
+
+			// console.log( arguments.callee.displayName, this.branchStateOf( object ) );
+			this.computeAndSetData();
 			this.selectValue( object );
-			// console.groupEnd( arguments.callee.displayName, "isClosed=", isClosed );
+		},
+
+		handleItemTapHold: function ( dataview, index, listItem, record ) {
+			var object = record.data.value
+			var branchState = this.branchStateOf( object );
+			// console.log( arguments.callee.displayName, '1 ' + this.branchStateOf( object ) );
+			if ( branchState === 'all' ) {
+				this.setBranchState( object, 'none' );
+			}
+			else {
+				this.setBranchState( object, 'all' );
+				this.setItemsBranchStateToNone( object );
+			}
+			// console.log( arguments.callee.displayName, '2 ' + this.branchStateOf( object ) );
+			this.computeAndSetData();
+			// this.selectValue( object );
+		},
+
+		setItemsBranchStateToNone: function ( object ) {
+			if ( this.isContainerOrClass( object ) ) {
+				this.setBranchState( object, 'all' );
+				this.objectChildren( object ).forEach( this.setItemsBranchStateToNone, this );
+			}
 		}
 	}
 );

@@ -16,6 +16,14 @@ Ext.define( 'uxExtSpect.view.tree.datalist.ClassesTree',
 	{  extend: 'uxExtSpect.view.tree.datalist.TreeList',
 		xtype: 'classestree',
 
+		parentOf: function ( object ) {
+			return object.superclass;
+		},
+
+		isContainerOrClass: function ( object ) {
+			return this.isClass( object );
+		},
+
 		createRowObject: function ( object ) { return { value: object }; },
 
 		// Collect all the components from ComponentManager
@@ -52,7 +60,7 @@ Ext.define( 'uxExtSpect.view.tree.datalist.ClassesTree',
 				var templateClass = component.self.prototype;
 
 				var pos = this.findItemPos( templateClass, "value", classRowObjects );
-				var classIsClosed = this.fetchIsClosed( templateClass );
+				var classIsClosed = this.isClosed( templateClass );
 				if ( pos === - 1 ) {
 					classRowObject = this.createRowObject( templateClass );
 					classRowObjects.push( classRowObject );
@@ -127,13 +135,14 @@ Ext.define( 'uxExtSpect.view.tree.datalist.ClassesTree',
 		//	We store this array in this.rowObjects for collectRowObjects to return
 
 		addRowObject: function ( rowObject ) {
-			rowObject.text = this.computeRowObjectString( rowObject.value );
+			rowObject.text = this.rowStringOf( rowObject.value );
 			this.rowObjects.push( rowObject );
 		},
 
 		addRowObjectsForObjectAndChildren: function ( rowObject ) {
 			this.addRowObject( rowObject );
-			if ( ! this.fetchIsClosed( rowObject.value ) ) {
+			var object = rowObject.value;
+			if ( this.isContainerOrClass( object ) && ! this.isClosed( object ) ) {
 				this.addChildRowObjects( rowObject );
 			}
 		},
@@ -151,24 +160,10 @@ Ext.define( 'uxExtSpect.view.tree.datalist.ClassesTree',
 			return - 1;
 		},
 
-		spanString: function ( object, objectString ) {
-			if ( object.hasOwnProperty( "$className" ) ) {
-				return this.callParent( arguments );
-			}
-			else { return objectString; }
-		},
-
-		assignIsClosed: function ( object, bool ) {
-			if ( object.hasOwnProperty( "$className" ) ) {
+		setBranchState: function ( object, string ) {
+			if ( this.isClass( object ) ) {
 				this.callParent( arguments );
 			}
 		}
-//		assignIsClosed: function ( object, bool, record ) {
-//			console.log( arguments.callee.displayName, object, record );
-//			var rowObject = record.raw;
-//			if ( this.objectChildren( rowObject ).length > 0 ) {
-//				this.callParent( arguments );
-//			}
-//		}
 	}
 );
