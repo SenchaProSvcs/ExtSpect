@@ -1,3 +1,8 @@
+/* The PropertiesTree is used for the App and Ext view,
+where most of the nodes are showing properties of the
+parent object.
+ */
+
 Ext.define( 'uxExtSpect.view.tree.datalist.PropertiesTree',
 	{  extend: 'uxExtSpect.view.tree.datalist.TreeList',
 
@@ -5,13 +10,23 @@ Ext.define( 'uxExtSpect.view.tree.datalist.PropertiesTree',
 			return true;
 		},
 
+//		isClosed: function ( object ) {
+//			return false;
+//		},
+
 		parentOf: function ( rec ) {
 			return undefined;
 		},
 
-		objectChildren: function ( rec ) {
+		showableChildren: function ( rec ) {
 			return rec.children || [];
 		},
+
+//		isShowingKids: function ( rec ) {
+//			return false;
+//		},
+
+//		setBranchStateNoneIfParentStateIsKids: function ( object ) {},
 
 		collectRowObjects: function () {
 			var object = this.fetchRootObject();
@@ -29,6 +44,11 @@ Ext.define( 'uxExtSpect.view.tree.datalist.PropertiesTree',
 			}
 
 			return this.rowObjects;
+		},
+
+		addRowObjectsForObjectAndChildren: function ( rec ) {
+			this.addRowObject( rec );
+			this.addChildRowObjects( rec );
 		},
 
 		createRowObject: function ( rec ) {
@@ -198,8 +218,7 @@ Ext.define( 'uxExtSpect.view.tree.datalist.PropertiesTree',
 				recClassName = 'uxExtSpect.object.rec.PropertyPointerRec';
 			}
 			else {
-				if ( object.hasOwnProperty( "modelName" ) )
-				{ recClassName = 'uxExtSpect.object.rec.ModelRec'; }
+				if ( object.hasOwnProperty( "modelName" ) ) { recClassName = 'uxExtSpect.object.rec.ModelRec'; }
 				else {
 					if ( object instanceof Ext.app.Application ) { recClassName = 'uxExtSpect.object.rec.ApplicationRec'; }
 					else {
