@@ -7,12 +7,8 @@ Ext.define( 'uxExtSpect.view.tree.datalist.PropertiesTree',
 	{  extend: 'uxExtSpect.view.tree.datalist.TreeList',
 
 		isContainerOrClass: function ( rec ) {
-			return true;
+			return true; // rec.children;
 		},
-
-//		isClosed: function ( object ) {
-//			return false;
-//		},
 
 		parentOf: function ( rec ) {
 			return undefined;
@@ -21,12 +17,6 @@ Ext.define( 'uxExtSpect.view.tree.datalist.PropertiesTree',
 		showableChildren: function ( rec ) {
 			return rec.children || [];
 		},
-
-//		isShowingKids: function ( rec ) {
-//			return false;
-//		},
-
-//		setBranchStateNoneIfParentStateIsKids: function ( object ) {},
 
 		collectRowObjects: function () {
 			var object = this.fetchRootObject();

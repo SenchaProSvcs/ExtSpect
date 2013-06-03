@@ -7,10 +7,10 @@ Ext.define( 'uxExtSpect.view.object.datalist.PropertiesOrArrayList',
 			indexBar: true, // Ext.IndexBar
 			// TODO: indexBar should only be true if more than 10 items
 
-			// TODO: TEST FOR DIRECT DATA  object.hasOwnProperty( pname )
-			itemTpl: // direct data should be bold, inherited plain
-				'<span style = "font-weight: bold">{id}: </span>' +
-					'<span style = "font-weight: normal">{text}</span>'
+			// itemCls: 'es-properties-list-item-cls',
+
+			itemTpl:
+				'<b>{id}</b>: {text}'
 		},
 
 		determineAndSetIndexBar: function () {
@@ -25,8 +25,12 @@ Ext.define( 'uxExtSpect.view.object.datalist.PropertiesOrArrayList',
 			// this.callParent( arguments )
 		},
 
-		createRowObject: function ( value, id ) {
-			return { id: id, value: value, text: this.valueStringOf( value ) };
+		createRowObject: function ( value, id, object ) {
+			var string = this.valueStringOf( value );
+			if ( object && object.hasOwnProperty( id ) ) {
+				string = '<b>' + string + '</b>';
+			}
+			return { id: id, value: value, text: string };
 		},
 
 		// TODO: arg list for onItemDisclosure is WRONG in doc, BUG
@@ -48,9 +52,13 @@ Ext.define( 'uxExtSpect.view.object.datalist.PropertiesOrArrayList',
 						'uxExtSpect.view.object.tabpanel.CollectionTabPanel' );
 				}
 				else {
-					if ( value instanceof Array ) { navigationView.pushNewArrayPanel( value, id, parentTabPanel ); }
+					if ( value instanceof Array ) {
+						navigationView.pushNewArrayPanel( value, id, parentTabPanel );
+					}
 					else {
-						if ( value instanceof Object ) { navigationView.pushNewPropertiesPanel( value ); }
+						if ( value instanceof Object ) {
+							navigationView.pushNewPropertiesPanel( value );
+						}
 					}
 				}
 			}

@@ -1,30 +1,46 @@
+/* Tweak or Mac Safari */
 body.x-desktop
 { font-size: 100% }
 
-/* For Mac Safari */
+#es-extspect .x-list-item-label, /* 2.0.1.1 only */
+#es-extspect .x-list-item, /* for 2.0.1.1 only */
+#es-extspect .x-list-item-body /* for 2.1.1 only? */
+{ font-family: 'Arial Narrow', sans-serif;
+	/* font-size: 20px;
+	height: 1em;
+	*/
+	line-height: 1em;
+	min-height: 1em;
+	padding-top: 2px;
+	padding-bottom: 2px;
+	border-top: 0;
+	border-bottom: 0;
+	margin-top: 0;
+	margin-bottom: 0;
+}
+
+/* Experiments
+#es-extspect .x-list .x-list-disclosure, 2.2.0
+#es-extspect .x-list .x-list-item .inner-html, 2.2.0
+*/
 
 /*
 http://www.sencha.com/blog/whats-new-in-sencha-touch-21
 #es-extspect .x-dock-body,
 */
-/* Experiments
-#es-extspect .x-list .x-list-disclosure, 2.2.0
-#es-extspect .x-list .x-list-item .inner-html, 2.2.0
-*/
-#es-extspect .x-list-item-label, /* 2.0.1.1 only */
-#es-extspect .x-list-item, /* for 2.0.1.1 only */
-#es-extspect .x-list-item-body /* for 2.1.1 only? */
-{  font-family: 'Arial Narrow', sans-serif;
-	line-height: 1em;
-	min-height: 1em;
-	/* height: 1em; */
-	border-top: 0;
-	border-bottom: 0;
-	padding-top: 0; /*  Experiment*/
-	padding-bottom: 0;
-	margin-top: 0;
-	margin-bottom: 0;
+
+/* More Experiments
+
+.es-tree-item-cls
+{ font-size: 12px;
 }
+.es-indent-item-cls
+{ font-size: 16px;
+}
+.es-properties-list-item-cls
+{ font-size: 16px;
+}
+*/
 
 /* THIS WORKS FINE IN 2.1.1
 BUT NOT SO WELL IN 2.0.1.1

@@ -156,7 +156,7 @@ Ext.define( 'uxExtSpect.view.object.datalist.property.PropertiesList',
 				var value = object[ property ];
 				if ( this.isValueOk( value, property ) ) {
 					var group = groupedOk ? this.determineGroup( value, property ) : null;
-					var record = this.createRowObject( value, property, group );
+					var record = this.createRowObject( value, property, object, group );
 					recs.push( record );
 				}
 			}
@@ -170,7 +170,7 @@ Ext.define( 'uxExtSpect.view.object.datalist.property.PropertiesList',
 			return recs.sort( this.comparisonFunction );
 		},
 
-		createRowObject: function ( value, id, group ) {
+		createRowObject: function ( value, id, object, group ) {
 			var rec = this.callParent( arguments );
 			rec.group = group;
 			return rec;

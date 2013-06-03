@@ -64,7 +64,8 @@ Ext.define( 'uxExtSpect.ExtSpect',
 			if ( ! this.getApp() ) {
 				console.error( 'uxExtSpect.initialize() did not receive a value for the config property app:' );
 			}
-			// console.log( arguments.callee.displayName, 'this.getApp()=', this.getApp() );
+
+			// allows for a different top level component other than Viewport
 			if ( this.startObject ) {
 				var navView = this.fetchObjectNavigationView();
 				navView.setStartObject( this.startObject );

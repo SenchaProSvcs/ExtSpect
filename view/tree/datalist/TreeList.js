@@ -8,18 +8,13 @@ Ext.define( 'uxExtSpect.view.tree.datalist.TreeList',
 		],
 		config: {
 			scrollToTopOnRefresh: false,
-//			listeners: {
-//				itemdoubletap: function () { this.handleItemDoubleTap.apply( this, arguments ); },
-//				itemtaphold: function () { this.handleItemTapHold.apply( this, arguments ); }
-//			}
+			// itemCls: 'es-tree-item-cls', // Touch 2.1
+			presentationMode: 'tree'
 		},
 
-//		spanStringOf: function ( object, objectString ) {
-//			return '<span style="font-weight:bold">' + objectString + '</span>';
-//		},
 		spanStringOf: function ( object, objectString ) {
 			if ( this.isContainerOrClass( object ) ) {
-				return '<span style="font-weight:bold">' + objectString + '</span>';
+				return '<b>' + objectString + '</b>';
 			}
 			// else
 			return objectString;
@@ -38,7 +33,7 @@ Ext.define( 'uxExtSpect.view.tree.datalist.TreeList',
 		},
 
 		addRowObjects: function ( object ) {
-			this.depth = 1; // used when getUseTreeWithLines is false
+			this.depth = 0; // used when getUseTreeWithLines is false
 			this.totalCounts = [];
 			this.counts = [];
 			this.addRowObjectsForObjectAndChildren( object );
@@ -48,7 +43,7 @@ Ext.define( 'uxExtSpect.view.tree.datalist.TreeList',
 			var array = this.showableChildren( object );
 			var totalCount = array.length;
 			if ( totalCount > 0 ) {
-				this.depth ++ // used when showListing
+				this.depth ++ // used when showIndented
 				this.totalCounts.push( totalCount );
 				this.counts.push( 0 );
 				array.forEach( this.addRowObjectsForObjectAndChildren, this );
@@ -81,20 +76,21 @@ Ext.define( 'uxExtSpect.view.tree.datalist.TreeList',
 			var counts = this.counts;
 			counts[ counts.length - 1 ] ++;
 
-			var objectString = this.valueStringOf( object );
-			var spanString = this.spanStringOf( object, objectString );
+			var valueString = this.valueStringOf( object );
+			var spanString = this.spanStringOf( object, valueString );
 
-			switch ( this.fetchParentNavigationView().presentationMode ) {
+			switch ( this.getPresentationMode() ) {
 				case 'tree' :
-					return this.computeVerticalBars( object, objectString ).join( '' ) + spanString;
+					return this.computeVerticalBars( object, valueString ).join( '' ) + spanString;
 				case  'indented' :
-					return Ext.String.repeat( this.treeIndentingChar, this.depth ) + spanString;
+					return Ext.String.repeat( this.indentingChar, this.depth ) + spanString;
 				case  'list' :
-					return objectString;
+					return valueString;
 			}
 		},
-
-		treeIndentingChar: '&ensp;',  // &emsp; &ensp; &nbsp;
+		// &emsp; &ensp; &nbsp;
+		treeSpaces: Ext.browser.is.Safari ? '&emsp;&emsp;&emsp;&emsp;' : '&emsp;', // to the left of the bars
+		indentingChar: Ext.browser.is.Safari ? '&emsp;&emsp;' : '&ensp;',
 		verticalBarChar: String.fromCharCode( 0x2503 ), // 0x2503 0x2502
 		verticalRightChar: String.fromCharCode( 0x2523 ), // 0x2523 0x251C 0x2520
 		upAndRightChar: String.fromCharCode( 0x2517 ), // 0x2517 0x2514 0x2516
@@ -112,10 +108,8 @@ Ext.define( 'uxExtSpect.view.tree.datalist.TreeList',
 			// add on the vertical bars
 			for ( var len = totalCountsLen - 1; index < len; index ++ ) {
 				if ( counts[ index ] < totalCounts[ index ] ) { chars.push( this.verticalBarChar ); } // ┃
-				else { chars.push( '&emsp;' ); }
+				else { chars.push( this.treeSpaces ); }
 			}
-
-			// console.log( objectString, counts[ index ], totalCounts[ index ] );//, counts, totalCounts );
 
 			// index === ( totalCountsLen - 1 ), the last item in the array
 			if ( totalCountsLen > 0 ) {
@@ -123,16 +117,11 @@ Ext.define( 'uxExtSpect.view.tree.datalist.TreeList',
 				{ chars.push( this.upAndRightChar ); } // ┗
 				else { chars.push( this.verticalRightChar ); } // ┣
 
-				chars.push( '&nbsp;' );
+				chars.push( '&nbsp;' ); // padding between a bar and the start of the name
 			}
 
 			return chars;
 		},
-
-//		setRowString: function ( rowObject ) {
-//			var value = rowObject.value;
-//			rowObject.text = this.rowStringOf( value );
-//		},
 
 		determineAndSetIndexBar: function () {
 			this.setIndexBar( false );

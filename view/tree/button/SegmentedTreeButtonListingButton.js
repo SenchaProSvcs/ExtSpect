@@ -4,13 +4,13 @@ Ext.define( 'uxExtSpect.view.tree.button.SegmentedTreeButtonListingButton',
 		requires: [
 			'uxExtSpect.view.tree.button.sort.TreeButton' ,
 			'uxExtSpect.view.tree.button.sort.IndentingButton',
-			'uxExtSpect.view.tree.button.sort.ListingButton'
+			// 'uxExtSpect.view.tree.button.sort.ListingButton'
 		],
 		config: {
 			items: [
 				{ xtype: 'treebutton', pressed: true },
-				{ xtype: 'indentingbutton' },
-				{ xtype: 'listingbutton' }
+				{ xtype: 'indentingbutton' }
+				// , { xtype: 'listingbutton' }
 			]
 		}
 	}

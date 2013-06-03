@@ -5,7 +5,7 @@ Ext.define( 'uxExtSpect.view.tree.TreeNavigationView', {
 	requires: ['uxExtSpect.view.tree.tabpanel.TreeTabPanel'],
 	dataListStoreName: 'uxExtSpect.store.tree.TreeListStore',
 
-	presentationMode: 'tree',
+	// presentationMode: 'tree',
 	showComponents: false,
 	showInstances: false,
 
@@ -13,10 +13,6 @@ Ext.define( 'uxExtSpect.view.tree.TreeNavigationView', {
 		items: [
 			{ xtype: 'treetabpanel' }
 		]
-	},
-
-	fetchDataLists: function () {
-		return this.query( '[isExtSpectDataList=true]' );
 	},
 
 	// A new object has appeared in the Object view

@@ -42,22 +42,27 @@ Ext.define( 'uxExtSpect.view.tree.datalist.BranchStateTree',
 			return this.branchStateOf( object ) === 'kids'
 		},
 
-		setBranchState: function ( object, string ) {
-			var listIdString = this.idStringFor( object );
-			var stateObject = this.branchStateObjectFor( object, listIdString );
-			stateObject[ listIdString ] = string;
+		spanStringOf: function ( object, objectString ) {
+			var string = this.callParent( arguments );
+			if ( this.isClosed( object ) ) {
+				string = '<u>' + string + '</u>';
+			}
+//			else
+//			if ( this.isShowingKids( object ) ) {
+//				string = '<i>' + string + '</i>';
+//			}
+			return string;
 		},
 
 		rowStringOf: function ( object ) {
 			this.setBranchStateNoneIfParentStateIsKids( object );
-//			if ( this.isClosed( object ) ) {
-//				objectString += ' ++';
-//			}
-//			if ( this.isShowingKids( object ) ) {
-//				objectString += ' &&';
-//			}
-
 			return this.callParent( arguments );
+		},
+
+		setBranchState: function ( object, string ) {
+			var listIdString = this.idStringFor( object );
+			var stateObject = this.branchStateObjectFor( object, listIdString );
+			stateObject[ listIdString ] = string;
 		},
 
 		setBranchStateNoneIfParentStateIsKids: function ( object ) {
@@ -80,7 +85,7 @@ Ext.define( 'uxExtSpect.view.tree.datalist.BranchStateTree',
 			this.setBranchState( object, isClosed ? 'kids' : 'none' );
 
 			var parent = this.parentOf( object );
-			if ( this.isShowingKids( parent ) ) {
+			if ( parent && this.isShowingKids( parent ) ) {
 				this.setBranchState( parent, 'all' );
 			}
 

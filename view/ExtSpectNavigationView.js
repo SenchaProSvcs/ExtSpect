@@ -16,6 +16,10 @@ Ext.define( 'uxExtSpect.view.ExtSpectNavigationView',
 			minWidth: 300,
 			width: '50%',
 			rootObject: Ext.Viewport
+		},
+
+		fetchDataLists: function () {
+			return this.query( '[isExtSpectDataList=true]' );
 		}
 	}
 );

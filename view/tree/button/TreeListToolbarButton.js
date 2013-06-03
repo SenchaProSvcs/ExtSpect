@@ -21,25 +21,44 @@ Ext.define( 'uxExtSpect.view.tree.button.TreeListToolbarButton',
 			this.fetchDataList().computeAndSetData();
 		},
 
-		showListing: function () {
-			var navigationView = this.fetchParentNavigationView();
-			navigationView.presentationMode = 'list';
-			navigationView.dataListStoreName = 'uxExtSpect.store.tree.ListingStore';
-			this.fetchDataList().computeAndSetData();
-		},
+//		showListing: function () {
+//			var tree = this.fetchDataList();
+//			tree.setPresentationMode( 'list' );
+//			var navigationView = this.fetchParentNavigationView();
+//			navigationView.dataListStoreName = 'uxExtSpect.store.tree.ListingStore';
+//			tree.computeAndSetData();
+//		},
+
+//		setItemClassForDataLists: function ( navigationView, value ) {
+//			console.log( arguments.callee.displayName );
+//			var dataLists = navigationView.fetchDataLists();
+//			for ( var index = 0, len = dataLists.length; index < len; index ++ ) {
+//				dataLists[index].setItemCls( value );
+//			}
+//		},
 
 		showIndented: function () {
+			var tree = this.fetchDataList();
+			tree.setPresentationMode( 'indented' );
+
+			// tree.setItemCls( 'es-indent-item-cls' );
+
 			var navigationView = this.fetchParentNavigationView();
-			navigationView.presentationMode = 'indented';
 			navigationView.dataListStoreName = 'uxExtSpect.store.tree.TreeListStore';
-			this.fetchDataList().computeAndSetData();
+
+			tree.computeAndSetData();
 		},
 
 		showTree: function () {
+			var tree = this.fetchDataList();
+			tree.setPresentationMode( 'tree' );
+
+			// tree.setItemCls( 'es-tree-item-cls' );
+
 			var navigationView = this.fetchParentNavigationView();
-			navigationView.presentationMode = 'tree';
 			navigationView.dataListStoreName = 'uxExtSpect.store.tree.TreeListStore';
-			this.fetchDataList().computeAndSetData();
+
+			tree.computeAndSetData();
 		}
 	}
 );

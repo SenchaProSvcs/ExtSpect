@@ -15,25 +15,25 @@ Ext.define( 'uxExtSpect.view.tree.tabpanel.TreeTabPanel',
 			items: [
 				{  title: 'Components',
 					items: [
-						{ xtype: 'componentstree' } ,
+						{ xtype: 'componentstree' },
 						{ xtype: 'componentstreetoolbar' }
 					]
-				} ,
+				},
 				{  title: 'Classes',
 					items: [
 						{ xtype: 'classestree' } ,
 						{ xtype: 'classestreetoolbar' }
 					]
-				} ,
-				{  title: 'App',
-					items: [
-						{ xtype: 'apptree' } ,
-						{ xtype: 'basictreetoolbar' }
-					]
-				} ,
+				},
 				{  title: 'Ext',
 					items: [
 						{ xtype: 'exttree' } ,
+						{ xtype: 'basictreetoolbar' }
+					]
+				},
+				{  title: 'App',
+					items: [
+						{ xtype: 'apptree' } ,
 						{ xtype: 'basictreetoolbar' }
 					]
 				}

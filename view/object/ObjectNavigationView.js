@@ -13,13 +13,7 @@ Ext.define( 'uxExtSpect.view.object.ObjectNavigationView', {
 
 	showOnlyOwnProperties: false,
 
-	config: {
-		items: [
-			{
-				xtype: 'extobjecttabpanel'
-			}
-		]
-	},
+	config: { items: [ { xtype: 'extobjecttabpanel' } ] },
 
 	// called by ObjectNavigationView#onBackButtonTap()
 	// p. 4-36 Touch manual says this is needed
@@ -116,8 +110,7 @@ Ext.define( 'uxExtSpect.view.object.ObjectNavigationView', {
 			var newTabPanel = Ext.create( panelClass || 'uxExtSpect.view.object.tabpanel.ArrayTabPanel' );
 			newTabPanel.setRootObject( pointer );
 
-			// TODO: If you are drilling down thru an array of arrays, title$
-			// might be wrong!
+			// TODO: If you are drilling down thru an array of arrays, title$ might be wrong!
 			var title = pointer.extspectString();
 			this.push( {
 				title: title,

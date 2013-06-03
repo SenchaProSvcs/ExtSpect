@@ -12,16 +12,12 @@ Ext.define( 'uxExtSpect.view.ExtSpectDataList',
 			// variableHeights: true, // Touch 2.2.0
 			infinite: true, // Touch 2.2.0
 
-			// itemHeight: 10, // added for Touch 2.1
 			itemHeight: 16, // added for Touch 2.2
 			// This becomes style="min-height:16px !important!" in the elements
 
-			// baseCls: 'es-list-item',
-			// cls: 'es-list-item',
-			// itemCls:'es-list-item', // Touch 2.1
-
 			listeners: {
 				itemsingletap: function () { this.handleItemSingleTap.apply( this, arguments ); },
+				itemdoubletap: function () { this.handleItemDoubleTap.apply( this, arguments ); },
 				painted: function () { this.handlePainted.apply( this, arguments ); }
 			}
 		},
@@ -31,7 +27,7 @@ Ext.define( 'uxExtSpect.view.ExtSpectDataList',
 		isClass: uxExtSpect.util.StringOf.isExtClass,
 
 		valueStringOf: function ( value ) {
-			return uxExtSpect.util.StringOf.to$( value )
+			return  uxExtSpect.util.StringOf.to$( value );
 		},
 
 		fetchParentNavigationView: function () {
@@ -56,10 +52,7 @@ Ext.define( 'uxExtSpect.view.ExtSpectDataList',
 
 		handlePainted: function () { this.computeAndSetData(); },
 
-//		setRowString: function ( rowObject ) {},
-
 		computeAndSetData: function () {
-			// console.group( arguments.callee.displayName, this.id );
 			var previousStore = this.getStore();
 			if ( previousStore ) { Ext.StoreManager.unregister( previousStore ); }
 
@@ -70,17 +63,12 @@ Ext.define( 'uxExtSpect.view.ExtSpectDataList',
 			var store = Ext.create( storeName );
 			store.setData( rowObjects );
 			this.setStore( store );
-			// console.groupEnd( arguments.callee.displayName, this.id );
 		},
 
 		determineStoreName: function () {
 			var storeName = this.storeName || this.fetchParentNavigationView().dataListStoreName;
 			return storeName;
 		},
-
-//		isExtObject: function ( value ) {
-//			return ( value instanceof Ext.Base ) || ( value && value.hasOwnProperty( "modelName" ) )
-//		},
 
 		// An instance here is defined as an object with a named constructor
 		// The Instance must have at least 1 property
@@ -107,6 +95,11 @@ Ext.define( 'uxExtSpect.view.ExtSpectDataList',
 				array.push( collection.item( index ) );
 			}
 			return array;
+		},
+
+		handleItemDoubleTap: function ( dataview, index, listItem, record ) {
+			console.log(arguments.callee.displayName);
+			this.handleItemSingleTap( dataview, index, listItem, record )
 		}
 	}
 );
