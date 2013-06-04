@@ -6,7 +6,7 @@ body.x-desktop
 #es-extspect .x-list-item, /* for 2.0.1.1 only */
 #es-extspect .x-list-item-body /* for 2.1.1 only? */
 { font-family: 'Arial Narrow', sans-serif;
-	/* font-size: 20px;
+	/*font-size: 20px;
 	height: 1em;
 	*/
 	line-height: 1em;
@@ -19,9 +19,16 @@ body.x-desktop
 	margin-bottom: 0;
 }
 
+#es-extspect .x-list-item-first,
+#es-extspect .x-list-item .x-innerhtml,
+#es-extspect .x-list-header
+{ padding-top: 0px;
+	padding-bottom: 0px;
+	height: 0px !important;
+}
+
 /* Experiments
 #es-extspect .x-list .x-list-disclosure, 2.2.0
-#es-extspect .x-list .x-list-item .inner-html, 2.2.0
 */
 
 /*

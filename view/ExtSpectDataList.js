@@ -12,7 +12,7 @@ Ext.define( 'uxExtSpect.view.ExtSpectDataList',
 			// variableHeights: true, // Touch 2.2.0
 			infinite: true, // Touch 2.2.0
 
-			itemHeight: 16, // added for Touch 2.2
+			itemHeight: 18, // added for Touch 2.2
 			// This becomes style="min-height:16px !important!" in the elements
 
 			listeners: {

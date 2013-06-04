@@ -110,7 +110,7 @@ category are listed at the bottom, according to the datatype of their value.
 Some objects appear wrapped with braces, with letters in front of them.
 Those letters indicate the name of the class the object instantiates. For
 example, O{0...} is an instance of Object, and it has no properties.
-A default config may show {21p/9m...}. This is an object that belongs to
+A default config may show {...21p/9m}. This is an object that belongs to
 no class, and has 21 properties and 9 methods. Some of the abbreviations
 for classes are:
 
